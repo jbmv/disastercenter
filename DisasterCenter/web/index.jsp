@@ -1,35 +1,43 @@
-<%-- 
-    Document   : index
-    Created on : Nov 1, 2018, 11:53:00 AM
-    Author     : james
---%>
 
+<%--
+    Document   : Login
+    Created on : 28 Feb, 2015, 8:50:26 AM
+    Author     : Lahaul Seth
+--%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Disaster Center Homepage</title>
+        <title>Login Demo with JSP</title>
     </head>
     <body>
-        <h1>Welcome to the Disaster Center homepage</h1><table border="0">
-            <input type="text" name="Username" value="Username" />
-            <input type="password" name="Password" value="" />
-            <thead>
-                <tr>
-                    <th><form action="login.jsp">
-                        <input type="submit" value="Login" name="Login" /></th></form>
-                    <th><form action="register.jsp">
-                        <input type="submit" value="Register" name="Register" /></th></form>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-
+        <form method="post" action="validate.jsp">
+            <center>
+            <table border="1" cellpadding="5" cellspacing="2">
+                <thead>
+                    <tr>
+                        <th colspan="2">Login Here</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Username</td>
+                        <td><input type="text" name="username" required/></td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type="password" name="password" required/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center"><input type="submit" value="Login" />
+                            &nbsp;&nbsp;
+                            <input type="reset" value="Reset" />
+                        </td>                        
+                    </tr>                    
+                </tbody>
+            </table>
+            </center>
+        </form>
     </body>
 </html>
