@@ -1,3 +1,5 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.Iterator"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%-- 
@@ -11,16 +13,14 @@
 <%
     Request.instances.clear();
     try {
-        String username = request.getParameter("username");   
-        String password = request.getParameter("password");
         Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?&useSSL=false", "root", "password" );    
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?&useSSL=false", "root", "password");
         PreparedStatement pst = conn.prepareStatement("SELECT RequestId,QuantityRequested,QuantityFulfilled,Expired,User_UserID,Product_ProductID,PriorityReference_PriorityReferenceId,DisasterEvent_DisasterEventId,p.type as ProdName,d.type as DisasterType,d.location as location FROM Request r JOIN Product p on r.Product_ProductId = p.ProductId JOIN disasterevent d on r.DisasterEvent_DisasterEventId = DisasterEventId");
         ResultSet rs = pst.executeQuery();
-        
-        while(rs.next()) {         
+
+        while (rs.next()) {
             Request reqObj = new Request(rs.getString("RequestId"));
-           // reqObj.setRequestID(Integer.parseInt(rs.getString("RequestId")));
+            // reqObj.setRequestID(Integer.parseInt(rs.getString("RequestId")));
             reqObj.setQuantityRequested(Integer.parseInt(rs.getString("QuantityRequested")));
             reqObj.setQuantityFulfilled(Integer.parseInt(rs.getString("QuantityFulfilled")));
             reqObj.setExpired(Boolean.parseBoolean(rs.getString("Expired")));
@@ -32,17 +32,12 @@
             reqObj.setUserID(Integer.parseInt(rs.getString("User_UserId")));
             reqObj.setLocation(Integer.parseInt(rs.getString("Location")));
         }
-        
-        
-    }
-    catch (Exception e){
+
+    } catch (Exception e) {
         out.print(e);
     }
-    
-    
-    
 
-    
+
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -54,6 +49,7 @@
     </head>
     <body>
         <h1>Current Requests</h1>
+        <form action="respond.jsp" method="get">
         <table border="1">
             <thead>
                 <tr>
@@ -65,39 +61,25 @@
                 </tr>
             </thead>
             <tbody>
-                <%
-                    for(int i=1; i<=Request.instances.size();i++) {
-                        Request item = Request.instances.get(Integer.toString(i));
-                    %>
+                <%                    
+                    Iterator it = Request.instances.entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry pair = (Map.Entry) it.next();
+                        Request item = Request.instances.get(pair.getKey());
+                %>
                 <tr>
                     <td><% out.print(item.getLocation()); %></td>
                     <td><% out.print(item.getProductName()); %></td>
                     <td><% out.print(item.getQuantityRequested()); %></td>
                     <td><% out.print(item.getDisasterType()); %></td>
-                    <td><input type="radio" name="Select" value="<% item.getRequestID(); %>" /></td>
-                    <% } %>
+                    <td>
+                        <input type="radio" name="Select" value="<%= item.getRequestID() %>" /></td>
+                        <% }%>
             </tbody>
         </table>
-            <table border="0" cellspacing="10">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><form method="post" action="respond.jsp">
-                <input type="submit" value="Respond to selected" />
-            </form>
-            </td>
-                        <td><form method="post" action="donate">
-                            <input type="submit" value="Donate for future" />
-            </form></td>
-                    </tr>
-                </tbody>
-            </table>
-
         
+                            <input type="submit" value="Respond to selected" />
+    </form>
+
 
 </html>

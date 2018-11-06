@@ -33,6 +33,7 @@ public class Request {
     
     public Request(String requestID) {
         instances.put(requestID,this);
+        this.requestID = Integer.parseInt(requestID);
     }
 
     public Request(int location, String disasterType, String productName, int requestID, int quantityRequested, int quantityFulfilled, boolean expired, int userID, int productID, int priorityReference, int disasterEventID) {
