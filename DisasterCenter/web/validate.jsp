@@ -45,9 +45,7 @@
            update2.setString(1, username);
            update.executeUpdate();
            update2.executeUpdate();
-           %>
-           <jsp:forward page="landing.jsp" />
-           <%
+           response.sendRedirect("landing_1.jsp");
         }
         else {
            PreparedStatement update = conn.prepareStatement("update user set failedloginattempts = failedloginattempts + 1 where username = ?");
