@@ -16,13 +16,12 @@ import java.time.LocalDate;
  * @author james
  */
 
-
 public class Response {
 
     int responseID;
     int quantitySent;
     Request request;
-    LocalDate providedByDate;
+    Date providedByDate;
     User user;
 
     public Response(String responseID) {
@@ -46,11 +45,11 @@ public class Response {
         this.quantitySent = quantitySent;
     }
 
-    public LocalDate getProvidedByDate() {
+    public Date getProvidedByDate() {
         return productID;
     }
 
-    public void setProvidedByDate(LocalDate providedByDate) {
+    public void setProvidedByDate(Date providedByDate) {
         this.providedByDate = providedByDate;
     }
 

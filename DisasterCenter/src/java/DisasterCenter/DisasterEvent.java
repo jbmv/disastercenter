@@ -5,8 +5,6 @@
  */
 package DisasterCenter;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author james
@@ -16,7 +14,7 @@ public class DisasterEvent {
     int disasterEventID;
     String type;
     Location location;
-    LocalDate startDate;
+    Date startDate;
 
     public DisasterEvent(int disasterEventID) {
         this.disasterEventID = disasterEventID;
@@ -46,11 +44,11 @@ public class DisasterEvent {
         this.location = location;
     }
 
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
     

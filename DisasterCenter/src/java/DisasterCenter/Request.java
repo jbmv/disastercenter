@@ -22,7 +22,7 @@ public class Request {
     int quantityRequested;
     int quantityFulfilled;
     boolean expired;
-    LocalDate neededByDate;
+    Date neededByDate;
     User user;
     Product product;
     PriorityReference priorityReference;
@@ -78,11 +78,11 @@ public class Request {
         this.quantityRequested = quantityRequested;
     }
 
-    public LocalDate getNeededByDate() {
+    public Date getNeededByDate() {
         return quantityRequested;
     }
 
-    public void setNeededByDate(LocalDate neededByDate) {
+    public void setNeededByDate(Date neededByDate) {
         this.neededByDate = neededByDate;
     }
 
