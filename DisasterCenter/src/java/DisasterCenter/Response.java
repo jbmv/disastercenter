@@ -3,7 +3,7 @@ package DisasterCenter;
 import java.util.HashMap;
 import java.util.Map;
 import java.time.LocalDate;
-
+import java.util.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,8 +25,7 @@ public class Response {
     User user;
 
     public Response(String responseID) {
-        instances.put(responseID,this);
-        this.responseID = Integer.parseInt(responseID);
+        this.responseID = responseID;
     }
 
     public int getResponseID() {

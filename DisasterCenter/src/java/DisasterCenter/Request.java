@@ -66,7 +66,7 @@ public class Request {
     }
 
     public Date getNeededByDate() {
-        return quantityRequested;
+        return neededByDate;
     }
 
     public void setNeededByDate(Date neededByDate) {
@@ -89,7 +89,7 @@ public class Request {
         this.expired = expired;
     }
 
-    public int getUser() {
+    public User getUser() {
         return user;
     }
 
@@ -97,15 +97,15 @@ public class Request {
         this.user = user;
     }
 
-    public String getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(String product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 
-    public int getPriorityReference() {
+    public PriorityReference getPriorityReference() {
         return priorityReference;
     }
 
