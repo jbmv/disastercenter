@@ -15,57 +15,48 @@ import java.util.*;
  */
 public class Request {
     
-    public static Map<String,Request> instances = new HashMap<String,Request>();
-    
-    
-    
     int requestID;
     int quantityRequested;
     int quantityFulfilled;
     boolean expired;
     LocalDate neededByDate;
-    int userID;
-    int productID;
-    int priorityReference;
-    int disasterEventID;
-    int locationId;
-    String productName;
-    String disasterType;
+    User user;
+    Product product;
+    PriorityReference priorityReference;
+    DisasterEvent disasterEvent;
+    Location location;
     
-    public Request(String requestID) {
-        instances.put(requestID,this);
-        this.requestID = Integer.parseInt(requestID);
+    public Request(int requestID) {
+        this.requestID = requestID;
     }
 
-    public Request(int location, String disasterType, String productName, int requestID, int quantityRequested, int quantityFulfilled, boolean expired, int userID, int productID, int priorityReference, int disasterEventID, LocalDate neededByDate) {
+    public Request(int location, Product product, int requestID, int quantityRequested, int quantityFulfilled, boolean expired, User user, PriorityReference priorityReference, DisasterEvent disasterEvent, LocalDate neededByDate) {
         this.requestID = requestID;
         this.quantityRequested = quantityRequested;
         this.quantityFulfilled = quantityFulfilled;
         this.expired = expired;
-        this.userID = userID;
-        this.productID = productID;
+        this.user = user;
+        this.product = product;
         this.priorityReference = priorityReference;
-        this.disasterEventID = disasterEventID;
-        this.productName = productName;
-        this.disasterType = disasterType;
+        this.disasterEvent = disasterEvent;
         this.location = location;
         this.neededByDate = neededByDate;
     }
 
-    public int getLocation() {
+    public Location getLocation() {
         return locationId;
     }
 
-    public void setLocation(int location) {
-        this.locationId = location;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
-    public String getDisasterType() {
+    public String getDisasterEvent() {
         return disasterType;
     }
 
-    public void setDisasterType(String disasterType) {
-        this.disasterType = disasterType;
+    public void setDisasterEvent(DisasterEvent disasterEvent) {
+        this.disasterEvent = disasterEvent;
     }
 
     public int getRequestID() {
@@ -80,8 +71,8 @@ public class Request {
         return quantityRequested;
     }
 
-    public void setRequestID(int requestID) {
-        this.requestID = requestID;
+    public void setQuantityRequested(int quantityRequested) {
+        this.quantityRequested = quantityRequested;
     }
 
     public LocalDate getNeededByDate() {
@@ -108,46 +99,27 @@ public class Request {
         this.expired = expired;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getUser() {
+        return user;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUserID(User user) {
+        this.user = user;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getProduct() {
+        return product;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public int getProductID() {
-        return productID;
-    }
-
-    public void setProductID(int productID) {
-        this.productID = productID;
+    public void setProduct(String product) {
+        this.product = product;
     }
 
     public int getPriorityReference() {
         return priorityReference;
     }
 
-    public void setPriorityReference(int priorityReference) {
+    public void setPriorityReference(PriorityReference priorityReference) {
         this.priorityReference = priorityReference;
     }
-
-    public int getDisasterEventID() {
-        return disasterEventID;
-    }
-
-    public void setDisasterEventID(int disasterEventID) {
-        this.disasterEventID = disasterEventID;
-    }
-    
-    
-    
 }

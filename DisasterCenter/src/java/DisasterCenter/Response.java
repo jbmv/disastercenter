@@ -14,14 +14,12 @@ import java.util.Map;
  * @author james
  */
 public class Response {
-    
-    public static Map<String,Response> instances = new HashMap<String,Response>();
-    
+
     int responseID;
     int quantitySent;
-    int requestID;
+    Request request;
     LocalDate providedByDate;
-    int userID;
+    User user;
 
     public Response(String responseID) {
         instances.put(responseID,this);
@@ -52,12 +50,12 @@ public class Response {
         this.providedByDate = providedByDate;
     }
 
-    public int getRequestID() {
+    public int getRequest() {
         return requestID;
     }
 
-    public void setRequestID(int requestID) {
-        this.requestID = requestID;
+    public void setRequest(Request request) {
+        this.request = request;
     }
 
     public boolean isRequestExpired() {
@@ -68,11 +66,11 @@ public class Response {
         this.requestExpired = requestExpired;
     }
 
-    public int getUserID() {
+    public int getUser() {
         return userID;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
