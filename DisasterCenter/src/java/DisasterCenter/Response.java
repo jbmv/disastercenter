@@ -19,11 +19,9 @@ public class Response {
     
     int responseID;
     int quantitySent;
-    int productID;
     int requestID;
-    boolean requestExpired;
+    LocalDate providedByDate;
     int userID;
-    String productName;
 
     public Response(String responseID) {
         instances.put(responseID,this);
@@ -46,12 +44,12 @@ public class Response {
         this.quantitySent = quantitySent;
     }
 
-    public int getProductID() {
+    public LocalDate getProvidedByDate() {
         return productID;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
+    public void setProvidedByDate(LocalDate providedByDate) {
+        this.providedByDate = providedByDate;
     }
 
     public int getRequestID() {
@@ -77,18 +75,4 @@ public class Response {
     public void setUserID(int userID) {
         this.userID = userID;
     }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-    
-    
-    
-    
-  
-    
 }

@@ -23,11 +23,12 @@ public class Request {
     int quantityRequested;
     int quantityFulfilled;
     boolean expired;
+    LocalDate neededByDate;
     int userID;
     int productID;
     int priorityReference;
     int disasterEventID;
-    int location;
+    int locationId;
     String productName;
     String disasterType;
     
@@ -36,7 +37,7 @@ public class Request {
         this.requestID = Integer.parseInt(requestID);
     }
 
-    public Request(int location, String disasterType, String productName, int requestID, int quantityRequested, int quantityFulfilled, boolean expired, int userID, int productID, int priorityReference, int disasterEventID) {
+    public Request(int location, String disasterType, String productName, int requestID, int quantityRequested, int quantityFulfilled, boolean expired, int userID, int productID, int priorityReference, int disasterEventID, LocalDate neededByDate) {
         this.requestID = requestID;
         this.quantityRequested = quantityRequested;
         this.quantityFulfilled = quantityFulfilled;
@@ -48,14 +49,15 @@ public class Request {
         this.productName = productName;
         this.disasterType = disasterType;
         this.location = location;
+        this.neededByDate = neededByDate;
     }
 
     public int getLocation() {
-        return location;
+        return locationId;
     }
 
     public void setLocation(int location) {
-        this.location = location;
+        this.locationId = location;
     }
 
     public String getDisasterType() {
@@ -78,8 +80,16 @@ public class Request {
         return quantityRequested;
     }
 
-    public void setQuantityRequested(int quantityRequested) {
-        this.quantityRequested = quantityRequested;
+    public void setRequestID(int requestID) {
+        this.requestID = requestID;
+    }
+
+    public LocalDate getNeededByDate() {
+        return quantityRequested;
+    }
+
+    public void setNeededByDate(LocalDate neededByDate) {
+        this.neededByDate = neededByDate;
     }
 
     public int getQuantityFulfilled() {
