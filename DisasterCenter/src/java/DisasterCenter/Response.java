@@ -70,7 +70,7 @@ public class Response {
     }
 
     public User getUser() {
-        return userID;
+        return user;
     }
 
     public void setUser(User user) {
