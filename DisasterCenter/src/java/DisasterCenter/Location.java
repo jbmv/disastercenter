@@ -24,7 +24,7 @@ public class Location {
     int zipcode;
 
     public Location(int locationId) {
-        this.responseID = responseID;
+        this.locationID = locationID;
     }
 
     public int getLocationID() {
@@ -71,7 +71,7 @@ public class Location {
         return city;
     }
 
-    public void setStreet(String city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
