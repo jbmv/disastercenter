@@ -14,7 +14,7 @@
     Request.instances.clear();
     try {
         Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?&useSSL=false", "root", "password");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false", "root", "password");
         PreparedStatement pst = conn.prepareStatement("SELECT RequestId,QuantityRequested,QuantityFulfilled,Expired,User_UserID,Product_ProductID,PriorityReference_PriorityReferenceId,DisasterEvent_DisasterEventId,p.type as ProdName,d.type as DisasterType,d.location as location FROM Request r JOIN Product p on r.Product_ProductId = p.ProductId JOIN disasterevent d on r.DisasterEvent_DisasterEventId = DisasterEventId");
         ResultSet rs = pst.executeQuery();
 

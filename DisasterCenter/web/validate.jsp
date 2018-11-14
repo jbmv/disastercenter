@@ -15,7 +15,7 @@
         String username = request.getParameter("username");   
         String password = request.getParameter("password");
         Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?&useSSL=false", "root", "password" );    
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false", "root", "password" );    
         PreparedStatement pst = conn.prepareStatement("Select username,password from user where username=? and password=?");
         pst.setString(1, username);
         pst.setString(2, password);
