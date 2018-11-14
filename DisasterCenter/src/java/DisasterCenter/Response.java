@@ -22,9 +22,10 @@ public class Response {
     int quantitySent;
     Request request;
     Date providedByDate;
+    boolean requestExpired;
     User user;
 
-    public Response(String responseID) {
+    public Response(int responseID) {
         this.responseID = responseID;
     }
 
@@ -45,15 +46,15 @@ public class Response {
     }
 
     public Date getProvidedByDate() {
-        return productID;
+        return providedByDate;
     }
 
     public void setProvidedByDate(Date providedByDate) {
         this.providedByDate = providedByDate;
     }
 
-    public int getRequest() {
-        return requestID;
+    public Request getRequest() {
+        return request;
     }
 
     public void setRequest(Request request) {
@@ -68,7 +69,7 @@ public class Response {
         this.requestExpired = requestExpired;
     }
 
-    public int getUser() {
+    public User getUser() {
         return userID;
     }
 

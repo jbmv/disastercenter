@@ -41,8 +41,8 @@ public class Request {
         this.location = location;
     }
 
-    public String getDisasterEvent() {
-        return disasterType;
+    public DisasterEvent getDisasterEvent() {
+        return disasterEvent;
     }
 
     public void setDisasterEvent(DisasterEvent disasterEvent) {
