@@ -33,21 +33,8 @@ public class Request {
         this.requestID = requestID;
     }
 
-    public Request(int location, Product product, int requestID, int quantityRequested, int quantityFulfilled, boolean expired, User user, PriorityReference priorityReference, DisasterEvent disasterEvent, LocalDate neededByDate) {
-        this.requestID = requestID;
-        this.quantityRequested = quantityRequested;
-        this.quantityFulfilled = quantityFulfilled;
-        this.expired = expired;
-        this.user = user;
-        this.product = product;
-        this.priorityReference = priorityReference;
-        this.disasterEvent = disasterEvent;
-        this.location = location;
-        this.neededByDate = neededByDate;
-    }
-
     public Location getLocation() {
-        return locationId;
+        return location;
     }
 
     public void setLocation(Location location) {
