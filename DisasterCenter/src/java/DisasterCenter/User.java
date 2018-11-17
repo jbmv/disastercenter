@@ -31,18 +31,6 @@ public class User {
         this.userID = userID;
     }
 
-    public User(String userName, String password, String firstName, String lastName, int residency, String email, String phone, Date lastLogin, int failedLoginAttempts) {
-        this.userName = userName;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.residency = residency;
-        this.email = email;
-        this.phone = phone;
-        this.lastLogin = lastLogin;
-        this.failedLoginAttempts = failedLoginAttempts;
-    }
-
     public String getUserName() {
         return userName;
     }
