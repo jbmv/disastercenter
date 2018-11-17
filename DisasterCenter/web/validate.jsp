@@ -34,21 +34,18 @@
         */
         if(rs.next()) {          
            out.println("Valid login credentials");
-           PreparedStatement update = conn.prepareStatement("update user set lastlogin = ? where username = ?");
-           PreparedStatement update2 = conn.prepareStatement("update user set failedloginattempts = 0 where username = ?");
+           PreparedStatement update = conn.prepareStatement(Queries.correctUserLogin);
            DateFormat df = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
            Calendar calendar = Calendar.getInstance();
            String dfString = df.format(calendar.getTime());
            out.println(dfString);
            update.setString(1, dfString);
            update.setString(2, username);
-           update2.setString(1, username);
            update.executeUpdate();
-           update2.executeUpdate();
            response.sendRedirect("landing_1.jsp");
         }
         else {
-           PreparedStatement update = conn.prepareStatement("update user set failedloginattempts = failedloginattempts + 1 where username = ?");
+           PreparedStatement update = conn.prepareStatement(Queries.incorrectUserLogin);
            update.setString(1, username);
 update.executeUpdate();
         out.println("Invalid login credentials"); 
