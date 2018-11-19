@@ -31,7 +31,7 @@ table {
     border: 1px solid #ddd;
 }
 
-th {
+th,td {
     cursor: pointer;
 }
 
@@ -47,7 +47,7 @@ tr:nth-child(even) {
 <body>
 
 <!-- Sidebar -->
-<jsp:include page="sidebar.jsp">
+<jsp:include page="sidebar.jsp"></jsp:include>
 
 <!-- Page Content -->
 <div style="margin-left:15%">
@@ -61,7 +61,6 @@ tr:nth-child(even) {
 <h2>Click on a request to create a response</h2>
 
 <div class="w3-responsive">
-        <form action="respond.jsp" method="get">
 <table class="w3-table-all">
             <thead>
                 <tr>
@@ -69,7 +68,6 @@ tr:nth-child(even) {
                     <th onclick="sortTable(1)">Product</th>
                     <th onclick="sortTable(2)">Quantity Needed</th>
                     <th onclick="sortTable(3)">Disaster</th>
-                    <th>Select</th>
                 </tr>
             </thead>
             <tbody>
@@ -80,20 +78,15 @@ tr:nth-child(even) {
                         Map.Entry pair = (Map.Entry) it.next();
                         Request newRequest = (Request) requestList.getInstances().get(pair.getKey());
                 %>
-                <tr>
+                <tr onclick="document.location='respond?requestID=<% out.print(newRequest.getRequestID()); %>'">
                     <td><% out.print(newRequest.getZipName()); %></td>
                     <td><% out.print(newRequest.getProductName()); %></td>
                     <td><% out.print(newRequest.getQuantityRequested()); %></td>
                     <td><% out.print(newRequest.getDisasterName()); %></td>
-                    <td>
-                        <input type="radio" name="Select" value="<%= newRequest.getRequestID() %>" /></td>
                         <% }%>
             </tbody>
         </table>
         
-                            <input type="submit" value="Respond to selected" />
-    </form>
-</table>
 </div>
 
 </div>

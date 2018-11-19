@@ -19,7 +19,7 @@ public class User {
     String password;
     String firstName;
     String lastName;
-    int residency;
+    int locationID;
     String email;
     String phone;
     Date lastLogin;
@@ -31,46 +31,89 @@ public class User {
         this.userID = userID;
     }
 
-    public User(String userName, String password, String firstName, String lastName, int residency, String email, String phone, Date lastLogin, int failedLoginAttempts) {
-        this.userName = userName;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.residency = residency;
-        this.email = email;
-        this.phone = phone;
-        this.lastLogin = lastLogin;
-        this.failedLoginAttempts = failedLoginAttempts;
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public String getUserName() {
         return userName;
     }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getPassword() {
         return password;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getFirstName() {
         return firstName;
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
     }
-    public int getResidency() {
-        return residency;
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
+
+    public int getLocationID() {
+        return locationID;
+    }
+
+    public void setLocationID(int residency) {
+        this.locationID = residency;
+    }
+
     public String getEmail() {
         return email;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPhone() {
         return phone;
     }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public Date getLastLogin() {
         return lastLogin;
     }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
     public int getFailedLoginAttempts() {
         return failedLoginAttempts;
     }
+
+    public void setFailedLoginAttempts(int failedLoginAttempts) {
+        this.failedLoginAttempts = failedLoginAttempts;
+    }
+    
 }
+
 
 /*
 * User x

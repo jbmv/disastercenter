@@ -26,40 +26,57 @@ public class Request {
     User user;
     Product product;
     PriorityReference priorityReference;
-    DisasterEvent disasterEvent;
+    int disasterEventID;
     Location location;
+    
+    // Below are needed to construct web tables and are not part of DB Request table
+    String zipName;
+    String productName;
+    String disasterName;
     
     public Request(int requestID) {
         this.requestID = requestID;
     }
 
-    public Request(int location, Product product, int requestID, int quantityRequested, int quantityFulfilled, boolean expired, User user, PriorityReference priorityReference, DisasterEvent disasterEvent, LocalDate neededByDate) {
-        this.requestID = requestID;
-        this.quantityRequested = quantityRequested;
-        this.quantityFulfilled = quantityFulfilled;
-        this.expired = expired;
-        this.user = user;
-        this.product = product;
-        this.priorityReference = priorityReference;
-        this.disasterEvent = disasterEvent;
-        this.location = location;
-        this.neededByDate = neededByDate;
+    public String getZipName() {
+        return zipName;
     }
 
+    public void setZipName(String zipName) {
+        this.zipName = zipName;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getDisasterName() {
+        return disasterName;
+    }
+
+    public void setDisasterName(String disasterName) {
+        this.disasterName = disasterName;
+    }
+
+    
     public Location getLocation() {
-        return locationId;
+        return location;
     }
 
     public void setLocation(Location location) {
         this.location = location;
     }
 
-    public DisasterEvent getDisasterEvent() {
-        return disasterEvent;
+    public int getDisasterEventID() {
+        return disasterEventID;
     }
 
-    public void setDisasterEvent(DisasterEvent disasterEvent) {
-        this.disasterEvent = disasterEvent;
+    public void setDisasterEventID(int disasterEvent) {
+        this.disasterEventID = disasterEvent;
     }
 
     public int getRequestID() {
@@ -94,7 +111,7 @@ public class Request {
         this.quantityFulfilled = quantityFulfilled;
     }
 
-    public boolean isExpired() {
+    public boolean getExpired() {
         return expired;
     }
 

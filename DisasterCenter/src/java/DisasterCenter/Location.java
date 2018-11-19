@@ -36,7 +36,7 @@ public class Location {
     }
 
     public int getLatitude() {
-        return locationID;
+        return latitude;
     }
 
     public void setLatitude(int latitude) {
