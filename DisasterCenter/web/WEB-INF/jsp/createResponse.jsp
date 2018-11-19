@@ -14,9 +14,9 @@
     User user = (User) session.getAttribute("user");
     Location userLocation = (Location) session.getAttribute("userLocation");
     RequestList requestList = (RequestList) session.getAttribute("requestList");
-    int responseID = Integer.parseInt(session.getAttribute("responseID").toString());
-    Request currentRequest = (Request) requestList.getInstances().get(String.valueOf(responseID));
-    Response newResponse = new Response(responseID);
+    int requestID = Integer.parseInt(session.getAttribute("requestID").toString());
+    Request currentRequest = (Request) requestList.getInstances().get(String.valueOf(requestID));
+    Response newResponse = new Response(requestID);
     newResponse.setUser(user);
 
 %>
