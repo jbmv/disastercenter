@@ -36,6 +36,9 @@ public class welcome extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession(false);
             if (session == null) {
+                out.print("<div class=\"w3-container w3-red\">"
+                        + "  <h1>Please login</h1>\n"
+                        + "</div>");
                 RequestDispatcher dispatcher = request.getRequestDispatcher(
                         "WEB-INF/login.html");
                 dispatcher.forward(request, response);

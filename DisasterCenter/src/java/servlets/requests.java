@@ -49,12 +49,15 @@ public class requests extends HttpServlet {
         //This code is not working, supposed to check that we have a session before displaying
         HttpSession session = request.getSession(false);
         if (session == null) {
+            PrintWriter out = response.getWriter();
+            out.print("<div class=\"w3-container w3-red\">"
+                    + "  <h1>not logged in</h1>\n"
+                    + "</div>");
             RequestDispatcher dispatcher = request.getRequestDispatcher(
                     "WEB-INF/login.html");
             dispatcher.forward(request, response);
         }
-        
-        User user = (User) session.getAttribute("user");
+
         Location userLocation = (Location) session.getAttribute("userLocation");
 
         try (PrintWriter out = response.getWriter()) {
