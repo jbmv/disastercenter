@@ -7,16 +7,19 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import DisasterCenter.User;
 
 /**
  *
  * @author james
  */
-public class respond extends HttpServlet {
+public class welcome extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,10 +34,31 @@ public class respond extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String requestID = request.getParameter("requestID");
-            out.print(requestID);
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
             
+            
+            
+            try {
+
+                if (user.getUserName() != null) {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(
+                            "/requests");
+                    dispatcher.forward(request, response);
+                } else {
+
+                    session.invalidate();
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(
+                            "WEB-INF/login.html");
+                    dispatcher.forward(request, response);
+                }
+            } catch (Exception e) {
+                out.print(e);
+                session.invalidate();
+                RequestDispatcher dispatcher = request.getRequestDispatcher(
+                        "WEB-INF/login.html");
+                dispatcher.forward(request, response);
+            }
         }
     }
 

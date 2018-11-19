@@ -7,16 +7,18 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author james
  */
-public class respond extends HttpServlet {
+public class logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,9 +34,14 @@ public class respond extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String requestID = request.getParameter("requestID");
-            out.print(requestID);
-            
+                        HttpSession session = request.getSession();
+                        session.invalidate();
+                                       out.print("<div class=\"w3-container w3-green\">"
+                        + "  <h1>You are now logged out</h1>\n"
+                        + "</div>");
+                RequestDispatcher dispatcher = request.getRequestDispatcher(
+                        "WEB-INF/login.html");
+                dispatcher.include(request, response);
         }
     }
 

@@ -91,7 +91,7 @@ public class login extends HttpServlet {
                         + "  <h1>Invalid Login!</h1>\n"
                         + "</div>");
                 RequestDispatcher dispatcher = request.getRequestDispatcher(
-                        "/index.html");
+                        "WEB-INF/login.html");
                 dispatcher.include(request, response);
 
             }
