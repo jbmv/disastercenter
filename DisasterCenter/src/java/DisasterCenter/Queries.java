@@ -36,23 +36,10 @@ public class Queries {
             + "   ) AS p ON 1=1"
             + " "
             + "ORDER BY distance"
-            
-            
-            /*
-SELECT zip, primary_city, latitude, longitude,
-      111.045* DEGREES(ACOS(COS(RADIANS(latpoint))
-                 * COS(RADIANS(latitude))
-                 * COS(RADIANS(longpoint) - RADIANS(longitude))
-                 + SIN(RADIANS(latpoint))
-                 * SIN(RADIANS(latitude)))) AS distance_in_km
- FROM zip
- JOIN (
-     SELECT  42.81  AS latpoint,  -70.81 AS longpoint
-   ) AS p ON 1=1
- ORDER BY distance_in_km
-*/
             // http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
             );
+    
+    public static String getProducts = "select * from product"; // should probably be a stored proceedure
     
     public static String correctUserLogin = "update user set lastlogin = ?, failedloginattempts = 0 where username = ?";
 

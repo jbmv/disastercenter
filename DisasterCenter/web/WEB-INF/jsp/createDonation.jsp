@@ -4,6 +4,10 @@
     Author     : james
 --%>
 
+<%@page import="DisasterCenter.Product"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="DisasterCenter.ProductList"%>
 <%@page import="DisasterCenter.Request"%>
 <%@page import="DisasterCenter.Response"%>
 <%@page import="DisasterCenter.RequestList"%>
@@ -11,13 +15,7 @@
 <%@page import="DisasterCenter.User"%>
 <%
     //import java objects from HTTP session
-    User user = (User) session.getAttribute("user");
-    Location userLocation = (Location) session.getAttribute("userLocation");
-    RequestList requestList = (RequestList) session.getAttribute("requestList");
-    int requestID = Integer.parseInt(session.getAttribute("requestID").toString());
-    Request currentRequest = (Request) requestList.getInstances().get(String.valueOf(requestID));
-    Response newResponse = new Response(requestID);
-    newResponse.setUser(user);
+    ProductList productList = (ProductList) session.getAttribute("productList");
 
 %>
 
@@ -65,21 +63,24 @@
                 </div>
 
         <div style="padding: 20px">
-            <form action="confirmResponse">
-                <label>Disaster</label>
-                <input type="text" id="disaster" name="disaster" placeholder="<%= currentRequest.getDisasterName()%>" readonly>
+            <form action="confirmDonation" method="POST">
 
-                <label>Location</label>
-                <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getZipName()%>" readonly>
 
-                <label>Product Requested</label>
-                <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getProductName()%>" readonly>
+                <label for="productID">Product Donating</label>
+                <select id="productID" name="productID">
+                    <%                    // for every entry in requestList.instances, create one table row
+                                Iterator it = productList.getInstances().entrySet().iterator();
+                                while (it.hasNext()) {
+                                    Map.Entry pair = (Map.Entry) it.next();
+                                    Product newProduct = (Product) productList.getInstances().get(pair.getKey());
+                            %>
+      <option value="<%= newProduct.getProdId()%>"><% out.print(newProduct.getProdType()); %></option>
+        <% } %>
+    </select>
+
                 
-                <label>Deliver By</label>
-                <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getNeededByDate() != null ? currentRequest.getNeededByDate() : "not specified" %>" readonly>
-                
-                <label style="color: red;">Quantity</label>
-                <input type="text" id="lname" name="lastname" value="<%= currentRequest.getQuantityRequested() %>">
+                <label for="quantity">Quantity Donating</label>
+                <input type="text" id="quantity" name="quantity" placeholder="Enter Quantity">
 
   
 
