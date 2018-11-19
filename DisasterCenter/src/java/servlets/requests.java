@@ -53,6 +53,7 @@ public class requests extends HttpServlet {
                     "WEB-INF/login.html");
             dispatcher.forward(request, response);
         }
+        
         User user = (User) session.getAttribute("user");
         Location userLocation = (Location) session.getAttribute("userLocation");
 

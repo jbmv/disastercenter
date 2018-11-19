@@ -48,10 +48,6 @@ public class donation extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher(
                     "WEB-INF/login.html");
             dispatcher.forward(request, response);
-        } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(
-                    "requests");
-            dispatcher.forward(request, response);
         }
 
         try (PrintWriter out = response.getWriter()) {
