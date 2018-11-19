@@ -43,6 +43,16 @@ public class requests extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+
+        //This code is not working, supposed to check that we have a session before displaying
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+                    "WEB-INF/login.html");
+            dispatcher.forward(request, response);
+        }
+        
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 
@@ -56,7 +66,8 @@ public class requests extends HttpServlet {
 
                 // create RequestList object, get HTTP session to append requestList
                 RequestList requestList = new RequestList();
-                HttpSession session = request.getSession(false);
+//                HttpSession session = request.getSession(false);
+                
 
                 while (rs.next()) {
                     Request newRequest = new Request(rs.getInt(1));
@@ -74,15 +85,15 @@ public class requests extends HttpServlet {
                 // append requestList to HTTP session, forward to jsp view
                 session.setAttribute("requestList", requestList);
                 RequestDispatcher dispatcher = request.getRequestDispatcher(
-                        "/WEB-INF/jsp/requests.jsp");
+                        "/WEB-INF/jsp/currentRequests.jsp");
                 dispatcher.forward(request, response);
 
             } catch (Exception e) {
                 out.print(e);
             }
 
-        } 
-            
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

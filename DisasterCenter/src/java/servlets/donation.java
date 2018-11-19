@@ -5,12 +5,14 @@
  */
 package servlets;
 
+import DisasterCenter.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,6 +43,10 @@ public class donation extends HttpServlet {
             out.println("<h1>Servlet donation at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
+            
+            HttpSession session = request.getSession(false);
+            User user = (User) session.getAttribute("user");
+            out.println(user.getFirstName());
         }
     }
 

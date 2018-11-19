@@ -34,12 +34,20 @@ public class welcome extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("user");
-            
-            
-            
+            HttpSession session = request.getSession(false);
+            if (session == null) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher(
+                        "WEB-INF/login.html");
+                dispatcher.forward(request, response);
+            } else {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(
+                            "requests");
+                    dispatcher.forward(request, response);
+            }
+
+            /* this works, but i shouldnt need it
             try {
+                User user = (User) session.getAttribute("user");
 
                 if (user.getUserName() != null) {
                     RequestDispatcher dispatcher = request.getRequestDispatcher(
@@ -47,18 +55,18 @@ public class welcome extends HttpServlet {
                     dispatcher.forward(request, response);
                 } else {
 
-                    session.invalidate();
                     RequestDispatcher dispatcher = request.getRequestDispatcher(
                             "WEB-INF/login.html");
                     dispatcher.forward(request, response);
                 }
             } catch (Exception e) {
-                out.print(e);
-                session.invalidate();
+                System.out.print(e);
                 RequestDispatcher dispatcher = request.getRequestDispatcher(
                         "WEB-INF/login.html");
                 dispatcher.forward(request, response);
+
             }
+             */
         }
     }
 
