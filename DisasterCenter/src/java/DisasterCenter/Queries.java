@@ -54,4 +54,7 @@ SELECT zip, primary_city, latitude, longitude,
             // http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
             );
     
+    public static String correctUserLogin = "update user set lastlogin = ?, failedloginattempts = 0 where username = ?";
+
+    public static String incorrectUserLogin = "update user set failedloginattempts = failedloginattempts + 1 where username = ?";
 }
