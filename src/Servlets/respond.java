@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
+package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author james
  */
-public class confirmDonation extends HttpServlet {
+public class respond extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,7 +32,6 @@ public class confirmDonation extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         HttpSession session = request.getSession(false);
         if (session == null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(
@@ -42,9 +41,13 @@ public class confirmDonation extends HttpServlet {
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            String requestID = request.getParameter("requestID");
 
-            out.print(request.getParameter("productID"));
+            session.setAttribute("requestID", requestID);
 
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+                    "/WEB-INF/jsp/createResponse.jsp");
+            dispatcher.forward(request, response);
         }
     }
 

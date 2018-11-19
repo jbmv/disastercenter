@@ -2,43 +2,43 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet>
         <servlet-name>login</servlet-name>
-        <servlet-class>servlets.login</servlet-class>
+        <servlet-class>Servlets.login</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>requests</servlet-name>
-        <servlet-class>servlets.requests</servlet-class>
+        <servlet-class>Servlets.requests</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>donation</servlet-name>
-        <servlet-class>servlets.donation</servlet-class>
+        <servlet-class>Servlets.donation</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>userProfile</servlet-name>
-        <servlet-class>servlets.userProfile</servlet-class>
+        <servlet-class>Servlets.userProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>register</servlet-name>
-        <servlet-class>servlets.register</servlet-class>
+        <servlet-class>Servlets.register</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>welcome</servlet-name>
-        <servlet-class>servlets.welcome</servlet-class>
+        <servlet-class>Servlets.welcome</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>logout</servlet-name>
-        <servlet-class>servlets.logout</servlet-class>
+        <servlet-class>Servlets.logout</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>respond</servlet-name>
-        <servlet-class>servlets.respond</servlet-class>
+        <servlet-class>Servlets.respond</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>confirmResponse</servlet-name>
-        <servlet-class>servlets.confirmResponse</servlet-class>
+        <servlet-class>Servlets.confirmResponse</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>confirmDonation</servlet-name>
-        <servlet-class>servlets.confirmDonation</servlet-class>
+        <servlet-class>Servlets.confirmDonation</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>

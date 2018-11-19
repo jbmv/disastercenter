@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
+package Servlets;
 
-import DisasterCenter.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -19,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author james
  */
-public class userProfile extends HttpServlet {
+public class confirmResponse extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,6 +32,7 @@ public class userProfile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
         HttpSession session = request.getSession(false);
         if (session == null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(
@@ -43,10 +43,16 @@ public class userProfile extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(
-                    "WEB-INF/jsp/userProfile.jsp");
-            dispatcher.forward(request, response);
-
+            //check that qty responding doesnt exceed qty requested
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet confirmResponse</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet confirmResponse at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

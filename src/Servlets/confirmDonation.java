@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
+package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,13 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import DisasterCenter.User;
 
 /**
  *
  * @author james
  */
-public class welcome extends HttpServlet {
+public class confirmDonation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,20 +32,18 @@ public class welcome extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+                    "WEB-INF/login.html");
+            dispatcher.forward(request, response);
+        }
+
         try (PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession(false);
-            if (session == null) {
-                out.print("<div class=\"w3-container w3-red\">"
-                        + "  <h1>Please login</h1>\n"
-                        + "</div>");
-                RequestDispatcher dispatcher = request.getRequestDispatcher(
-                        "WEB-INF/login.html");
-                dispatcher.forward(request, response);
-            } else {
-                RequestDispatcher dispatcher = request.getRequestDispatcher(
-                        "requests");
-                dispatcher.forward(request, response);
-            }
+            /* TODO output your page here. You may use following sample code. */
+
+            out.print(request.getParameter("productID"));
 
         }
     }
