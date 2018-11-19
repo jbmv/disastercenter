@@ -50,36 +50,35 @@
     <body>
         <h1>Current Requests</h1>
         <form action="respond.jsp" method="get">
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Location</th>
-                    <th>Product</th>
-                    <th>Quantity Needed</th>
-                    <th>Disaster</th>
-                    <th>Select</th>
-                </tr>
-            </thead>
-            <tbody>
-                <%                    
-                    Iterator it = Request.instances.entrySet().iterator();
-                    while (it.hasNext()) {
-                        Map.Entry pair = (Map.Entry) it.next();
-                        Request item = Request.instances.get(pair.getKey());
-                %>
-                <tr>
-                    <td><% out.print(item.getLocation()); %></td>
-                    <td><% out.print(item.getProductName()); %></td>
-                    <td><% out.print(item.getQuantityRequested()); %></td>
-                    <td><% out.print(item.getDisasterType()); %></td>
-                    <td>
-                        <input type="radio" name="Select" value="<%= item.getRequestID() %>" /></td>
-                        <% }%>
-            </tbody>
-        </table>
-        
-                            <input type="submit" value="Respond to selected" />
-    </form>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>Product</th>
+                        <th>Quantity Needed</th>
+                        <th>Disaster</th>
+                        <th>Select</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%                    Iterator it = Request.instances.entrySet().iterator();
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry) it.next();
+                            Request item = Request.instances.get(pair.getKey());
+                    %>
+                    <tr>
+                        <td><% out.print(item.getLocation()); %></td>
+                        <td><% out.print(item.getProductName()); %></td>
+                        <td><% out.print(item.getQuantityRequested()); %></td>
+                        <td><% out.print(item.getDisasterType());%></td>
+                        <td>
+                            <input type="radio" name="Select" value="<%= item.getRequestID()%>" /></td>
+                            <% }%>
+                </tbody>
+            </table>
+
+            <input type="submit" value="Respond to selected" />
+        </form>
 
 
 </html>

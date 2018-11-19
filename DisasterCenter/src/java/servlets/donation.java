@@ -42,10 +42,21 @@ public class donation extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+                    "WEB-INF/login.html");
+            dispatcher.forward(request, response);
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+                    "requests");
+            dispatcher.forward(request, response);
+        }
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(false);
-            
+
             try {
                 // get all requests from database
                 // NOTE: we should switch this to stored proceedure
@@ -56,12 +67,10 @@ public class donation extends HttpServlet {
 
                 // create ProductList object, get HTTP session to append requestList
                 ProductList productList = new ProductList();
-                
 
                 while (rs.next()) {
                     Product newProduct = new Product(rs.getInt("productID"));
                     newProduct.setProductType(rs.getString("type"));
-
 
                     // append each request to requestList object
                     productList.addInstance(newProduct);

@@ -10,7 +10,7 @@ package DisasterCenter;
  * @author james
  */
 public class PriorityReference {
-    
+
     int priorityReferenceID;
     String level;
 
@@ -33,7 +33,5 @@ public class PriorityReference {
     public void setLevel(String level) {
         this.level = level;
     }
-    
-    
-    
+
 }

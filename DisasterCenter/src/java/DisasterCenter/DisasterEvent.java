@@ -12,7 +12,7 @@ import java.util.*;
  * @author james
  */
 public class DisasterEvent {
-    
+
     int disasterEventID;
     String type;
     Location location;
@@ -53,7 +53,5 @@ public class DisasterEvent {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
-    
-    
-    
+
 }

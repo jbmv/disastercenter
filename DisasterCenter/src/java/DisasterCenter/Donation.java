@@ -10,7 +10,7 @@ package DisasterCenter;
  * @author james
  */
 public class Donation {
-    
+
     int donationID;
     Product product;
     int amount;
@@ -52,5 +52,4 @@ public class Donation {
         this.user = user;
     }
 
-    
 }

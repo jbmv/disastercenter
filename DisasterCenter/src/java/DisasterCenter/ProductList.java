@@ -13,20 +13,19 @@ import java.util.Map;
  * @author james
  */
 public class ProductList {
-    
-        private Map<String, Object> instances = new HashMap<String, Object>();
+
+    private Map<String, Object> instances = new HashMap<String, Object>();
 
     public Map<String, Object> getInstances() {
         return instances;
     }
-    
-    
+
     public void addInstance(Product product) {
         instances.put(String.valueOf(product.getProdId()), product);
     }
-    
+
     public void removeInstance(Product product) {
         instances.remove(String.valueOf(product.getProdId()));
     }
-    
+
 }

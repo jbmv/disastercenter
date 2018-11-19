@@ -40,9 +40,9 @@ public class welcome extends HttpServlet {
                         "WEB-INF/login.html");
                 dispatcher.forward(request, response);
             } else {
-                    RequestDispatcher dispatcher = request.getRequestDispatcher(
-                            "requests");
-                    dispatcher.forward(request, response);
+                RequestDispatcher dispatcher = request.getRequestDispatcher(
+                        "requests");
+                dispatcher.forward(request, response);
             }
 
         }

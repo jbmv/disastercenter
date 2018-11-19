@@ -55,37 +55,37 @@
 
     </style>
     <body>
-                <!-- Sidebar -->
+        <!-- Sidebar -->
         <jsp:include page="sidebar.jsp"></jsp:include>
-        
-                    <!-- Page Content -->
-<div style="margin-left:15%">
+
+            <!-- Page Content -->
+            <div style="margin-left:15%">
                 <div class="w3-container w3-teal">
                     <h1>Create New Response</h1>
                 </div>
 
-        <div style="padding: 20px">
-            <form action="confirmResponse">
-                <label>Disaster</label>
-                <input type="text" id="disaster" name="disaster" placeholder="<%= currentRequest.getDisasterName()%>" readonly>
+                <div style="padding: 20px">
+                    <form action="confirmResponse">
+                        <label>Disaster</label>
+                        <input type="text" id="disaster" name="disaster" placeholder="<%= currentRequest.getDisasterName()%>" readonly>
 
-                <label>Location</label>
-                <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getZipName()%>" readonly>
+                    <label>Location</label>
+                    <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getZipName()%>" readonly>
 
-                <label>Product Requested</label>
-                <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getProductName()%>" readonly>
-                
-                <label>Deliver By</label>
-                <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getNeededByDate() != null ? currentRequest.getNeededByDate() : "not specified" %>" readonly>
-                
-                <label style="color: red;">Quantity</label>
-                <input type="text" id="lname" name="lastname" value="<%= currentRequest.getQuantityRequested() %>">
+                    <label>Product Requested</label>
+                    <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getProductName()%>" readonly>
 
-  
+                    <label>Deliver By</label>
+                    <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getNeededByDate() != null ? currentRequest.getNeededByDate() : "not specified"%>" readonly>
 
-                <input type="submit" value="Submit">
-            </form>
-        </div>
+                    <label style="color: red;">Quantity</label>
+                    <input type="text" id="lname" name="lastname" value="<%= currentRequest.getQuantityRequested()%>">
+
+
+
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
         </div>
     </body>
 </html>

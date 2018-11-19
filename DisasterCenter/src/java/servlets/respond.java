@@ -32,11 +32,21 @@ public class respond extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+                    "WEB-INF/login.html");
+            dispatcher.forward(request, response);
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+                    "requests");
+            dispatcher.forward(request, response);
+        }
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String requestID = request.getParameter("requestID");
-            
-            HttpSession session = request.getSession();
+
             session.setAttribute("requestID", requestID);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(

@@ -37,13 +37,13 @@ public class userProfile extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet userProfile</title>");            
+            out.println("<title>Servlet userProfile</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet userProfile at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-            
+
             HttpSession session = request.getSession(false);
             User user = (User) session.getAttribute("user");
             out.println(user.getFirstName());

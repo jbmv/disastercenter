@@ -53,40 +53,40 @@
 
     </style>
     <body>
-                <!-- Sidebar -->
+        <!-- Sidebar -->
         <jsp:include page="sidebar.jsp"></jsp:include>
-        
-                    <!-- Page Content -->
-<div style="margin-left:15%">
+
+            <!-- Page Content -->
+            <div style="margin-left:15%">
                 <div class="w3-container w3-teal">
-                    <h1>Create New Response</h1>
+                    <h1>Create Custom Donation</h1>
                 </div>
 
-        <div style="padding: 20px">
-            <form action="confirmDonation" method="POST">
+                <div style="padding: 20px">
+                    <form action="confirmDonation" method="POST">
 
 
-                <label for="productID">Product Donating</label>
-                <select id="productID" name="productID">
-                    <%                    // for every entry in requestList.instances, create one table row
-                                Iterator it = productList.getInstances().entrySet().iterator();
-                                while (it.hasNext()) {
-                                    Map.Entry pair = (Map.Entry) it.next();
-                                    Product newProduct = (Product) productList.getInstances().get(pair.getKey());
-                            %>
-      <option value="<%= newProduct.getProdId()%>"><% out.print(newProduct.getProdType()); %></option>
-        <% } %>
-    </select>
+                        <label for="productID">Product Donating</label>
+                        <select id="productID" name="productID">
+                        <%                    // for every entry in requestList.instances, create one table row
+                            Iterator it = productList.getInstances().entrySet().iterator();
+                            while (it.hasNext()) {
+                                Map.Entry pair = (Map.Entry) it.next();
+                                Product newProduct = (Product) productList.getInstances().get(pair.getKey());
+                        %>
+                        <option value="<%= newProduct.getProdId()%>"><% out.print(newProduct.getProdType()); %></option>
+                        <% }%>
+                    </select>
 
-                
-                <label for="quantity">Quantity Donating</label>
-                <input type="text" id="quantity" name="quantity" placeholder="Enter Quantity">
 
-  
+                    <label for="quantity">Quantity Donating</label>
+                    <input type="text" id="quantity" name="quantity" placeholder="Enter Quantity">
 
-                <input type="submit" value="Submit">
-            </form>
-        </div>
+
+
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
         </div>
     </body>
 </html>

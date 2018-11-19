@@ -72,7 +72,6 @@ public class requests extends HttpServlet {
                 // create RequestList object, get HTTP session to append requestList
                 RequestList requestList = new RequestList();
 //                HttpSession session = request.getSession(false);
-                
 
                 while (rs.next()) {
                     Request newRequest = new Request(rs.getInt(1));

@@ -34,14 +34,14 @@ public class logout extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-                        HttpSession session = request.getSession();
-                        session.invalidate();
-                                       out.print("<div class=\"w3-container w3-green\">"
-                        + "  <h1>You are now logged out</h1>\n"
-                        + "</div>");
-                RequestDispatcher dispatcher = request.getRequestDispatcher(
-                        "WEB-INF/login.html");
-                dispatcher.include(request, response);
+            HttpSession session = request.getSession();
+            session.invalidate();
+            out.print("<div class=\"w3-container w3-green\">"
+                    + "  <h1>You are now logged out</h1>\n"
+                    + "</div>");
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+                    "WEB-INF/login.html");
+            dispatcher.include(request, response);
         }
     }
 

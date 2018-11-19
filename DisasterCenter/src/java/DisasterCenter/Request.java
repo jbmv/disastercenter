@@ -1,6 +1,5 @@
 package DisasterCenter;
 
-
 import java.util.*;
 
 /*
@@ -8,16 +7,14 @@ import java.util.*;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author james
  */
-
 import java.time.LocalDate;
 
 public class Request {
-    
+
     int requestID;
     int quantityRequested;
     int quantityFulfilled;
@@ -28,14 +25,13 @@ public class Request {
     PriorityReference priorityReference;
     int disasterEventID;
     Location location;
-    
+
     // Below are needed to construct web tables and are not part of DB Request table
     String zipName;
     String productName;
     String disasterName;
     int distance;
-    
-    
+
     public Request(int requestID) {
         this.requestID = requestID;
     }
@@ -48,8 +44,6 @@ public class Request {
         this.distance = distance;
     }
 
-    
-    
     public String getZipName() {
         return zipName;
     }
@@ -74,7 +68,6 @@ public class Request {
         this.disasterName = disasterName;
     }
 
-    
     public Location getLocation() {
         return location;
     }

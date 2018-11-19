@@ -1,6 +1,5 @@
 package DisasterCenter;
 
-
 import java.util.*;
 
 /*
@@ -8,12 +7,12 @@ import java.util.*;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Mercury
  */
 public class User {
+
     int userID;
     String userName;
     String password;
@@ -25,12 +24,9 @@ public class User {
     Date lastLogin;
     int failedLoginAttempts;
 
-
-
     public User(int userID) {
         this.userID = userID;
     }
-
 
     public int getUserID() {
         return userID;
@@ -111,7 +107,7 @@ public class User {
     public void setFailedLoginAttempts(int failedLoginAttempts) {
         this.failedLoginAttempts = failedLoginAttempts;
     }
-    
+
 }
 
 
@@ -126,4 +122,4 @@ public class User {
 * Employee
 * DisasterEvent x
 * Call Center
-*/
+ */

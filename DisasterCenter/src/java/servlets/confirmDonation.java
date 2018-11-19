@@ -7,6 +7,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,12 +32,23 @@ public class confirmDonation extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+                    "WEB-INF/login.html");
+            dispatcher.forward(request, response);
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+                    "requests");
+            dispatcher.forward(request, response);
+        }
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-                        HttpSession session = request.getSession(false);
 
-                        out.print(request.getParameter("productID"));
-            
+            out.print(request.getParameter("productID"));
+
         }
     }
 

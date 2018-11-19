@@ -10,14 +10,13 @@ package DisasterCenter;
  * @author james
  */
 public class Queries {
-    
-    public static String getUser = ( ""
+
+    public static String getUser = (""
             + "Select userid,username,password,firstname,lastname,email,phone,u.locationid,lattitude,longitude "
             + "from user u join location l on u.locationid = l.locationid "
-            + "where username=? and password=?"
-            );
-    
-    public static String getRequest = ( ""
+            + "where username=? and password=?");
+
+    public static String getRequest = (""
             + "SELECT RequestId,r.DisasterEventID,r.UserID,r.ProductID,QuantityRequested,"
             + "QuantityFulfilled,PriorityReferenceId,Expired,NeededByDate,l.lattitude,l.longitude, "
             + "r.LocationID,p.type as productName,"
@@ -35,12 +34,11 @@ public class Queries {
             + "     SELECT  ?  AS userLat, ? AS userLon"
             + "   ) AS p ON 1=1"
             + " "
-            + "ORDER BY distance"
-            // http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
+            + "ORDER BY distance" // http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
             );
-    
+
     public static String getProducts = "select * from product"; // should probably be a stored proceedure
-    
+
     public static String correctUserLogin = "update user set lastlogin = ?, failedloginattempts = 0 where username = ?";
 
     public static String incorrectUserLogin = "update user set failedloginattempts = failedloginattempts + 1 where username = ?";
