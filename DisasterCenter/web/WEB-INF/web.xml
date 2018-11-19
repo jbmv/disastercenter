@@ -17,10 +17,6 @@
         <servlet-class>servlets.userProfile</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>respond</servlet-name>
-        <servlet-class>servlets.respond</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>register</servlet-name>
         <servlet-class>servlets.register</servlet-class>
     </servlet>
@@ -31,6 +27,14 @@
     <servlet>
         <servlet-name>logout</servlet-name>
         <servlet-class>servlets.logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>respond</servlet-name>
+        <servlet-class>servlets.respond</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>confirmResponse</servlet-name>
+        <servlet-class>servlets.confirmResponse</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -49,10 +53,6 @@
         <url-pattern>/userProfile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>respond</servlet-name>
-        <url-pattern>/respond</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
@@ -63,6 +63,14 @@
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>respond</servlet-name>
+        <url-pattern>/respond</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>confirmResponse</servlet-name>
+        <url-pattern>/confirmResponse</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

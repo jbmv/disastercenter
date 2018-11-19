@@ -45,28 +45,6 @@ public class welcome extends HttpServlet {
                     dispatcher.forward(request, response);
             }
 
-            /* this works, but i shouldnt need it
-            try {
-                User user = (User) session.getAttribute("user");
-
-                if (user.getUserName() != null) {
-                    RequestDispatcher dispatcher = request.getRequestDispatcher(
-                            "/requests");
-                    dispatcher.forward(request, response);
-                } else {
-
-                    RequestDispatcher dispatcher = request.getRequestDispatcher(
-                            "WEB-INF/login.html");
-                    dispatcher.forward(request, response);
-                }
-            } catch (Exception e) {
-                System.out.print(e);
-                RequestDispatcher dispatcher = request.getRequestDispatcher(
-                        "WEB-INF/login.html");
-                dispatcher.forward(request, response);
-
-            }
-             */
         }
     }
 

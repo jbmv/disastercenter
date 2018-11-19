@@ -7,7 +7,6 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author james
  */
-public class respond extends HttpServlet {
+public class confirmResponse extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,19 +32,20 @@ public class respond extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            
+            //check that qty responding doesnt exceed qty requested
+            
+            
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet respond</title>");            
+            out.println("<title>Servlet confirmResponse</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet respond at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet confirmResponse at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-            
-                            RequestDispatcher dispatcher = request.getRequestDispatcher(
-                        "/WEB-INF/jsp/createResponse.jsp");
-                dispatcher.forward(request, response);
         }
     }
 

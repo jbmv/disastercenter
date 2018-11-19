@@ -33,11 +33,23 @@ public class Request {
     String zipName;
     String productName;
     String disasterName;
+    int distance;
+    
     
     public Request(int requestID) {
         this.requestID = requestID;
     }
 
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    
+    
     public String getZipName() {
         return zipName;
     }

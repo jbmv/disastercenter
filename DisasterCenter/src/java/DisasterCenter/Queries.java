@@ -19,14 +19,39 @@ public class Queries {
     
     public static String getRequest = ( ""
             + "SELECT RequestId,r.DisasterEventID,r.UserID,r.ProductID,QuantityRequested,"
-            + "QuantityFulfilled,PriorityReferenceId,Expired,NeededByDate,"
+            + "QuantityFulfilled,PriorityReferenceId,Expired,NeededByDate,l.lattitude,l.longitude, "
             + "r.LocationID,p.type as productName,"
             + "d.type as disasterName,"
-            + "l.zipcode as zipName "
+            + "l.zipcode as zipName, "
+            + "111.045* DEGREES(ACOS(COS(RADIANS(userLat))"
+            + "                 * COS(RADIANS(l.lattitude))"
+            + "                 * COS(RADIANS(userLon) - RADIANS(l.longitude))"
+            + "                 + SIN(RADIANS(userLat))"
+            + "                 * SIN(RADIANS(l.lattitude)))) AS distance "
             + "FROM Request r JOIN Product p on r.ProductId = p.ProductId "
             + "JOIN disasterevent d on r.DisasterEventId = d.DisasterEventId "
             + "JOIN location l on r.locationid = l.locationid "
-            + "where Expired != 1"
+            + " JOIN ("
+            + "     SELECT  ?  AS userLat, ? AS userLon"
+            + "   ) AS p ON 1=1"
+            + " "
+            + "ORDER BY distance"
+            
+            
+            /*
+SELECT zip, primary_city, latitude, longitude,
+      111.045* DEGREES(ACOS(COS(RADIANS(latpoint))
+                 * COS(RADIANS(latitude))
+                 * COS(RADIANS(longpoint) - RADIANS(longitude))
+                 + SIN(RADIANS(latpoint))
+                 * SIN(RADIANS(latitude)))) AS distance_in_km
+ FROM zip
+ JOIN (
+     SELECT  42.81  AS latpoint,  -70.81 AS longpoint
+   ) AS p ON 1=1
+ ORDER BY distance_in_km
+*/
+            // http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
             );
     
 }

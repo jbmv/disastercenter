@@ -52,16 +52,16 @@ public class login extends HttpServlet {
             pst.setString(2, password);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                User user = new User(rs.getInt(1));
-                user.setUserName(rs.getString(2));
-                user.setFirstName(rs.getString(4));
-                user.setLastName(rs.getString(5));
-                user.setEmail(rs.getString(6));
-                user.setPhone(rs.getString(7));
-                user.setLocationID(rs.getInt(8));
+                User user = new User(rs.getInt("userid"));
+                user.setUserName(rs.getString("username"));
+                user.setFirstName(rs.getString("firstname"));
+                user.setLastName(rs.getString("lastname"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setLocationID(rs.getInt("locationid"));
                 Location userLocation = new Location(user.getLocationID());
-                userLocation.setLatitude(rs.getInt(9));
-                userLocation.setLongitude(rs.getInt(10));
+                userLocation.setLatitude(rs.getInt("lattitude"));
+                userLocation.setLongitude(rs.getInt("longitude"));
 
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);

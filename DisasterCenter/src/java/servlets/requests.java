@@ -5,9 +5,11 @@
  */
 package servlets;
 
+import DisasterCenter.Location;
 import DisasterCenter.Queries;
 import DisasterCenter.Request;
 import DisasterCenter.RequestList;
+import DisasterCenter.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -51,7 +53,8 @@ public class requests extends HttpServlet {
                     "WEB-INF/login.html");
             dispatcher.forward(request, response);
         }
-        
+        User user = (User) session.getAttribute("user");
+        Location userLocation = (Location) session.getAttribute("userLocation");
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -62,6 +65,8 @@ public class requests extends HttpServlet {
                 Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false", "root", "password");
                 PreparedStatement pst = conn.prepareStatement(Queries.getRequest);
+                pst.setString(1, String.valueOf(userLocation.getLatitude()));
+                pst.setString(2, String.valueOf(userLocation.getLongitude()));
                 ResultSet rs = pst.executeQuery();
 
                 // create RequestList object, get HTTP session to append requestList
@@ -77,6 +82,7 @@ public class requests extends HttpServlet {
                     newRequest.setZipName(rs.getString("zipName"));
                     newRequest.setDisasterName(rs.getString("disasterName"));
                     newRequest.setProductName(rs.getString("productName"));
+                    newRequest.setDistance(rs.getInt("distance"));
 
                     // append each request to requestList object
                     requestList.addInstance(newRequest);
