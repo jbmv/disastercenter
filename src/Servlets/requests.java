@@ -31,127 +31,126 @@ import javax.servlet.http.HttpSession;
  */
 public class requests extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
-        response.setContentType("text/html;charset=UTF-8");
+	/**
+	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+	 * methods.
+	 *
+	 * @param request  servlet request
+	 * @param response servlet response
+	 * @throws ServletException if a servlet-specific error occurs
+	 * @throws IOException      if an I/O error occurs
+	 */
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		response.setContentType("text/html;charset=UTF-8");
 
-        //This code is not working, supposed to check that we have a session before displaying
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            PrintWriter out = response.getWriter();
-            out.print("<div class=\"w3-container w3-red\">"
-                    + "  <h1>not logged in</h1>\n"
-                    + "</div>");
-            RequestDispatcher dispatcher = request.getRequestDispatcher(
-                    "WEB-INF/login.html");
-            dispatcher.forward(request, response);
-        }
+		// REQURED TO BE LOGGED IN TO ACCESS THIS PAGE, if not logged in, redirect
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			PrintWriter out = response.getWriter();
+			out.print("<div class=\"w3-container w3-red\">" + "  <h1>not logged in</h1>\n" + "</div>");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.html");
+			dispatcher.forward(request, response);
+		}
 
-        Location userLocation = (Location) session.getAttribute("userLocation");
+		// get userLocation object from HttpSession
+		Location userLocation = (Location) session.getAttribute("userLocation");
 
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+		try (PrintWriter out = response.getWriter()) {
+			/* TODO output your page here. You may use following sample code. */
 
-            try {
-                // get all requests from database
-                // NOTE: we should switch this to stored proceedure
-                Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false", "root", "password");
-                PreparedStatement pst = conn.prepareStatement(Queries.getRequest);
-                pst.setString(1, String.valueOf(userLocation.getLatitude()));
-                pst.setString(2, String.valueOf(userLocation.getLongitude()));
-                ResultSet rs = pst.executeQuery();
+			try {
 
-                // create RequestList object, get HTTP session to append requestList
-                RequestList requestList = new RequestList();
-//                HttpSession session = request.getSession(false);
+				// get all non-expired requests from database
+				Class.forName("com.mysql.jdbc.Driver"); // MySQL database connection
+				Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false",
+						"root", "password");
+				PreparedStatement pst = conn.prepareStatement(Queries.getRequest);
+				pst.setString(1, String.valueOf(userLocation.getLatitude()));
+				pst.setString(2, String.valueOf(userLocation.getLongitude()));
+				ResultSet rs = pst.executeQuery();
 
-                while (rs.next()) {
-                    Request newRequest = new Request(rs.getInt(1));
-                    newRequest.setQuantityRequested(rs.getInt("QuantityRequested"));
-                    newRequest.setQuantityFulfilled(rs.getInt("QuantityFulfilled"));
-                    newRequest.setExpired(rs.getBoolean("Expired"));
-                    newRequest.setZipName(rs.getString("zipName"));
-                    newRequest.setDisasterName(rs.getString("disasterName"));
-                    newRequest.setProductName(rs.getString("productName"));
-                    newRequest.setDistance(rs.getInt("distance"));
+				// create RequestList object, add all current requests, append requestList to
+				// HttpSession
+				RequestList requestList = new RequestList();
 
-                    // append each request to requestList object
-                    requestList.addInstance(newRequest);
-                }
+				while (rs.next()) {
+					Request newRequest = new Request(rs.getInt(1));
+					newRequest.setQuantityRequested(rs.getInt("QuantityRequested"));
+					newRequest.setQuantityFulfilled(rs.getInt("QuantityFulfilled"));
+					newRequest.setExpired(rs.getBoolean("Expired"));
+					newRequest.setZipName(rs.getString("zipName"));
+					newRequest.setDisasterName(rs.getString("disasterName"));
+					newRequest.setProductName(rs.getString("productName"));
+					newRequest.setDistance(rs.getInt("distance"));
 
-                // append requestList to HTTP session, forward to jsp view
-                session.setAttribute("requestList", requestList);
-                RequestDispatcher dispatcher = request.getRequestDispatcher(
-                        "/WEB-INF/jsp/currentRequests.jsp");
-                dispatcher.forward(request, response);
+					// append each request to requestList object
+					requestList.addInstance(newRequest);
+				}
 
-            } catch (Exception e) {
-                out.print(e);
-            }
+				// append requestList to HTTP session, send browser to currentRequests.jsp view
+				session.setAttribute("requestList", requestList);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/currentRequests.jsp");
+				dispatcher.forward(request, response);
 
-        }
+			} catch (Exception e) {
+				out.print(e);
+			}
 
-    }
+		}
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(requests.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(requests.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	}
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(requests.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(requests.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+	// + sign on the left to edit the code.">
+	/**
+	 * Handles the HTTP <code>GET</code> method.
+	 *
+	 * @param request  servlet request
+	 * @param response servlet response
+	 * @throws ServletException if a servlet-specific error occurs
+	 * @throws IOException      if an I/O error occurs
+	 */
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			processRequest(request, response);
+		} catch (ClassNotFoundException ex) {
+			Logger.getLogger(requests.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SQLException ex) {
+			Logger.getLogger(requests.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+	/**
+	 * Handles the HTTP <code>POST</code> method.
+	 *
+	 * @param request  servlet request
+	 * @param response servlet response
+	 * @throws ServletException if a servlet-specific error occurs
+	 * @throws IOException      if an I/O error occurs
+	 */
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			processRequest(request, response);
+		} catch (ClassNotFoundException ex) {
+			Logger.getLogger(requests.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SQLException ex) {
+			Logger.getLogger(requests.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	/**
+	 * Returns a short description of the servlet.
+	 *
+	 * @return a String containing servlet description
+	 */
+	@Override
+	public String getServletInfo() {
+		return "Short description";
+	}// </editor-fold>
 
 }

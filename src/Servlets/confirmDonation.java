@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 
 import DisasterCenter.Donation;
 import DisasterCenter.Queries;
+import DisasterCenter.User;
 
 /**
  *
@@ -41,40 +42,47 @@ public class confirmDonation extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 
+		// REQURED TO BE LOGGED IN TO ACCESS THIS PAGE, if not logged in, redirect
 		HttpSession session = request.getSession(false);
 		if (session == null) {
+			// user not logged in, forward to login page
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.html");
 			dispatcher.forward(request, response);
 		}
 
-			/* TODO output your page here. You may use following sample code. */
-			// get next available donationID
-			
+		/* TODO still need to finish this servlet */
+		// get next available donationID
+
 		try {
-            Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false", "root", "password");
-            PreparedStatement pst = conn.prepareStatement(Queries.getNextDonationID);
-            ResultSet rs = pst.executeQuery();
-            rs.next();
-            int donationID = rs.getInt("nextID");
-			Donation newDonation = new Donation(donationID); // need to change this to get next available id
+			// connect to database, get next available ID for this new donation
+			Class.forName("com.mysql.jdbc.Driver"); // MySQL database connection
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false", "root",
+					"password");
+			PreparedStatement pst = conn.prepareStatement(Queries.getNextDonationID);
+			ResultSet rs = pst.executeQuery();
+			rs.next(); // get the row
+			int donationID = rs.getInt("nextID"); // get next available donation ID
+
+			// create donation object, populate with next avail ID
+			// populate product,amount,user fields of donation object
+			Donation newDonation = new Donation(donationID);
 			newDonation.setAmount(Integer.valueOf(request.getParameter("quantity")));
 			newDonation.setProductID(Integer.valueOf(request.getParameter("productID")));
-			
-			// add db update code here
+			newDonation.setUser((User) session.getAttribute("user"));
 
-			
+			// TODO add db update code here
+			// don't forget to recheck database to see if that new donation id was used?
+			// ... concurrency
+
 			session.setAttribute("newDonation", newDonation);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/donationConfirmation.jsp");
 			dispatcher.forward(request, response);
-			
+
 		} catch (Exception e) {
 			PrintWriter out = response.getWriter();
 			out.println(e);
 		}
-		
 
-		
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
