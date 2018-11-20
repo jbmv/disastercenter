@@ -42,4 +42,6 @@ public class Queries {
     public static String correctUserLogin = "update user set lastlogin = ?, failedloginattempts = 0 where username = ?";
 
     public static String incorrectUserLogin = "update user set failedloginattempts = failedloginattempts + 1 where username = ?";
+
+	public static String getNextDonationID = "SELECT IFNULL(MAX(donationid) + 1, 1) as nextID FROM donation"; // get last ID + 1, return 1 if null
 }

@@ -15,8 +15,21 @@ public class Donation {
     Product product;
     int amount;
     User user;
+    
+    // stuff i need to form queries
+    int productID;
+    
+    
 
-    public Donation(int donationID) {
+    public int getProductID() {
+		return productID;
+	}
+
+	public void setProductID(int productID) {
+		this.productID = productID;
+	}
+
+	public Donation(int donationID) {
         this.donationID = donationID;
     }
 
