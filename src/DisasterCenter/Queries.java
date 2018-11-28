@@ -44,5 +44,7 @@ public class Queries {
 																												// 1,
 																												// return
 																												// 1 if
-																												// null
+
+	public static String createResponse = "";	
+	public static String updateRequest = "";																											// null
 }
