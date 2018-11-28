@@ -28,6 +28,8 @@ public class User {
         this.userID = userID;
     }
 
+    public User() { }
+
     public int getUserID() {
         return userID;
     }

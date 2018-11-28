@@ -33,6 +33,8 @@ public class Donation {
         this.donationID = donationID;
     }
 
+    public Donation() { }
+
     public int getDonationID() {
         return donationID;
     }

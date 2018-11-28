@@ -25,6 +25,8 @@ public class Request {
         this.requestID = requestID;
     }
 
+    public Request() { }
+
     public float getDistance() {
         return distance;
     }

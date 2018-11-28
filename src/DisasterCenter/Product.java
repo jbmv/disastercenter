@@ -18,6 +18,8 @@ public class Product {
         this.productId = productId;
     }
 
+    public Product() { }
+
     public void setProductType(String type) {
         this.type = type;
     }

@@ -23,6 +23,8 @@ public class Location {
         this.locationID = locationID;
     }
 
+    public Location() { }
+
     public int getLocationID() {
         return locationID;
     }

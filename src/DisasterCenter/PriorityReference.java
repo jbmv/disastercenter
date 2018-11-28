@@ -18,6 +18,8 @@ public class PriorityReference {
         this.priorityReferenceID = priorityReferenceID;
     }
 
+    public PriorityReference() { }
+
     public int getPriorityReferenceID() {
         return priorityReferenceID;
     }

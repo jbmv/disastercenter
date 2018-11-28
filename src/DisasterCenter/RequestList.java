@@ -14,9 +14,9 @@ import java.util.Map;
  */
 public class RequestList {
 
-    private Map<String, Object> instances = new HashMap<String, Object>();
+    private Map<String, Request> instances = new HashMap<String, Request>();
 
-    public Map<String, Object> getInstances() {
+    public Map<String, Request> getInstances() {
         return instances;
     }
 

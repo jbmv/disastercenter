@@ -24,6 +24,8 @@ public class Response {
         this.responseID = responseID;
     }
 
+    public Response() { }
+
     public int getResponseID() {
         return responseID;
     }

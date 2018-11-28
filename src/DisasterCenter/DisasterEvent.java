@@ -22,6 +22,8 @@ public class DisasterEvent {
         this.disasterEventID = disasterEventID;
     }
 
+    public DisasterEvent() { }
+
     public int getDisasterEventID() {
         return disasterEventID;
     }
