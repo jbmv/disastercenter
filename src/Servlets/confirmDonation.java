@@ -70,11 +70,11 @@ public class confirmDonation extends HttpServlet {
 			newDonation.setProductID(Integer.valueOf(request.getParameter("productID")));
 			newDonation.setUser((User) session.getAttribute("user"));
 
-			CheckCurrentRequests(newDonation, session);
+			newDonation = CheckCurrentRequests(newDonation, session);
 
 			if(newDonation.getAmount() != 0)
 			{
-				//If any product left create donation
+				setDonation
 			}
 
 			// TODO add db update code here
