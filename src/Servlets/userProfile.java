@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import DisasterCenter.User;
+
 /**
  *
  * @author james
@@ -43,6 +45,7 @@ public class userProfile extends HttpServlet {
 		try (PrintWriter out = response.getWriter()) {
 			/* TODO output your page here. You may use following sample code. */
 
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userProfile.jsp");
 			dispatcher.forward(request, response);
 
