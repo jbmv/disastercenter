@@ -14,9 +14,9 @@ import java.util.Map;
  */
 public class ProductList {
 
-    private Map<String, Object> instances = new HashMap<String, Object>();
+    private Map<String, Product> instances = new HashMap<String, Product>();
 
-    public Map<String, Object> getInstances() {
+    public Map<String, Product> getInstances() {
         return instances;
     }
 

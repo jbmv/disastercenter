@@ -7,10 +7,12 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,9 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import DisasterCenter.Donation;
-import DisasterCenter.Queries;
-import DisasterCenter.User;
+import DisasterCenter.*;
 
 /**
  *
@@ -70,6 +70,13 @@ public class confirmDonation extends HttpServlet {
 			newDonation.setProductID(Integer.valueOf(request.getParameter("productID")));
 			newDonation.setUser((User) session.getAttribute("user"));
 
+			CheckCurrentRequests(newDonation, session);
+
+			if(newDonation.getAmount() != 0)
+			{
+				//If any product left create donation
+			}
+
 			// TODO add db update code here
 			// don't forget to recheck database to see if that new donation id was used?
 			// ... concurrency
@@ -84,6 +91,44 @@ public class confirmDonation extends HttpServlet {
 		}
 
 	}
+
+	private Donation CheckCurrentRequests(Donation newDonation, HttpSession session)
+	{
+		RequestList requestList = session.getAttribute("requestList");
+		Iterator<Request> requests = requestList.getInstances().values().iterator();
+		while(requests.hasNext())
+		{
+			Request current = requests.next();
+			if(current.getProduct().getProdId() == newDonation.getProductID())
+			{
+				int amountNeeded = current.getQuantityRequested() - current.getQuantityFulfilled();
+				//Generate a response here
+				Response newResponse = new Response();
+				newResponse.setUser(session.getAttribute("user"));
+				newResponse.setRequest(current);
+				int currentAmt = newDonation.getAmount();
+				if(currentAmt >= amountNeeded)
+				{
+					newDonation.setAmount(currentAmt - amountNeeded);
+					newResponse.setQuantitySent(amountNeeded);
+				}
+				else
+				{
+					newDonation.setAmount(0);
+					newResponse.setQuantitySent(amountNeeded - currentAmt);
+				}
+				newResponse.setProvidedByDate();
+				// save response and update request	in sql
+			}
+			if(newDonation.getAmount() == 0)
+			{
+				break;
+			}
+		}
+
+		return newDonation;
+	}
+
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
 	// + sign on the left to edit the code.">

@@ -17,7 +17,6 @@ public class Response {
     int quantitySent;
     Request request;
     Date providedByDate;
-    boolean requestExpired;
     User user;
 
     public Response(int responseID) {
@@ -56,14 +55,6 @@ public class Response {
 
     public void setRequest(Request request) {
         this.request = request;
-    }
-
-    public boolean isRequestExpired() {
-        return requestExpired;
-    }
-
-    public void setRequestExpired(boolean requestExpired) {
-        this.requestExpired = requestExpired;
     }
 
     public User getUser() {
