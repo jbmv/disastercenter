@@ -6,6 +6,7 @@
 package Servlets;
 
 import DisasterCenter.Location;
+import DisasterCenter.Product;
 import DisasterCenter.Queries;
 import DisasterCenter.Request;
 import DisasterCenter.RequestList;
@@ -75,7 +76,7 @@ public class requests extends HttpServlet {
 				RequestList requestList = new RequestList();
 
 				while (rs.next()) {
-					Request newRequest = new Request(rs.getInt(1));
+					Request newRequest = new Request(rs.getInt("RequestID"));
 					newRequest.setQuantityRequested(rs.getInt("QuantityRequested"));
 					newRequest.setQuantityFulfilled(rs.getInt("QuantityFulfilled"));
 					newRequest.setExpired(rs.getBoolean("Expired"));
@@ -83,6 +84,7 @@ public class requests extends HttpServlet {
 					newRequest.setDisasterName(rs.getString("disasterName"));
 					newRequest.setProductName(rs.getString("productName"));
 					newRequest.setDistance(rs.getFloat("distance"));
+					newRequest.setProduct(new Product(rs.getInt("ProductID")));
 
 					// append each request to requestList object
 					requestList.addInstance(newRequest);

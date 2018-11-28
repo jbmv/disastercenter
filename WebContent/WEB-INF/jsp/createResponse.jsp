@@ -16,8 +16,6 @@
     RequestList requestList = (RequestList) session.getAttribute("requestList");
     int requestID = Integer.parseInt(session.getAttribute("requestID").toString());
     Request currentRequest = (Request) requestList.getInstances().get(String.valueOf(requestID));
-    Response newResponse = new Response(requestID);
-    newResponse.setUser(user);
 
 %>
 
@@ -79,7 +77,7 @@
                     <input type="text" id="deliverby" name="deliverby" placeholder="<%= currentRequest.getNeededByDate() != null ? currentRequest.getNeededByDate() : "not specified"%>" readonly>
 
                     <label style="color: red;">Quantity</label>
-                    <input type="text" id="quantity" name="quantity" value="<%= currentRequest.getQuantityRequested()%>">
+                    <input type="text" id="quantity" name="quantity" value="<%= currentRequest.getQuantityRequested() - currentRequest.getQuantityFulfilled()%>">
 
 
 
