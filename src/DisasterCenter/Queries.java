@@ -45,6 +45,8 @@ public class Queries {
 	public static String updateStoredProduct = "update StoredProduct set Quantity = Quantity + ? where StoredProductId = ?";									
 																											
 
-	public static String createResponse = "insert into response (QuantitySent, RequestID, UserID, ProvidedByDate) values (?, ?, ?, ?)";	
 	public static String updateRequest = "update Request set QuantityFulfilled = ?, Expired = ? where RequestID = ?";																										
+	public static String createResponse = "insert into Response (QuantitySent, RequestId, UserId, ProvidedByDate) values (?,?,?,'?')";	
+	public static String updateFulfilledRequest = "update Request set quantity";
+	public static String updateUnfulfilledRequest = "update Request set quantity";																												// null
 }

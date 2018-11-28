@@ -12,6 +12,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
@@ -58,19 +61,21 @@ public class confirmDonation extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver"); // MySQL database connection
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false", "root",
 					"password");
-			PreparedStatement pst = conn.prepareStatement(Queries.getNextDonationID);
-			ResultSet rs = pst.executeQuery();
-			rs.next(); // get the row
-			int donationID = rs.getInt("nextID"); // get next available donation ID
+			//PreparedStatement pst = conn.prepareStatement(Queries.getNextDonationID);
+			//ResultSet rs = pst.executeQuery();
+			//rs.next(); // get the row
+			//int donationID = rs.getInt("nextID"); // get next available donation ID
 
 			// create donation object, populate with next avail ID
 			// populate product,amount,user fields of donation object
-			Donation newDonation = new Donation(donationID);
+			Donation newDonation = new Donation();
 			newDonation.setAmount(Integer.valueOf(request.getParameter("quantity")));
 			newDonation.setProductID(Integer.valueOf(request.getParameter("productID")));
 			newDonation.setUser((User) session.getAttribute("user"));
 
-			newDonation = CheckCurrentRequests(newDonation, session);
+
+			newDonation = CheckCurrentRequests(newDonation, session, conn);
+
 
 			if(newDonation.getAmount() != 0)
 			{
@@ -99,7 +104,7 @@ public class confirmDonation extends HttpServlet {
 
 	}
 
-	private Donation CheckCurrentRequests(Donation newDonation, HttpSession session)
+	private Donation CheckCurrentRequests(Donation newDonation, HttpSession session, Connection conn)
 	{
 		RequestList requestList = (RequestList) session.getAttribute("requestList");
 		Iterator<Request> requests = requestList.getInstances().values().iterator();
@@ -113,19 +118,43 @@ public class confirmDonation extends HttpServlet {
 				Response newResponse = new Response();
 				newResponse.setUser((User) session.getAttribute("user"));
 				newResponse.setRequest(current);
+				
+
+				Calendar calendar = Calendar.getInstance();
+				newResponse.setProvidedByDate(calendar.getTime());
 				int currentAmt = newDonation.getAmount();
 				if(currentAmt >= amountNeeded)
 				{
 					newDonation.setAmount(currentAmt - amountNeeded);
 					newResponse.setQuantitySent(amountNeeded);
+					current.setQuantityFulfilled(amountNeeded);
 				}
 				else
 				{
 					newDonation.setAmount(0);
 					newResponse.setQuantitySent(amountNeeded - currentAmt);
+					current.setQuantityFulfilled(amountNeeded - currentAmt);
 				}
-				newResponse.setProvidedByDate();
+				// figure out how to get date newResponse.setProvidedByDate();
+				
 				// save response and update request	in sql
+				DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+				PreparedStatement pst = conn.prepareStatement(Queries.createResponse);
+				pst.setString(1, String.valueOf(newResponse.getQuantitySent()));
+				pst.setString(2, String.valueOf(newResponse.getRequest().getRequestID()));
+				pst.setString(3, String.valueOf(newResponse.getUser().getUserID()));
+				pst.setString(4, String.valueOf(df.format(newResponse.getProvidedByDate())));
+				pst.executeQuery();
+
+				if(current.getQuantityRequested() == current.getQuantityFulfilled())
+				{
+					pst = conn.prepareStatement(Queries.updateFulfilledRequest);
+
+					pst.executeQuery();
+				}
+				
+
+				
 			}
 			if(newDonation.getAmount() == 0)
 			{
