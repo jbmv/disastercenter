@@ -84,17 +84,15 @@ public class confirmResponse extends HttpServlet {
 				PreparedStatement createResponse = conn.prepareStatement(Queries.createResponse);
 				//updateRequest = "update Request set QuantityFulfilled = ?, Expired = ? where RequestID = ?"
 				PreparedStatement updateRequest = conn.prepareStatement(Queries.updateRequest);
-				updateRequest.setString(3, String.valueOf(currentRequest.getRequestID()));
+				updateRequest.setString(2, String.valueOf(currentRequest.getRequestID()));
 				
 				// need to check if the Quantity select exceeds the request
 				if (newResponse.getQuantitySent() == (currentRequest.getQuantityRequested() - currentRequest.getQuantityFulfilled())) {
 					updateRequest.setString(1, String.valueOf(currentRequest.getQuantityRequested()));
-					updateRequest.setString(2,  "1");
 					session.setAttribute("splitResponse", "False");
 				}
 				else if (newResponse.getQuantitySent() < (currentRequest.getQuantityRequested() - currentRequest.getQuantityFulfilled())){
 					updateRequest.setString(1, String.valueOf(currentRequest.getQuantityFulfilled() + newResponse.getQuantitySent()));
-					updateRequest.setString(2,  "0");
 					session.setAttribute("splitResponse", "False");
 				}
 				else if (newResponse.getQuantitySent() > (currentRequest.getQuantityRequested() - currentRequest.getQuantityFulfilled())) {
