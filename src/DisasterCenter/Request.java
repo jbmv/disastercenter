@@ -19,17 +19,17 @@ public class Request {
     String zipName;
     String productName;
     String disasterName;
-    int distance;
+    float distance;
 
     public Request(int requestID) {
         this.requestID = requestID;
     }
 
-    public int getDistance() {
+    public float getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(float distance) {
         this.distance = distance;
     }
 

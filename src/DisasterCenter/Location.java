@@ -12,8 +12,8 @@ package DisasterCenter;
 public class Location {
 
     int locationID;
-    int latitude;
-    int longitude;
+    float latitude;
+    float longitude;
     int streetNumber;
     String street;
     String city;
@@ -31,19 +31,19 @@ public class Location {
         this.locationID = locationID;
     }
 
-    public int getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(int latitude) {
+    public void setLatitude(float latitude) {
         this.latitude = latitude;
     }
 
-    public int getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(int longitude) {
+    public void setLongitude(float longitude) {
         this.longitude = longitude;
     }
 

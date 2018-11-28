@@ -82,7 +82,7 @@ public class requests extends HttpServlet {
 					newRequest.setZipName(rs.getString("zipName"));
 					newRequest.setDisasterName(rs.getString("disasterName"));
 					newRequest.setProductName(rs.getString("productName"));
-					newRequest.setDistance(rs.getInt("distance"));
+					newRequest.setDistance(rs.getFloat("distance"));
 
 					// append each request to requestList object
 					requestList.addInstance(newRequest);
