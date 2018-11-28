@@ -74,14 +74,14 @@ public class confirmDonation extends HttpServlet {
 
 			if(newDonation.getAmount() != 0)
 			{
-				PreparedStatement pst = conn.prepareStatement(Queries.setDonation);
+				pst = conn.prepareStatement(Queries.setDonation);
 				pst.setString(1, String.valueOf(newDonation.getAmount()));
 				pst.setString(2, String.valueOf(newDonation.getProductID()));
-				pst.setString(3, String.valueof(newDonation.getUser().getUserId()));
+				pst.setString(3, String.valueOf(newDonation.getUser().getUserID()));
 				
 				pst = conn.prepareStatement(Queries.updateStoredProduct);
 				pst.setString(1, String.valueOf(newDonation.getAmount()));
-				pst.setString(2, String.valueOf(newDonation.getProdcutID()));
+				pst.setString(2, String.valueOf(newDonation.getProductID()));
 			}
 
 			// TODO add db update code here
@@ -101,7 +101,7 @@ public class confirmDonation extends HttpServlet {
 
 	private Donation CheckCurrentRequests(Donation newDonation, HttpSession session)
 	{
-		RequestList requestList = session.getAttribute("requestList");
+		RequestList requestList = (RequestList) session.getAttribute("requestList");
 		Iterator<Request> requests = requestList.getInstances().values().iterator();
 		while(requests.hasNext())
 		{
@@ -111,7 +111,7 @@ public class confirmDonation extends HttpServlet {
 				int amountNeeded = current.getQuantityRequested() - current.getQuantityFulfilled();
 				//Generate a response here
 				Response newResponse = new Response();
-				newResponse.setUser(session.getAttribute("user"));
+				newResponse.setUser((User) session.getAttribute("user"));
 				newResponse.setRequest(current);
 				int currentAmt = newDonation.getAmount();
 				if(currentAmt >= amountNeeded)

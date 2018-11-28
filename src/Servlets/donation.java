@@ -80,6 +80,7 @@ public class donation extends HttpServlet {
 
 			} catch (Exception e) {
 				out.print(e);
+				e.printStackTrace();
 			}
 
 		}

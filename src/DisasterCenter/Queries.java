@@ -32,21 +32,19 @@ public class Queries {
 					+ "     SELECT  ?  AS userLat, ? AS userLon" + "   ) AS p ON 1=1 " + "HAVING expired = 0 "
 					+ "ORDER BY distance");
 
-	public static String getProducts = "select * from product"; // should probably be a stored proceedure
+	public static String getProducts = "select * from product"; 
 
 	public static String correctUserLogin = "update user set lastlogin = ?, failedloginattempts = 0 where username = ?";
 
 	public static String incorrectUserLogin = "update user set failedloginattempts = failedloginattempts + 1 where username = ?";
 
-	public static String getNextDonationID = "SELECT IFNULL(MAX(donationid) + 1, 1) as nextID FROM donation"; // get
-																												// last
-	public static String setDonation = "insert into Donation (Amount, User_UserId, Product_ProdcutId) values (?, ?, ?, ?)";																											// ID +
-																												// 1,
-	public static String updateStoredProduct = "update StoredProduct set Quantity = Quantity + ? where StoredProductId = ?";									// ID +
-																												// 1,
-																												// return
-																												// 1 if
+	public static String getNextDonationID = "SELECT IFNULL(MAX(donationid) + 1, 1) as nextID FROM donation";
+																												
+	public static String setDonation = "insert into Donation (Amount, UserID, ProductId) values (?, ?, ?)";																											// ID +
+																												
+	public static String updateStoredProduct = "update StoredProduct set Quantity = Quantity + ? where StoredProductId = ?";									
+																											
 
-	public static String createResponse = "";	
-	public static String updateRequest = "";																											// null
+	public static String createResponse = "insert into response (QuantitySent, RequestID, UserID, ProvidedByDate) values (?, ?, ?, ?)";	
+	public static String updateRequest = "update Request set QuantityFulfilled = ?, Expired = ? where RequestID = ?";																										
 }
