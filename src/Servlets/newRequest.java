@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import DisasterCenter.DisasterEvent;
+import DisasterCenter.DisasterList;
+import DisasterCenter.Location;
 import DisasterCenter.Product;
 import DisasterCenter.ProductList;
 import DisasterCenter.Queries;
@@ -55,11 +58,10 @@ public class newRequest extends HttpServlet {
 
 		try (PrintWriter out = response.getWriter()) {
 
-			// TODO code this servlet
 
 			// get all products from database, append to product list
 			// this is so we can populate the product dropdown when making a custom request
-			// NOTE: we should switch this to stored proceedure
+
 			Class.forName("com.mysql.jdbc.Driver"); // MySQL database connection
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false", "root",
 					"password");
@@ -78,9 +80,34 @@ public class newRequest extends HttpServlet {
 				productList.addInstance(newProduct);
 			}
 
-			// append productList to HTTP session for use in the view,
+			// get all disasters from DisasterEvents table and append to disastersList
+			// this is to populate the select disaster associated with a new request
+			pst = conn.prepareStatement(Queries.getDisasters);
+			rs = pst.executeQuery();
+			DisasterList disasterList = new DisasterList();
+			
+			while (rs.next()) {
+				// iterate through all rows in DisasterEvent table, append to disasterList
+				// query returns: disastereventid,type,location,startdate,lattitude,longitude,zipcode
+				DisasterEvent disaster = new DisasterEvent();
+				Location location = new Location();
+				location.setLatitude(rs.getLong("lattitude"));
+				location.setLongitude(rs.getLong("longitude"));
+				location.setZipcodes(rs.getInt("zipcode"));
+				disaster.setDisasterEventID(rs.getInt("disastereventid"));
+				disaster.setLocation(location);
+				disaster.setType(rs.getString("type"));
+				disaster.setStartDate(rs.getDate("startdate"));
+				
+				//append each disaster to disasterList
+				disasterList.addInstance(disaster);
+			}
+			
+			
+			// append productList and disasterList to HTTP session for use in the view,
 			// then forward browser to createDonation.jsp view
 			session.setAttribute("productList", productList);
+			session.setAttribute("disasterList", disasterList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/createNewRequest.jsp");
 			dispatcher.forward(request, response);
 

@@ -13,9 +13,13 @@
 <%@page import="DisasterCenter.RequestList"%>
 <%@page import="DisasterCenter.Location"%>
 <%@page import="DisasterCenter.User"%>
+<%@page import="DisasterCenter.DisasterList"%>
+<%@page import="DisasterCenter.DisasterEvent"%>
+
 <%
     //import java objects from HTTP session
     ProductList productList = (ProductList) session.getAttribute("productList");
+	DisasterList disasterList = (DisasterList) session.getAttribute("disasterList");
 
 %>
 
@@ -78,9 +82,22 @@
                         <% }%>
                     </select>
 
+                    <label for="disaster">Disaster associated with this request</label>
+                        <select id="disaster" name="disaster">
+                        <%                    
+                        // for every entry in disasterList.instances, create one table row
+                            Iterator it2 = disasterList.getInstances().entrySet().iterator();
+                            while (it2.hasNext()) {
+                                Map.Entry pair = (Map.Entry) it2.next();
+                                DisasterEvent disaster = (DisasterEvent) disasterList.getInstances().get(pair.getKey());
+                        %>
+                        <option value="<%= disaster.getDisasterEventID()%>"><% out.print(disaster.getType() + " at zipcode " + disaster.getLocation().getZipcode()); %></option>
+                        <% }%>
+                    </select>
 
-                    <label for="quantity">Quantity Donating</label>
+                    <label for="quantity">Quantity Requesting</label>
                     <input type="text" id="quantity" name="quantity" placeholder="Enter Quantity">
+
 
 
 

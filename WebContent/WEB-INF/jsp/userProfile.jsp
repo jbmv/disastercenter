@@ -102,7 +102,7 @@
                     <label>Zipcode</label>
                     <input type="text" id="zip" name="zip" value="<%= userLocation.getZipcode()%>">
 
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Update User Information">
                 </form>
                 
                 
