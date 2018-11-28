@@ -73,23 +73,11 @@ public class confirmRequest extends HttpServlet {
             newRequest.setExpired(false);
             // newRequest.setNeededByDate()  didn't see this input in jsp file
             newRequest.setUser((User) session.getAttribute("user"));
-            newRequest.setProduct(Product(request.getParameter("productId")));
-
-			if(newDonation.getAmount() != 0)
-			{
-				pst = conn.prepareStatement(Queries.setDonation);
-				pst.setString(1, String.valueOf(newDonation.getAmount()));
-				pst.setString(2, String.valueOf(newDonation.getProductID()));
-				pst.setString(3, String.valueOf(newDonation.getUser().getUserID()));
-				
-				pst = conn.prepareStatement(Queries.updateStoredProduct);
-				pst.setString(1, String.valueOf(newDonation.getAmount()));
-				pst.setString(2, String.valueOf(newDonation.getProductID()));
-			}
-
-			// TODO add db update code here
-			// don't forget to recheck database to see if that new donation id was used?
-			// ... concurrency
+            newRequest.setProduct(new Product(request.getParameter("productId")));
+            newRequest.setLocation(new Location());
+            // how should i set other attribute/do I need to?
+            
+			//to do, update sql tables with new request
 
 			session.setAttribute("newDonation", newDonation);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/donationConfirmation.jsp");
