@@ -75,14 +75,6 @@ public class confirmRequest extends HttpServlet {
             newRequest.setUser((User) session.getAttribute("user"));
             newRequest.setProduct(Product(request.getParameter("productId")));
 
-			newDonation.setAmount(Integer.valueOf(request.getParameter("quantity")));
-			newDonation.setProductID(Integer.valueOf(request.getParameter("productID")));
-			newDonation.setUser((User) session.getAttribute("user"));
-
-
-			newDonation = CheckCurrentRequests(newDonation, session, conn);
-
-
 			if(newDonation.getAmount() != 0)
 			{
 				pst = conn.prepareStatement(Queries.setDonation);
