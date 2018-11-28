@@ -40,7 +40,9 @@ public class Queries {
 
 	public static String getNextDonationID = "SELECT IFNULL(MAX(donationid) + 1, 1) as nextID FROM donation"; // get
 																												// last
-																												// ID +
+	public static String setDonation = "insert into Donation (Amount, User_UserId, Product_ProdcutId) values (?, ?, ?, ?)";																											// ID +
+																												// 1,
+	public static String updateStoredProduct = "update StoredProduct set Quantity = Quantity + ? where StoredProductId = ?";									// ID +
 																												// 1,
 																												// return
 																												// 1 if

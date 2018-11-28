@@ -70,16 +70,16 @@
                         <input type="text" id="disaster" name="disaster" placeholder="<%= currentRequest.getDisasterName()%>" readonly>
 
                     <label>Location</label>
-                    <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getZipName()%>" readonly>
+                    <input type="text" id="location" name="location" placeholder="<%= currentRequest.getZipName()%>" readonly>
 
                     <label>Product Requested</label>
-                    <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getProductName()%>" readonly>
+                    <input type="text" id="product" name="product" placeholder="<%= currentRequest.getProductName()%>" readonly>
 
                     <label>Deliver By</label>
-                    <input type="text" id="lname" name="lastname" placeholder="<%= currentRequest.getNeededByDate() != null ? currentRequest.getNeededByDate() : "not specified"%>" readonly>
+                    <input type="text" id="deliverby" name="deliverby" placeholder="<%= currentRequest.getNeededByDate() != null ? currentRequest.getNeededByDate() : "not specified"%>" readonly>
 
                     <label style="color: red;">Quantity</label>
-                    <input type="text" id="lname" name="lastname" value="<%= currentRequest.getQuantityRequested()%>">
+                    <input type="text" id="quantity" name="quantity" value="<%= currentRequest.getQuantityRequested()%>">
 
 
 

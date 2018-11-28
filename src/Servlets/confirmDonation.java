@@ -73,11 +73,22 @@ public class confirmDonation extends HttpServlet {
 			newDonation.setProductID(Integer.valueOf(request.getParameter("productID")));
 			newDonation.setUser((User) session.getAttribute("user"));
 
+<<<<<<< HEAD
 			newDonation = CheckCurrentRequests(newDonation, session, conn);
+=======
+			newDonation = CheckCurrentRequests(newDonation, session);
+>>>>>>> 1ae53daaeb62d3070e4cbb39bfb047228d84a2c2
 
 			if(newDonation.getAmount() != 0)
 			{
-				//If any product left create donation
+				PreparedStatement pst = conn.prepareStatement(Queries.setDonation);
+				pst.setString(1, String.valueOf(newDonation.getAmount()));
+				pst.setString(2, String.valueOf(newDonation.getProductID()));
+				pst.setString(3, String.valueof(newDonation.getUser().getUserId()));
+				
+				pst = conn.prepareStatement(Queries.updateStoredProduct);
+				pst.setString(1, String.valueOf(newDonation.getAmount()));
+				pst.setString(2, String.valueOf(newDonation.getProdcutID()));
 			}
 
 			// TODO add db update code here
