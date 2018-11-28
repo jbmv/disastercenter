@@ -74,7 +74,14 @@ public class confirmDonation extends HttpServlet {
 
 			if(newDonation.getAmount() != 0)
 			{
-				setDonation
+				PreparedStatement pst = conn.prepareStatement(Queries.setDonation);
+				pst.setString(1, String.valueOf(newDonation.getAmount()));
+				pst.setString(2, String.valueOf(newDonation.getProductID()));
+				pst.setString(3, String.valueof(newDonation.getUser().getUserId()));
+				
+				pst = conn.prepareStatement(Queries.updateStoredProduct);
+				pst.setString(1, String.valueOf(newDonation.getAmount()));
+				pst.setString(2, String.valueOf(newDonation.getProdcutID()));
 			}
 
 			// TODO add db update code here
