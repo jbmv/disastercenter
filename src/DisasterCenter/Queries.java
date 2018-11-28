@@ -45,6 +45,7 @@ public class Queries {
 																												// return
 																												// 1 if
 
-	public static String createResponse = "";	
-	public static String updateRequest = "";																											// null
+	public static String createResponse = "insert into Response (QuantitySent, RequestId, UserId, ProvidedByDate) values (?,?,?,'?')";	
+	public static String updateFulfilledRequest = "update Request set quantity";
+	public static String updateUnfulfilledRequest = "update Request set quantity";																												// null
 }
