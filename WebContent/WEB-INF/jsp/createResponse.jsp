@@ -13,9 +13,7 @@
     //import java objects from HTTP session
     User user = (User) session.getAttribute("user");
     Location userLocation = (Location) session.getAttribute("userLocation");
-    RequestList requestList = (RequestList) session.getAttribute("requestList");
-    int requestID = Integer.parseInt(session.getAttribute("requestID").toString());
-    Request currentRequest = (Request) requestList.getInstances().get(String.valueOf(requestID));
+	Request currentRequest = (Request) session.getAttribute("currentRequest");
 
 %>
 

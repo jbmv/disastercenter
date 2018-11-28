@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import DisasterCenter.Request;
+import DisasterCenter.RequestList;
+
 /**
  *
  * @author james
@@ -44,7 +47,9 @@ public class respond extends HttpServlet {
 
 			// get requestID of request that was clicked on and at it to HttpSession
 			String requestID = request.getParameter("requestID");
-			session.setAttribute("requestID", requestID);
+		    RequestList requestList = (RequestList) session.getAttribute("requestList");
+		    Request currentRequest = (Request) requestList.getInstances().get(String.valueOf(requestID));
+		    session.setAttribute("currentRequest", currentRequest);
 
 			// send browser to createResposne.jsp view
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/createResponse.jsp");

@@ -21,7 +21,7 @@ public class Queries {
 			// http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
 			("" + "SELECT RequestId,r.DisasterEventID,r.UserID,r.ProductID,QuantityRequested,"
 					+ "QuantityFulfilled,PriorityReferenceId,Expired,NeededByDate,l.lattitude,l.longitude, "
-					+ "r.LocationID,p.type as productName," + "d.type as disasterName," + "l.zipcode as zipName, "
+					+ "r.LocationID,streetnum,street,city,p.type as productName," + "d.type as disasterName," + "l.zipcode as zipName, "
 					+ "111.045* DEGREES(ACOS(COS(RADIANS(userLat))" + "                 * COS(RADIANS(l.lattitude))"
 					+ "                 * COS(RADIANS(userLon) - RADIANS(l.longitude))"
 					+ "                 + SIN(RADIANS(userLat))"
@@ -51,4 +51,6 @@ public class Queries {
 	public static String updateUnfulfilledRequest = "update Request set quantity";																												// null
 
 	public static String getDisasters = "select disastereventid,type,location,startdate,lattitude,longitude,zipcode from DisasterEvent d join location l on d.location = l.locationid";
+
+	public static String getAddressToSendResponse = "";
 }

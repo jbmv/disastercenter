@@ -59,16 +59,12 @@ public class confirmResponse extends HttpServlet {
 		}
 
 		try (PrintWriter out = response.getWriter()) {
-			/* TODO output your page here. You may use following sample code. */
-
-			// TODO check that qty responding doesnt exceed qty requested
 
 			// import HTTP session attributes
 		    User user = (User) session.getAttribute("user");
 		    RequestList requestList = (RequestList) session.getAttribute("requestList");
-		    int requestID = Integer.parseInt(session.getAttribute("requestID").toString());
-		    Request currentRequest = (Request) requestList.getInstances().get(String.valueOf(requestID));
- 
+		    Request currentRequest = (Request) session.getAttribute("currentRequest");
+		    
 		    // create response object and get form data for quantity
 			Response newResponse = new Response();
 			newResponse.setRequest(currentRequest);
@@ -89,6 +85,8 @@ public class confirmResponse extends HttpServlet {
 				//updateRequest = "update Request set QuantityFulfilled = ?, Expired = ? where RequestID = ?"
 				PreparedStatement updateRequest = conn.prepareStatement(Queries.updateRequest);
 				updateRequest.setString(3, String.valueOf(currentRequest.getRequestID()));
+				
+				// need to check if the Quantity select exceeds the request
 				if (newResponse.getQuantitySent() == (currentRequest.getQuantityRequested() - currentRequest.getQuantityFulfilled())) {
 					updateRequest.setString(1, String.valueOf(currentRequest.getQuantityRequested()));
 					updateRequest.setString(2,  "1");
@@ -105,15 +103,17 @@ public class confirmResponse extends HttpServlet {
 					Donation newDonation = new Donation();
 					newDonation.setAmount(newResponse.getQuantitySent() - (currentRequest.getQuantityRequested() - currentRequest.getQuantityFulfilled()));
 					newDonation.setProductID(currentRequest.getProduct().getProdId());
+					// quantity exceeds request so....
 					
-					// and we need to create a new donation for the overflow
-					// insert into Donation (Amount, UserID, ProductId) values (?, ?, ?)
+					// we need to create a new donation for the overflow
+					// query: insert into Donation (Amount, UserID, ProductId) values (?, ?, ?)
 					PreparedStatement createNewDonation = conn.prepareStatement(Queries.setDonation);
 					createNewDonation.setString(1, String.valueOf(newDonation.getAmount()));
 					createNewDonation.setString(2, String.valueOf(user.getUserID()));
 					createNewDonation.setString(3, String.valueOf(newDonation.getProductID()));
 					createNewDonation.executeUpdate();
 					session.setAttribute("splitResponse", "True");
+					session.setAttribute("donationOverflow", createNewDonation);
 				}
 				
 				createResponse.setString(1, String.valueOf(newResponse.getQuantitySent()));
@@ -133,8 +133,10 @@ public class confirmResponse extends HttpServlet {
 				}
 				createResponse.executeUpdate();
 				updateRequest.executeUpdate();
+								
 				
 				// forward to webpage with address to send response to
+				// separate webpages depending on if a new donation for overflow created
 				if (session.getAttribute("splitResponse") == "True") {
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/thankYouSplitResponse.jsp");
 					dispatcher.forward(request, response);
