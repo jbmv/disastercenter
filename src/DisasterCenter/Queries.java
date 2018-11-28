@@ -29,7 +29,7 @@ public class Queries {
 					+ "FROM Request r JOIN Product p on r.ProductId = p.ProductId "
 					+ "JOIN disasterevent d on r.DisasterEventId = d.DisasterEventId "
 					+ "JOIN location l on r.locationid = l.locationid " + " JOIN ("
-					+ "     SELECT  ?  AS userLat, ? AS userLon" + "   ) AS p ON 1=1 " + "HAVING expired = 0 "
+					+ "     SELECT  ?  AS userLat, ? AS userLon" + "   ) AS p ON 1=1 " + "HAVING expired = 0 AND quantityfulfilled < quantityrequested "
 					+ "ORDER BY distance");
 
 	public static String getProducts = "select * from product"; 
@@ -45,7 +45,7 @@ public class Queries {
 	public static String updateStoredProduct = "update StoredProduct set Quantity = Quantity + ? where StoredProductId = ?";									
 																											
 
-	public static String updateRequest = "update Request set QuantityFulfilled = ?, Expired = ? where RequestID = ?";																										
+	public static String updateRequest = "update Request set QuantityFulfilled = ? where RequestID = ?";																										
 	public static String createResponse = "insert into Response (QuantitySent, RequestId, UserId, ProvidedByDate) values (?,?,?,?)";	
 	public static String updateFulfilledRequest = "update Request set quantity";
 	public static String updateUnfulfilledRequest = "update Request set quantity";																												// null
@@ -53,4 +53,6 @@ public class Queries {
 	public static String getDisasters = "select disastereventid,type,location,startdate,lattitude,longitude,zipcode from DisasterEvent d join location l on d.location = l.locationid";
 
 	public static String getAddressToSendResponse = "";
+
+	public static String expireOldRequests = "update request set expired = 1 where neededbydate < now()";
 }

@@ -17,6 +17,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -66,7 +69,15 @@ public class requests extends HttpServlet {
 				Class.forName("com.mysql.jdbc.Driver"); // MySQL database connection
 				Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false",
 						"root", "password");
-				PreparedStatement pst = conn.prepareStatement(Queries.getRequest);
+				
+				// first, expire any old requests before displaying requests
+				PreparedStatement pst = conn.prepareStatement(Queries.expireOldRequests);
+				pst.executeUpdate();
+				
+				
+				
+				
+				pst = conn.prepareStatement(Queries.getRequest);
 				pst.setString(1, String.valueOf(userLocation.getLatitude()));
 				pst.setString(2, String.valueOf(userLocation.getLongitude()));
 				
@@ -78,7 +89,10 @@ public class requests extends HttpServlet {
 				// HttpSession
 				RequestList requestList = new RequestList();
 
+
 				while (rs.next()) {
+					
+					
 					Request newRequest = new Request(rs.getInt("RequestID"));
 					Location location = new Location(rs.getInt("LocationID"));
 					location.setStreetNumber(rs.getInt("streetnum"));
