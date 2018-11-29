@@ -54,4 +54,10 @@ public class Queries {
 	public static String getAddressToSendResponse = "";
 
 	public static String expireOldRequests = "update request set expired = 1 where neededbydate < now()";
+
+	public static String getNewUser = "select username from user where username = ?";
+
+	public static String createNewUserLocation = "insert into location (lattitude,longitude,streetnum,street,city,zipcode) values (?,?,?,?,?,?)";
+	public static String getNewUserLocation = "select locationid from location where lattitude = ? and longitude = ? and streetnum = ?";
+	public static String createNewUser = "insert into user (username,password,firstname,lastname,email,phone,locationid,failedloginattempts) values (?,?,?,?,?,?,?,0)";
 }

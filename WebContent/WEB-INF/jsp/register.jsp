@@ -5,14 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="DisasterCenter.Location"%>
-<%@page import="DisasterCenter.User"%>
-<%
-    //import java objects from HTTP session
-    User user = (User) session.getAttribute("user");
-    Location userLocation = (Location) session.getAttribute("userLocation");
 
-%>
 
 
 <!DOCTYPE html>
@@ -69,43 +62,44 @@
 
                 <div style="padding: 20px">
                     <form action="updateUser" method="POST">
+                    <input type="hidden" id="registering" name="registering" value="registering">
                         <label>Username</label>
-                        <input type="text" id="username" name="username" placeholder="<%= user.getUserName()%>" readonly>
+                        <input type="text" id="username" name="username" placeholder="Enter username">
 
                     <label>Password</label>
-                    <input type="password" id="password" name="password" placeholder="password">
+                    <input type="password" id="password" name="password" placeholder="Enter password">
 
                     <label>email</label>
-                    <input type="text" id="email" name="email" value="<%= user.getEmail()%>">
+                    <input type="text" id="email" name="email" placeholder="Enter email">
 
                     <label>First Name</label>
-                    <input type="text" id="fname" name="fname" value="<%= user.getFirstName()%>">
+                    <input type="text" id="fname" name="fname" placeholder="Enter first name ">
 
                     <label>Last Name</label>
-                    <input type="text" id="lname" name="lname" value="<%= user.getLastName()%>">
+                    <input type="text" id="lname" name="lname" placeholder="Enter last name">
 
                     <label>Phone Number</label>
-                    <input type="text" id="phone" name="phone" value="<%= user.getPhone()%>">
+                    <input type="text" id="phone" name="phone" placeholder="Enter phone number">
 
                     <label>Latitude</label>
-                    <input type="text" id="latitude" name="latitude" value="<%= userLocation.getLatitude()%>">
+                    <input type="text" id="latitude" name="latitude" placeholder="Enter latitude">
 
                     <label>Longitude</label>
-                    <input type="text" id="longitude" name="longitude" value="<%= userLocation.getLongitude()%>">
+                    <input type="text" id="longitude" name="longitude" placeholder="Enter longitude">
 
                     <label>City</label>
-                    <input type="text" id="city" name="city" value="<%= userLocation.getCity()%>">
+                    <input type="text" id="city" name="city" placeholder="Enter city">
                     
                     <label>Street Number</label>
-                    <input type="text" id="streetnum" name="streetnum" value="<%= userLocation.getStreetNumber()%>"> 
+                    <input type="text" id="streetnum" name="streetnum" placeholder="Enter street number"> 
                     
                     <label>Street</label>
-                    <input type="text" id="street" name="street" value="<%= userLocation.getStreet()%>">                    
+                    <input type="text" id="street" name="street" placeholder="Enter Street">                    
 
                     <label>Zipcode</label>
-                    <input type="text" id="zip" name="zip" value="<%= userLocation.getZipcode()%>">
+                    <input type="text" id="zip" name="zip" placeholder="Enter Zipcode">
 
-                    <input type="submit" value="Update User Information">
+                    <input type="submit" value="Register New User">
                 </form>
                 
                 

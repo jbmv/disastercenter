@@ -16,6 +16,14 @@
     <servlet-name>userProfile</servlet-name>
     <servlet-class>Servlets.userProfile</servlet-class>
   </servlet>
+    <servlet>
+    <servlet-name>confirmRequest</servlet-name>
+    <servlet-class>Servlets.confirmRequest</servlet-class>
+  </servlet>
+    <servlet>
+    <servlet-name>updateUser</servlet-name>
+    <servlet-class>Servlets.updateUser</servlet-class>
+  </servlet>
   <servlet>
     <servlet-name>register</servlet-name>
     <servlet-class>Servlets.register</servlet-class>
@@ -51,6 +59,14 @@
   <servlet-mapping>
     <servlet-name>donation</servlet-name>
     <url-pattern>/donation</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>confirmRequest</servlet-name>
+    <url-pattern>/confirmRequest</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>updateUser</servlet-name>
+    <url-pattern>/updateUser</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>userProfile</servlet-name>

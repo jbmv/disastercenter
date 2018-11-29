@@ -47,45 +47,137 @@ public class updateUser extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		response.setContentType("text/html;charset=UTF-8");
-
-		// REQURED TO BE LOGGED IN TO ACCESS THIS PAGE, if not logged in, redirect
+		System.out.println("starting updateUser servlet");
+		//System.out.println(request.getParameter("registering"));
+		String registeringNewUser = request.getParameter("registering");
+		System.out.println(registeringNewUser);
+		
 		HttpSession session = request.getSession(false);
-		if (session == null) {
-			// user not logged in, forward to login page
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.html");
-			dispatcher.forward(request, response);
+		// create db connection
+		Class.forName("com.mysql.jdbc.Driver"); // MySQL database connection
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false", "root",
+				"password");
+		
+		if (registeringNewUser.equals("registering")) {
+			System.out.println("registering == registering");
+			session = request.getSession();
+		} else {
+			// REQURED TO BE LOGGED IN TO ACCESS THIS PAGE, if not logged in, redirect
+			if (session == null) {
+				// user not logged in, forward to login page
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.html");
+				dispatcher.forward(request, response);
+			}
 		}
 
 		try (PrintWriter out = response.getWriter()) {
-			User user = (User) session.getAttribute("user");
-			Location userLocation = (Location) session.getAttribute("userLocation");
-		    String userName;
-		    String password;
-		    String firstName;
-		    String lastName;
-		    int locationID;
-		    String email;
-		    String phone;
-		    Date lastLogin;
-		    int failedLoginAttempts;
+			System.out.println("try block, setting user object info");
+			
+			User user = new User();
+			Location userLocation = new Location();
 		    
 		    userLocation.setCity(request.getParameter("city"));
-		    userLocation.setLatitude(Integer.valueOf(request.getParameter("latitude")));
-		    userLocation.setLongitude(Integer.valueOf(request.getParameter("longitude")));
+		    userLocation.setLatitude(Long.valueOf(request.getParameter("latitude")));
+		    userLocation.setLongitude(Long.valueOf(request.getParameter("longitude")));
 		    userLocation.setStreet(request.getParameter("street"));
+		    userLocation.setStreetNumber(Integer.valueOf(request.getParameter("streetnum")));
+		    userLocation.setZipcodes(Integer.valueOf(request.getParameter("zip")));
+		    
+		    
 			user.setPassword(request.getParameter("password"));
 			user.setFirstName(request.getParameter("fname"));
 			user.setLastName(request.getParameter("lname"));
 			user.setEmail(request.getParameter("email"));
 			user.setPhone(request.getParameter("phone"));
 			
+			if (registeringNewUser.equals("registering")) {
+				System.out.println("setting username");
+				
+				// all code in this block executes if registering and then returns out of this servlet
+				// test username chosen is unique in database, else redirect back with message
+				user.setUserName(request.getParameter("username"));
+				PreparedStatement pst = conn.prepareStatement(Queries.getNewUser);
+				pst.setString(1, user.getUserName());
+				ResultSet rs = pst.executeQuery();
+				
+				System.out.println("first sql query done");
+				
+				
+				if (rs.next()) {
+					// username already exists
+					System.out.println("username already exists");
+					out.print("<div class=\"w3-container w3-red\">" + "  <h1>That username already exists!</h1>\n" + "</div>");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/register.jsp");
+					dispatcher.include(request, response);
+				}
+				// location query: insert into location (lattitude,longitude,streetnum,street,city,zipcode)
+
+				pst = conn.prepareStatement(Queries.createNewUserLocation);
+				pst.setString(1, String.valueOf(userLocation.getLatitude()));
+				pst.setString(2, String.valueOf(userLocation.getLongitude()));
+				pst.setString(3, String.valueOf(userLocation.getStreetNumber()));
+				pst.setString(4, userLocation.getStreet());
+				pst.setString(5, userLocation.getCity());
+				pst.setString(6, String.valueOf(userLocation.getZipcode()));
+				pst.executeUpdate();
+				
+				System.out.println("sql update location done");
+
+				// okay we made a new location, but we need the new locationID to create new user
+				// query: where lattitude = ? and longitude = ? and streetnum = ?
+				System.out.println("sql get location id we just created");
+				pst = conn.prepareStatement(Queries.getNewUserLocation);
+				pst.setString(1, String.valueOf(userLocation.getLatitude()));
+				pst.setString(2, String.valueOf(userLocation.getLongitude()));
+				pst.setString(3, String.valueOf(userLocation.getStreetNumber()));
+				// this was not working, so doing something super wrong and getting last location id to be created!
+				//pst = conn.prepareStatement("select locationid from location ORDER BY locationid DESC LIMIT 1");
+				rs = pst.executeQuery();
+				rs.next();
+				System.out.println("rs.next() done");
+				user.setLocationID(rs.getInt("locationid"));
+				System.out.println("got locatoin");
+				
+				
+				//finally we can create the new user
+				// querty: insert into user (username,password,firstname,lastname,email,phone,locationid) values = (?,?,?,?,?,?,?)
+				pst = conn.prepareStatement(Queries.createNewUser);
+				pst.setString(1, user.getUserName());
+				pst.setString(2, user.getPassword());
+				pst.setString(3, user.getFirstName());
+				pst.setString(4, user.getLastName());
+				pst.setString(5, user.getEmail());
+				pst.setString(6, user.getPhone());
+				pst.setInt(7, user.getLocationID());
+				System.out.println("about to create user");
+				pst.executeUpdate();
+
+				
+				
+				// User created! redirect to login
+				session.invalidate();
+				System.out.println("created user, forward to login");
+				out.print("<div class=\"w3-container w3-red\">" + "  <h1>User created, please login!</h1>\n" + "</div>");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.html");
+				dispatcher.include(request, response);
+				
+				
+			}
+
+			
+			
 			
 
-
+			// this code only executes if updating existing user
 			// then forward browser to userProfile.jsp view
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userProfile.jsp");
-			dispatcher.forward(request, response);
+			//RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userProfile.jsp");
+			//dispatcher.forward(request, response);
 
+		}
+		catch (Exception e) {
+			PrintWriter out = response.getWriter();
+			out.println(e);
+			e.printStackTrace();
 		}
 	}
 
