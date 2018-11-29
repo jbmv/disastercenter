@@ -50,7 +50,7 @@
 			<div class="w3-container w3-deep-orange">
 			<h2>Please send the donation of <% out.print(newResponse.getQuantitySent()); %> <% out.print(currentRequest.getProductName()); %> to...</h2>
 			<textarea label="address" type="text"cols="40" rows="5" readonly><% out.print(address); %></textarea>
-			<h2><% out.print(currentRequest.getNeededByDate() != null ? "...by " + currentRequest.getNeededByDate() : "... as soon as possible."); %></h2>
+			<h2><% out.print(currentRequest.getDateString() != null ? "...by " + currentRequest.getDateString() : "... as soon as possible."); %></h2>
 			</div>
 
 	</div>
