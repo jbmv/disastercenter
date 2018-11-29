@@ -97,21 +97,12 @@ public class confirmResponse extends HttpServlet {
 				}
 				else if (newResponse.getQuantitySent() > (currentRequest.getQuantityRequested() - currentRequest.getQuantityFulfilled())) {
 					updateRequest.setString(1, String.valueOf(currentRequest.getQuantityRequested()));
-					updateRequest.setString(2,  "1");
+					// quantity exceeds request so....
 					Donation newDonation = new Donation();
 					newDonation.setAmount(newResponse.getQuantitySent() - (currentRequest.getQuantityRequested() - currentRequest.getQuantityFulfilled()));
 					newDonation.setProductID(currentRequest.getProduct().getProdId());
 					newDonation.setProduct(currentRequest.getProduct());
-					// quantity exceeds request so....
-					
-					// we need to create a new donation for the overflow
-					// query: insert into Donation (Amount, UserID, ProductId) values (?, ?, ?)
-					PreparedStatement createNewDonation = conn.prepareStatement(Queries.setDonation);
-					createNewDonation.setString(1, String.valueOf(newDonation.getAmount()));
-					createNewDonation.setString(2, String.valueOf(user.getUserID()));
-					createNewDonation.setString(3, String.valueOf(newDonation.getProductID()));
-					createNewDonation.executeUpdate();
-					
+		
 					session.setAttribute("splitResponse", "True");
 					session.setAttribute("donationOverflow", newDonation);
 				}
