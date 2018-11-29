@@ -61,7 +61,7 @@ public class confirmDonation extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver"); // MySQL database connection
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project?&useSSL=false", "root",
 					"password");
-			//PreparedStatement pst = conn.prepareStatement(Queries.getNextDonationID);
+			PreparedStatement pst;// = conn.prepareStatement(Queries.getNextDonationID);
 			//ResultSet rs = pst.executeQuery();
 			//rs.next(); // get the row
 			//int donationID = rs.getInt("nextID"); // get next available donation ID
