@@ -52,17 +52,19 @@
             <!-- Page Content -->
             <div style="margin-left:15%">
                 <div class="w3-container w3-teal">
-                    <h1>Confirmation of Your Donation</h1>
+                    <h1>Thank you for your donation!</h1>
                 </div>
                 
-                              <div style="padding: 20px">
+                              <div class="w3-container w3-aqua">
+                              
+                              <h2>
+                              Currently, there are no requests for these items
+                              <br>
+                              Your donation of <% out.print(newDonation.getAmount()); %> <% out.print(newDonation.getProduct().getProdType()); %> has been placed on call.
+                              <br>
+                              You will be notified when a new request has been matched.</h2>
 
-                    <label>Product Donated</label>
-                    <input type="text" id="product" name="product" value="<%= newDonation.getProductID() %>" readonly>
 
-
-                    <label>Quantity Donated</label>
-                    <input type="text" id="quantity" name="quantity" value="<%= newDonation.getAmount() %>" readonly>
 
 
 

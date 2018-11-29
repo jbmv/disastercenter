@@ -73,6 +73,11 @@ public class confirmDonation extends HttpServlet {
 			newDonation.setAmount(Integer.valueOf(request.getParameter("quantity")));
 			newDonation.setProductID(Integer.valueOf(request.getParameter("productID")));
 			newDonation.setUser((User) session.getAttribute("user"));
+			
+			// need the product name for display on donationConfirmation.jsp
+			ProductList productList = (ProductList) session.getAttribute("productList");
+			newDonation.setProduct(productList.getProductByID(String.valueOf(newDonation.getProductID())));
+
 
 
 			newDonation = CheckCurrentRequests(newDonation, session, conn);
@@ -101,6 +106,7 @@ public class confirmDonation extends HttpServlet {
 		} catch (Exception e) {
 			PrintWriter out = response.getWriter();
 			out.println(e);
+			e.printStackTrace();
 		}
 
 	}

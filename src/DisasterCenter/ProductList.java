@@ -15,6 +15,10 @@ import java.util.Map;
 public class ProductList {
 
     private Map<String, Product> instances = new HashMap<String, Product>();
+    
+    public Product getProductByID(String productID) {
+		return instances.get(productID);
+    }
 
     public Map<String, Product> getInstances() {
         return instances;
@@ -27,5 +31,7 @@ public class ProductList {
     public void removeInstance(Product product) {
         instances.remove(String.valueOf(product.getProdId()));
     }
+    
+    
 
 }
