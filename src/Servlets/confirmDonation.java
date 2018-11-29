@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -104,7 +105,7 @@ public class confirmDonation extends HttpServlet {
 
 	}
 
-	private Donation CheckCurrentRequests(Donation newDonation, HttpSession session, Connection conn)
+	private Donation CheckCurrentRequests(Donation newDonation, HttpSession session, Connection conn) throws SQLException
 	{
 		RequestList requestList = (RequestList) session.getAttribute("requestList");
 		Iterator<Request> requests = requestList.getInstances().values().iterator();
@@ -144,14 +145,14 @@ public class confirmDonation extends HttpServlet {
 				pst.setString(2, String.valueOf(newResponse.getRequest().getRequestID()));
 				pst.setString(3, String.valueOf(newResponse.getUser().getUserID()));
 				pst.setString(4, String.valueOf(df.format(newResponse.getProvidedByDate())));
-				pst.executeQuery();
+				pst.executeUpdate();
 
 				if(current.getQuantityRequested() == current.getQuantityFulfilled())
 				{
 					pst = conn.prepareStatement(Queries.updateFulfilledRequestAmount);
 					pst.setString(1, String.valueOf(current.getQuantityFulfilled()));
 					pst.setString(2, String.valueOf(current.getRequestID()));
-					pst.executeQuery();
+					pst.executeUpdate();
 
 					//remove from the requestList if fulfilled ??
 					requestList.removeInstance(current);
@@ -161,7 +162,7 @@ public class confirmDonation extends HttpServlet {
 					pst = conn.prepareStatement(Queries.updateFulfilledRequestAmount);
 					pst.setString(1, String.valueOf(current.getQuantityFulfilled()));
 					pst.setString(2, String.valueOf(current.getRequestID()));
-					pst.executeQuery();
+					pst.executeUpdate();
 				}
 			}
 			if(newDonation.getAmount() == 0)
