@@ -55,7 +55,7 @@
                     <h1>Thank you for your donation!</h1>
                 </div>
                 
-                              <div class="w3-container w3-aqua">
+                              <div class="w3-container w3-aqua"x>
                               
                               <h2>
                               Currently, there are no requests for these items

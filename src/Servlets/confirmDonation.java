@@ -70,14 +70,17 @@ public class confirmDonation extends HttpServlet {
 			// create donation object, populate with next avail ID
 			// populate product,amount,user fields of donation object
 			Donation newDonation = new Donation();
+			if (session.getAttribute("newDonation") != null) 
+				newDonation = (Donation) session.getAttribute("newDonation");
 			newDonation.setAmount(Integer.valueOf(request.getParameter("quantity")));
 			newDonation.setProductID(Integer.valueOf(request.getParameter("productID")));
 			newDonation.setUser((User) session.getAttribute("user"));
-			
+			System.out.println("getting product object for productID" + newDonation.getProductID());
 			// need the product name for display on donationConfirmation.jsp
 			ProductList productList = (ProductList) session.getAttribute("productList");
-			newDonation.setProduct(productList.getProductByID(String.valueOf(newDonation.getProductID())));
-
+			if (newDonation.getProduct() == null) 
+				newDonation.setProduct(productList.getProductByID(String.valueOf(newDonation.getProductID())));
+			
 
 
 			newDonation = CheckCurrentRequests(newDonation, session, conn);

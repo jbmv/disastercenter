@@ -13,6 +13,7 @@
 	Request currentRequest = (Request) session.getAttribute("currentRequest");
 	Response newResponse = (Response) session.getAttribute("newResponse");
 	Donation newDonation = (Donation) session.getAttribute("donationOverflow");
+	session.setAttribute("newDonation", newDonation);
 	String address = "Disaster Center\n" + currentRequest.getLocation().getStreetNumber() + " "
 			+ currentRequest.getLocation().getStreet() + "\n"
 			+ currentRequest.getLocation().getCity() + " " 
@@ -91,8 +92,9 @@
 
 
 			<form action="confirmDonation" method="POST">
+			<input type="hidden" id="productID" name="productID" value="<%= newDonation.getProductID() %>">
 			<label for="productID">Product</label>
-			<input type="text" id="productID" name="productID" value="<%= newDonation.getProduct().getProdType() %>" readonly>
+			<input type="text" id="productName" name="productName" value="<%= newDonation.getProduct().getProdType() %>" readonly>
 			<label for="quantity">Quantity Donating</label>
 			<input type="text" id="quantity" name="quantity" value="<%= newDonation.getAmount() %>" readonly>
 			<input type="submit" value="Create This Donation">
