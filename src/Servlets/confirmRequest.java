@@ -66,8 +66,8 @@ public class confirmRequest extends HttpServlet {
 			//rs.next(); // get the row
 			//int donationID = rs.getInt("nextID"); // get next available donation ID
 
-			// create donation object, populate with next avail ID
-			// populate product,amount,user fields of donation object
+			// create Request object, populate with next avail ID
+			
 			Request newRequest = new Request();
             newRequest.setQuantityRequested(Integer.valueOf(request.getParameter("quantity")));
             newRequest.setExpired(false);
@@ -76,10 +76,11 @@ public class confirmRequest extends HttpServlet {
             newRequest.setProduct(new Product(request.getParameter("productId")));
             newRequest.setLocation(new Location());
             // how should i set other attribute/do I need to?
-            
+
 			//to do, update sql tables with new request
 
-			session.setAttribute("newDonation", newDonation);
+			session.setAttribute("newRequest", newRequest);
+            // which page do we move to next?
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/donationConfirmation.jsp");
 			dispatcher.forward(request, response);
 

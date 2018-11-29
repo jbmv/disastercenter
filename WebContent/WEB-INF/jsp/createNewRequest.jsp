@@ -67,7 +67,7 @@
                 </div>
 
                 <div style="padding: 20px">
-                    <form action="confirmNewRequest" method="POST">
+                    <form action="confirmRequest" method="POST">
 
 
                         <label for="productID">Product Donating</label>
