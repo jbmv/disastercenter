@@ -70,6 +70,7 @@
                 <div style="padding: 20px">
                     <form action="updateUser" method="POST">
                         <label>Username</label>
+                        <input type="hidden" id="registering" name="registering" value="notregistering">
                         <input type="text" id="username" name="username" placeholder="<%= user.getUserName()%>" readonly>
 
                     <label>Password</label>

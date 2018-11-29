@@ -55,6 +55,8 @@ public class login extends HttpServlet {
 			pst.setString(1, username);
 			pst.setString(2, password);
 			ResultSet rs = pst.executeQuery();
+			// query returns: userid,username,password,firstname,lastname,email,phone,u.locationid,
+			// lattitude,longitude,streetnum,street,city,zipcode
 
 			// check to see if a row was returned, if TRUE, username & password combo is
 			// valid
@@ -72,6 +74,11 @@ public class login extends HttpServlet {
 				Location userLocation = new Location(user.getLocationID());
 				userLocation.setLatitude(rs.getInt("lattitude"));
 				userLocation.setLongitude(rs.getInt("longitude"));
+				userLocation.setStreetNumber(rs.getInt("streetnum"));
+				userLocation.setStreet(rs.getString("street"));
+				userLocation.setCity(rs.getString("city"));
+				userLocation.setZipcodes(rs.getInt("zipcode"));
+				
 
 				// append User and Location objects to new HttpSessions so we can reference them
 				// later

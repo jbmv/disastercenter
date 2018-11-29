@@ -12,7 +12,7 @@ package DisasterCenter;
 public class Queries {
 
 	public static String getUser = (""
-			+ "Select userid,username,password,firstname,lastname,email,phone,u.locationid,lattitude,longitude "
+			+ "Select userid,username,password,firstname,lastname,email,phone,u.locationid,lattitude,longitude,streetnum,street,city,zipcode "
 			+ "from user u join location l on u.locationid = l.locationid " + "where username=? and password=?");
 
 	public static String getRequest =
@@ -60,4 +60,8 @@ public class Queries {
 	public static String createNewUserLocation = "insert into location (lattitude,longitude,streetnum,street,city,zipcode) values (?,?,?,?,?,?)";
 	public static String getNewUserLocation = "select locationid from location where lattitude = ? and longitude = ? and streetnum = ?";
 	public static String createNewUser = "insert into user (username,password,firstname,lastname,email,phone,locationid,failedloginattempts) values (?,?,?,?,?,?,?,0)";
+
+	public static String updateUser = "update user set password = ?, firstname = ?, lastname = ?, email = ?, phone = ? where userid = ?";
+
+	public static String updateUserLocation = "update location set lattitude = ?, longitude = ?, streetnum = ?, street = ?, city = ?, zipcode = ? where locationid = ?";
 }

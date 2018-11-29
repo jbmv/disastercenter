@@ -51,6 +51,8 @@ public class updateUser extends HttpServlet {
 		//System.out.println(request.getParameter("registering"));
 		String registeringNewUser = request.getParameter("registering");
 		System.out.println(registeringNewUser);
+		int oldUserID = 0;
+		String oldUserName = "";
 		
 		HttpSession session = request.getSession(false);
 		// create db connection
@@ -67,7 +69,13 @@ public class updateUser extends HttpServlet {
 				// user not logged in, forward to login page
 				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.html");
 				dispatcher.forward(request, response);
+			} else {
+				// get userid so we can preserve it for later
+				User oldUser = (User) session.getAttribute("user");
+				oldUserID = oldUser.getUserID();
+				oldUserName = oldUser.getUserName();
 			}
+
 		}
 
 		try (PrintWriter out = response.getWriter()) {
@@ -77,8 +85,8 @@ public class updateUser extends HttpServlet {
 			Location userLocation = new Location();
 		    
 		    userLocation.setCity(request.getParameter("city"));
-		    userLocation.setLatitude(Long.valueOf(request.getParameter("latitude")));
-		    userLocation.setLongitude(Long.valueOf(request.getParameter("longitude")));
+		    userLocation.setLatitude(Float.valueOf(request.getParameter("latitude")));
+		    userLocation.setLongitude(Float.valueOf(request.getParameter("longitude")));
 		    userLocation.setStreet(request.getParameter("street"));
 		    userLocation.setStreetNumber(Integer.valueOf(request.getParameter("streetnum")));
 		    userLocation.setZipcodes(Integer.valueOf(request.getParameter("zip")));
@@ -164,14 +172,41 @@ public class updateUser extends HttpServlet {
 				
 			}
 
+			// this code only executes if updating existing user
+			// get old user id
 			
+			user.setUserID(oldUserID);
+			user.setUserName(oldUserName);
+			PreparedStatement pst = conn.prepareStatement(Queries.updateUser);
+			pst.setString(1, user.getPassword());
+			pst.setString(2, user.getFirstName());
+			pst.setString(3, user.getLastName());
+			pst.setString(4, user.getEmail());
+			pst.setString(5, user.getPhone());
+			pst.setInt(6, user.getUserID());
+			System.out.println("about to update user");
+			pst.executeUpdate();
+			
+			pst = conn.prepareStatement(Queries.updateUserLocation);
+			pst.setFloat(1, userLocation.getLatitude());
+			pst.setFloat(2, userLocation.getLongitude());
+			pst.setInt(3, userLocation.getStreetNumber());
+			pst.setString(4, userLocation.getStreet());
+			pst.setString(5, userLocation.getCity());
+			pst.setInt(6, userLocation.getZipcode());
+			pst.setInt(7, userLocation.getLocationID());
+			System.out.println("about to update user location");
+			pst.executeUpdate();
+
+			session.setAttribute("user", user);
+			session.setAttribute("userLocation", userLocation);
 			
 			
 
-			// this code only executes if updating existing user
 			// then forward browser to userProfile.jsp view
-			//RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userProfile.jsp");
-			//dispatcher.forward(request, response);
+			out.print("<div class=\"w3-container w3-red\">" + "  <h1>User Profile Updated!</h1>\n" + "</div>");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userProfile.jsp");
+			dispatcher.forward(request, response);
 
 		}
 		catch (Exception e) {
