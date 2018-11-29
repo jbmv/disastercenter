@@ -72,7 +72,7 @@
                     <input type="text" id="product" name="product" placeholder="<%= currentRequest.getProductName()%>" readonly>
 
                     <label>Deliver By</label>
-                    <input type="text" id="deliverby" name="deliverby" placeholder="<%= currentRequest.getNeededByDate() != null ? currentRequest.getNeededByDate() : "not specified"%>" readonly>
+                    <input type="text" id="deliverby" name="deliverby" placeholder="<%= currentRequest.getDateString() != null ? currentRequest.getDateString() : "not specified"%>" readonly>
 
                     <label style="color: red;">Quantity</label>
                     <input type="text" id="quantity" name="quantity" value="<%= currentRequest.getQuantityRequested() - currentRequest.getQuantityFulfilled()%>">

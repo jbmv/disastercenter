@@ -69,7 +69,8 @@
                                     <th onclick="sortTable(1)"> Location</th>
                                     <th onclick="sortTable(2)">Product</th>
                                     <th onclick="sortTable(3)">Quantity Needed</th>
-                                    <th onclick="sortTable(4)">Disaster</th>
+                                    <th onclick="sortTable(4)">Needed By</th>
+                                    <th onclick="sortTable(5)">Disaster</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,6 +85,7 @@
                                 <td><% out.print(newRequest.getZipName()); %></td>
                                 <td><% out.print(newRequest.getProductName()); %></td>
                                 <td><% out.print(newRequest.getQuantityRequested() - newRequest.getQuantityFulfilled()); %></td>
+                                <td><% out.print(newRequest.getDateString()); %></td>
                                 <td><% out.print(newRequest.getDisasterName()); %></td>
                                 <% }%>
                         </tbody>

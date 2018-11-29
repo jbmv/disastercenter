@@ -19,7 +19,22 @@ public class Request {
     String zipName;
     String productName;
     String disasterName;
-    float distance;
+    String dateString;
+    
+    
+    public String getDateString() {
+		return dateString;
+	}
+
+	public void setDateString(String dateString) {
+		this.dateString = dateString;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	float distance;
 
     public Request(int requestID) {
         this.requestID = requestID;
@@ -138,4 +153,8 @@ public class Request {
     public void setPriorityReference(PriorityReference priorityReference) {
         this.priorityReference = priorityReference;
     }
+
+
+	
+	
 }

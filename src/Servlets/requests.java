@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -82,6 +83,7 @@ public class requests extends HttpServlet {
 				pst.setString(2, String.valueOf(userLocation.getLongitude()));
 				
 				//query returns: RequestId,r.DisasterEventID,r.UserID,r.ProductID,QuantityRequested,
+				// QuantityFulfilled,PriorityReferenceId,Expired,NeededByDate,l.lattitude,l.longitude,
 				//r.LocationID,streetnum,street,city,p.type as productName," + "d.type as disasterName," + "l.zipcode as zipName, 
 				ResultSet rs = pst.executeQuery();
 
@@ -91,18 +93,20 @@ public class requests extends HttpServlet {
 
 
 				while (rs.next()) {
-					
-					
+
 					Request newRequest = new Request(rs.getInt("RequestID"));
+					
 					Location location = new Location(rs.getInt("LocationID"));
 					location.setStreetNumber(rs.getInt("streetnum"));
 					location.setStreet(rs.getString("street"));
 					location.setCity(rs.getString("city"));
 					location.setZipcodes(rs.getInt("zipName"));
 					newRequest.setLocation(location);
+					
 					Product product = new Product(rs.getInt("ProductID"));
 					product.setProductType(rs.getString("productName"));
 					newRequest.setProduct(product);
+					
 					newRequest.setQuantityRequested(rs.getInt("QuantityRequested"));
 					newRequest.setQuantityFulfilled(rs.getInt("QuantityFulfilled"));
 					newRequest.setExpired(rs.getBoolean("Expired"));
@@ -110,6 +114,12 @@ public class requests extends HttpServlet {
 					newRequest.setDisasterName(rs.getString("disasterName"));
 					newRequest.setProductName(rs.getString("productName"));
 					newRequest.setDistance(rs.getFloat("distance"));
+					
+					SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+					Date date = df.parse(rs.getString("NeededByDate"));
+					String stringDate = df.format(date);
+					newRequest.setNeededByDate(date);
+					newRequest.setDateString(stringDate);
 
 					// append each request to requestList object
 					requestList.addInstance(newRequest);
@@ -122,6 +132,7 @@ public class requests extends HttpServlet {
 
 			} catch (Exception e) {
 				out.print(e);
+				e.printStackTrace();
 			}
 
 		}

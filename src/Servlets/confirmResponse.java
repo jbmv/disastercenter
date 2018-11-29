@@ -110,8 +110,9 @@ public class confirmResponse extends HttpServlet {
 					createNewDonation.setString(2, String.valueOf(user.getUserID()));
 					createNewDonation.setString(3, String.valueOf(newDonation.getProductID()));
 					createNewDonation.executeUpdate();
+					
 					session.setAttribute("splitResponse", "True");
-					session.setAttribute("donationOverflow", createNewDonation);
+					session.setAttribute("donationOverflow", newDonation);
 				}
 				
 				createResponse.setString(1, String.valueOf(newResponse.getQuantitySent()));
