@@ -101,6 +101,7 @@ public class confirmResponse extends HttpServlet {
 					Donation newDonation = new Donation();
 					newDonation.setAmount(newResponse.getQuantitySent() - (currentRequest.getQuantityRequested() - currentRequest.getQuantityFulfilled()));
 					newDonation.setProductID(currentRequest.getProduct().getProdId());
+					newDonation.setProduct(currentRequest.getProduct());
 					// quantity exceeds request so....
 					
 					// we need to create a new donation for the overflow
