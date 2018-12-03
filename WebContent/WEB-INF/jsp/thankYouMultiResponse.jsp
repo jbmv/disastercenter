@@ -54,10 +54,9 @@
 			<h1>Thank you for your donation</h1>
 			</div>
 		<%                    // for every entry in requestList.instances, create one table row
-                                Iterator it = responseList.getInstances().entrySet().iterator();
+                                Iterator it = responseList.getInstances().iterator();
                                 while (it.hasNext()) {
-                                    Map.Entry pair = (Map.Entry) it.next();
-                                    Response newResponse = (Response) responseList.getInstances().get(pair.getKey());
+                                    Response newResponse = (Response) it.next();
                                     System.out.println(newResponse.getRequest().getRequestID());
                                     System.out.println(requestList.getInstances().get(newResponse.getRequest().getRequestID()));
                                 	Request currentRequest = requestList.getInstances().get(String.valueOf(newResponse.getRequest().getRequestID()));

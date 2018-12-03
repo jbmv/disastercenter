@@ -169,8 +169,6 @@ public class confirmDonation extends HttpServlet {
 					session.getAttribute("responseList");
 				}
 				responseList.addInstance(newResponse);
-				session.setAttribute("responseList", responseList);
-
 				
 				if(current.getQuantityRequested() == current.getQuantityFulfilled())
 				{
@@ -193,7 +191,7 @@ public class confirmDonation extends HttpServlet {
 				break;
 			}
 		}
-		
+		session.setAttribute("responseList", responseList);
 		return newDonation;
 	}
 

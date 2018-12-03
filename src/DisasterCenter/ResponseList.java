@@ -5,8 +5,7 @@
  */
 package DisasterCenter;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -14,18 +13,18 @@ import java.util.Map;
  */
 public class ResponseList {
 
-    private Map<String, Response> instances = new HashMap<String, Response>();
+    private List<Response> instances = new ArrayList<Response>(10);
 
-    public Map<String, Response> getInstances() {
+    public List<Response> getInstances() {
         return instances;
     }
 
     public void addInstance(Response response) {
-        instances.put(String.valueOf(response.getResponseID()), response);
+        instances.add(response);
     }
 
     public void removeInstance(Response response) {
-        instances.remove(String.valueOf(response.getResponseID()));
+        instances.remove(response);
     }
 
 }
