@@ -89,15 +89,13 @@ public class confirmRequest extends HttpServlet {
 			Map<String, DisasterEvent> disInst = dList.getInstances();
 			DisasterEvent dEvent = disInst.get(String.valueOf(disID));
 			newRequest.setLocation(dEvent.getLocation());
-            
 			
-
 			//to do, update sql tables with new request
-			pst = conn.prepareStatement(Queries.insNewRequest);
+			PreparedStatement pst = conn.prepareStatement(Queries.insNewRequest);
 			pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
 			pst.setString(2, String.valueOf(newRequest.getQuantityFulfilled()));
 			pst.setString(3, String.valueOf(newRequest.getExpired()));
-			pst.setString(4, String.valueOf(newRequest.getUser.getUserID()));
+			pst.setString(4, String.valueOf(newRequest.getUser().getUserID()));
 			pst.setString(5, String.valueOf(prodId));
 			pst.setString(6, String.valueOf(disID));
 			pst.executeUpdate();
