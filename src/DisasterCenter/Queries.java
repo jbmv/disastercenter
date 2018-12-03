@@ -14,7 +14,9 @@ public class Queries {
 	public static String getUser = (""
 			+ "Select userid,username,password,firstname,lastname,email,phone,u.locationid,lattitude,longitude,streetnum,street,city,zipcode "
 			+ "from user u join location l on u.locationid = l.locationid " + "where username=? and password=?");
-
+    
+	public static String getUserSP = ("Call getUser(?,?)");
+	
 	public static String getRequest =
 			// gets all non-expired requests, calculates distance from user based on lat/lon
 			// algorithm source:
@@ -66,7 +68,9 @@ public class Queries {
 	public static String createNewUserSP = "";
 
 	public static String updateUser = "update user set password = ?, firstname = ?, lastname = ?, email = ?, phone = ? where userid = ?";
-
+    public static String updateUserSP = ("Call updateUser(?,?,?,?,?,?");
+	
+	
 	public static String updateUserLocation = "update location set lattitude = ?, longitude = ?, streetnum = ?, street = ?, city = ?, zipcode = ? where locationid = ?";
 
 	public static String insNewRequest = "insert into Request (QuantityRequested, QuantityFulfilled, Expired, UserId, ProductId, DisasterEventId, NeededByDate, LocationID) values (?, 0, 0, ?, ?, ?, ?, ?)";

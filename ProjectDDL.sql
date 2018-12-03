@@ -243,3 +243,29 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+--------
+DROP PROCEDURE getUser;
+
+DELIMITER //
+CREATE PROCEDURE getUser 
+(IN userna varchar(20), IN pass varchar(20))
+BEGIN
+	SELECT userid,username,password,firstname,lastname,email,phone,u.locationid,lattitude,longitude,streetnum,street,city,zipcode
+	FROM user u join location l on u.locationid = l.locationid
+	WHERE username=userna and password=pass ;
+END // 
+DELIMITER ;
+
+--------
+DROP PROCEDURE updateUser;
+
+DELIMITER //
+CREATE PROCEDURE updateUser
+(IN pass varchar(20), IN firstN varchar(20), IN lastN varchar(20), IN ema varchar(20), IN phon varchar(20), IN uID int)
+BEGIN 
+	UPDATE user SET password = pass, firstname = firstN, lastname = lastN, email = ema, phone = phon
+    WHERE userid = uID;
+END //
+DELIMITER //
+
