@@ -124,6 +124,7 @@ public class confirmDonation extends HttpServlet {
 
 	private Donation CheckCurrentRequests(Donation newDonation, HttpSession session, Connection conn) throws SQLException
 	{
+		ResponseList responseList = new ResponseList();
 		RequestList requestList = (RequestList) session.getAttribute("requestList");
 		Iterator<Request> requests = requestList.getInstances().values().iterator();
 		while(requests.hasNext())
@@ -155,6 +156,7 @@ public class confirmDonation extends HttpServlet {
 				// figure out how to get date newResponse.setProvidedByDate();
 				
 				// save response and update request	in sql
+				responseList.addInstance(newResponse);
 				DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
 				PreparedStatement pst = conn.prepareStatement(Queries.createResponse);
 				pst.setString(1, String.valueOf(newResponse.getQuantitySent()));
@@ -186,7 +188,8 @@ public class confirmDonation extends HttpServlet {
 				break;
 			}
 		}
-
+		
+		session.setAttribute("responseList", responseList);
 		return newDonation;
 	}
 
