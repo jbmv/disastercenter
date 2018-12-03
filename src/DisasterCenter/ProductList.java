@@ -31,7 +31,4 @@ public class ProductList {
     public void removeInstance(Product product) {
         instances.remove(String.valueOf(product.getProdId()));
     }
-    
-    
-
 }
