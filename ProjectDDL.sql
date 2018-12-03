@@ -100,7 +100,6 @@ CREATE TABLE IF NOT EXISTS `Project`.`Request` (
   `ProductId` INT NOT NULL,
   `QuantityRequested` INT NOT NULL,
   `QuantityFulfilled` INT NOT NULL,
-  `PriorityReferenceId` INT NOT NULL,
   `Expired` TINYINT NOT NULL,
   `NeededByDate` DATETIME NOT NULL,
   `LocationId` INT NOT NULL,
