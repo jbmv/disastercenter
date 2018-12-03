@@ -94,9 +94,9 @@ public class confirmRequest extends HttpServlet {
 			PreparedStatement pst = conn.prepareStatement(Queries.insNewRequest);
 			pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
 						
-			pst.setString(4, String.valueOf(newRequest.getUser().getUserID()));
-			pst.setString(5, String.valueOf(prodId));
-			pst.setString(6, String.valueOf(disID));
+			pst.setString(2, String.valueOf(newRequest.getUser().getUserID()));
+			pst.setString(3, String.valueOf(prodId));
+			pst.setString(4, String.valueOf(disID));
 			pst.executeUpdate();
 
 			session.setAttribute("newRequest", newRequest);
