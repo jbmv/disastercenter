@@ -144,8 +144,8 @@ public class confirmDonation extends HttpServlet {
 				if(currentAmt >= amountNeeded)
 				{
 					newDonation.setAmount(currentAmt - amountNeeded);
-					newResponse.setQuantitySent(currentAmt - amountNeeded);
-					current.setQuantityFulfilled(amountNeeded);
+					newResponse.setQuantitySent(amountNeeded);
+					current.setQuantityFulfilled(amountNeeded + current.getQuantityFulfilled());
 				}
 				else
 				{
@@ -165,7 +165,9 @@ public class confirmDonation extends HttpServlet {
 				pst.executeUpdate();
 				
 				if (session.getAttribute("responseList") != null)
+				{
 					session.getAttribute("responseList");
+				}
 				responseList.addInstance(newResponse);
 				session.setAttribute("responseList", responseList);
 
