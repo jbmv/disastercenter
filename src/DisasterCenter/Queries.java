@@ -42,11 +42,12 @@ public class Queries {
 																												
 	public static String setDonation = "insert into Donation (Amount, UserID, ProductId) values (?, ?, ?)";																											// ID +
 																												
-	public static String updateStoredProduct = "update StoredProduct set Quantity = Quantity + ? where StoredProductId = ?";									
-																											
+	public static String updateStoredProduct = "update StoredProduct set Quantity = Quantity + ? where StoredProductId = ?";																																		
 
 	public static String updateRequest = "update Request set QuantityFulfilled = ? where RequestID = ?";																										
+	
 	public static String createResponse = "insert into Response (QuantitySent, RequestId, UserId, ProvidedByDate) values (?,?,?,?)";	
+	
 	public static String updateFulfilledRequestAmount = "update Request set quantityFulfilled = ? where requestId = ?";																											// null
 
 	public static String getDisasters = "select disastereventid,type,location,startdate,lattitude,longitude,zipcode from DisasterEvent d join location l on d.location = l.locationid";
@@ -58,8 +59,11 @@ public class Queries {
 	public static String getNewUser = "select username from user where username = ?";
 
 	public static String createNewUserLocation = "insert into location (lattitude,longitude,streetnum,street,city,zipcode) values (?,?,?,?,?,?)";
+	
 	public static String getNewUserLocation = "select locationid from location where lattitude = ? and longitude = ? and streetnum = ?";
+	
 	public static String createNewUser = "insert into user (username,password,firstname,lastname,email,phone,locationid,failedloginattempts) values (?,?,?,?,?,?,?,0)";
+	public static String createNewUserSP = ""
 
 	public static String updateUser = "update user set password = ?, firstname = ?, lastname = ?, email = ?, phone = ? where userid = ?";
 
