@@ -44,7 +44,7 @@ public class Queries {
 																												
 	public static String setDonation = "insert into Donation (Amount, UserID, ProductId) values (?, ?, ?)";																											// ID +
 																												
-	public static String updateStoredProduct = "update StoredProduct set Quantity = Quantity + ? where StoredProductId = ?";																																		
+	public static String updateStoredProduct = "update StoredProduct set Quantity = Quantity + ? where ProductId = ?";																																		
 
 	public static String updateRequest = "update Request set QuantityFulfilled = ? where RequestID = ?";																										
 	

@@ -86,20 +86,18 @@
 			
 			<div class="w3-container w3-aqua">
 			<h2>Your quantity donated exceeded the quantity for this request. 
-			To create a donation for this amount, click create donation below.
-			This donation may be automatically matched to another request.</h2>
+			A new donation with the excess quantity has been created.
+			When a request for this product is created, you will be notified.</h2>
 			
 
-
-			<form action="confirmDonation" method="POST">
 			<input type="hidden" id="productID" name="productID" value="<%= newDonation.getProductID() %>">
 			<label for="productID">Product</label>
 			<input type="text" id="productName" name="productName" value="<%= newDonation.getProduct().getProdType() %>" readonly>
 			<label for="quantity">Quantity Donating</label>
 			<input type="text" id="quantity" name="quantity" value="<%= newDonation.getAmount() %>" readonly>
-			<input type="submit" value="Create This Donation">
 
-</form>
+
+
 	</div>
 </body>
 </html>
