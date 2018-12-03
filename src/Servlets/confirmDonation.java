@@ -102,7 +102,7 @@ public class confirmDonation extends HttpServlet {
 				pst.executeUpdate();
 				
 				session.setAttribute("newDonation", newDonation);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/donationConfirmation.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/thankYouMultiResponse.jsp");
 				dispatcher.forward(request, response);
 			}
 
@@ -156,7 +156,6 @@ public class confirmDonation extends HttpServlet {
 				// figure out how to get date newResponse.setProvidedByDate();
 				
 				// save response and update request	in sql
-				responseList.addInstance(newResponse);
 				DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
 				PreparedStatement pst = conn.prepareStatement(Queries.createResponse);
 				pst.setString(1, String.valueOf(newResponse.getQuantitySent()));
@@ -164,16 +163,19 @@ public class confirmDonation extends HttpServlet {
 				pst.setString(3, String.valueOf(newResponse.getUser().getUserID()));
 				pst.setString(4, String.valueOf(df.format(newResponse.getProvidedByDate())));
 				pst.executeUpdate();
+				
+				if (session.getAttribute("responseList") != null)
+					session.getAttribute("responseList");
+				responseList.addInstance(newResponse);
+				session.setAttribute("responseList", responseList);
 
+				
 				if(current.getQuantityRequested() == current.getQuantityFulfilled())
 				{
 					pst = conn.prepareStatement(Queries.updateFulfilledRequestAmount);
 					pst.setString(1, String.valueOf(current.getQuantityFulfilled()));
 					pst.setString(2, String.valueOf(current.getRequestID()));
 					pst.executeUpdate();
-
-					//remove from the requestList if fulfilled ??
-					requestList.removeInstance(current);
 				}
 				else
 				{
@@ -182,6 +184,7 @@ public class confirmDonation extends HttpServlet {
 					pst.setString(2, String.valueOf(current.getRequestID()));
 					pst.executeUpdate();
 				}
+				
 			}
 			if(newDonation.getAmount() == 0)
 			{
@@ -189,7 +192,6 @@ public class confirmDonation extends HttpServlet {
 			}
 		}
 		
-		session.setAttribute("responseList", responseList);
 		return newDonation;
 	}
 

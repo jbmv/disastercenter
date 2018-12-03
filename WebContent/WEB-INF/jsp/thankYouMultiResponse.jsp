@@ -21,7 +21,7 @@
 			+ currentRequest.getLocation().getZipcode();  */
 	ResponseList responseList = (ResponseList) session.getAttribute("responseList");
 	RequestList requestList = (RequestList) session.getAttribute("requestList");
-	
+	System.out.println(requestList);
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -58,7 +58,9 @@
                                 while (it.hasNext()) {
                                     Map.Entry pair = (Map.Entry) it.next();
                                     Response newResponse = (Response) responseList.getInstances().get(pair.getKey());
-                                	Request currentRequest = requestList.getInstances().get(newResponse.getRequest().getRequestID());
+                                    System.out.println(newResponse.getRequest().getRequestID());
+                                    System.out.println(requestList.getInstances().get(newResponse.getRequest().getRequestID()));
+                                	Request currentRequest = requestList.getInstances().get(String.valueOf(newResponse.getRequest().getRequestID()));
                                 	String address = "Disaster Center\n" + currentRequest.getLocation().getStreetNumber() + " "
                                 			+ currentRequest.getLocation().getStreet() + "\n"
                                 			+ currentRequest.getLocation().getCity() + " " 
