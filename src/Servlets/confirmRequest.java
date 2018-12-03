@@ -78,11 +78,11 @@ public class confirmRequest extends HttpServlet {
 
             newRequest.setUser((User) session.getAttribute("user"));
             
-			int prodId = request.getParamter("productId");
+			int prodId = Integer.valueOf(request.getParameter("productId"));
 			ProductList pList = (ProductList) session.getAttribute("productList");
 			newRequest.setProduct(pList.getProductByID(String.valueOf(prodId)));
 
-            int disID = request.getParameter("disaster");
+            int disID = Integer.valueOf(request.getParameter("disaster"));
 			DisasterList dList = (DisasterList) session.getAttribute("disasterList");
 			Map<String, DisasterEvent> disInst = dList.getInstances();
 			DisasterEvent dEvent = disInst.get(String.valueOf(disID));
