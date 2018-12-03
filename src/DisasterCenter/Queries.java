@@ -17,6 +17,8 @@ public class Queries {
     
 	public static String getUserSP = ("Call getUser(?,?)");
 	
+	//
+	
 	public static String getRequest =
 			// gets all non-expired requests, calculates distance from user based on lat/lon
 			// algorithm source:
