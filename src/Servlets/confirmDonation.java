@@ -91,8 +91,8 @@ public class confirmDonation extends HttpServlet {
 			{
 				pst = conn.prepareStatement(Queries.setDonation);
 				pst.setString(1, String.valueOf(newDonation.getAmount()));
-				pst.setString(2, String.valueOf(newDonation.getProductID()));
-				pst.setString(3, String.valueOf(newDonation.getUser().getUserID()));
+				pst.setString(2, String.valueOf(newDonation.getUser().getUserID()));
+				pst.setString(3, String.valueOf(newDonation.getProductID()));
 				pst.executeUpdate();
 				
 				pst = conn.prepareStatement(Queries.updateStoredProduct);
