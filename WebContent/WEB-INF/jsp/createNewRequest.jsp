@@ -98,7 +98,8 @@
                     <label for="quantity">Quantity Requesting</label>
                     <input type="text" id="quantity" name="quantity" placeholder="Enter Quantity">
 
-
+                    <label for="neededBy">Date needed by (YYYY-MM-DD)</label>
+                    <input type="text" id="neededBy" name="neededBy" placeholder="Enter date needed by">
 
 
                     <input type="submit" value="Submit">
