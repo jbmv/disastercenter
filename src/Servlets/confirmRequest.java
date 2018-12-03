@@ -80,7 +80,7 @@ public class confirmRequest extends HttpServlet {
 			//to do, update sql tables with new request
 
 			session.setAttribute("newRequest", newRequest);
-            // which page do we move to next?
+            // move to thank you for request
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/donationConfirmation.jsp");
 			dispatcher.forward(request, response);
 
@@ -91,4 +91,5 @@ public class confirmRequest extends HttpServlet {
 
 	}
 
- 
+
+} 
