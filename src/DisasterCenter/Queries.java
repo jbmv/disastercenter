@@ -65,6 +65,6 @@ public class Queries {
 
 	public static String updateUserLocation = "update location set lattitude = ?, longitude = ?, streetnum = ?, street = ?, city = ?, zipcode = ? where locationid = ?";
 
-	public static String insNewRequest = "insert into Request (QuantityRequested, QuantityFulfilled, Expired, UserId, ProductId, DisasterEventId) values (?, 0, 0, ?, ?, ?)";
+	public static String insNewRequest = "insert into Request (QuantityRequested, QuantityFulfilled, Expired, UserId, ProductId, DisasterEventId, NeededByDate) values (?, 0, 0, ?, ?, ?, ?)";
 
 }
