@@ -20,7 +20,7 @@ public class Queries {
 			// algorithm source:
 			// http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
 			("" + "SELECT RequestId,r.DisasterEventID,r.UserID,r.ProductID,QuantityRequested,"
-					+ "QuantityFulfilled,PriorityReferenceId,Expired,NeededByDate,l.lattitude,l.longitude, "
+					+ "QuantityFulfilled,Expired,NeededByDate,l.lattitude,l.longitude, "
 					+ "r.LocationID,streetnum,street,city,p.type as productName," + "d.type as disasterName," + "l.zipcode as zipName, "
 					+ "111.045* DEGREES(ACOS(COS(RADIANS(userLat))" + "                 * COS(RADIANS(l.lattitude))"
 					+ "                 * COS(RADIANS(userLon) - RADIANS(l.longitude))"
@@ -65,6 +65,6 @@ public class Queries {
 
 	public static String updateUserLocation = "update location set lattitude = ?, longitude = ?, streetnum = ?, street = ?, city = ?, zipcode = ? where locationid = ?";
 
-	public static String insNewRequest = "insert into Request (QuantityRequested, QuantityFulfilled, Expired, UserId, ProductId, DisasterEventId, NeededByDate) values (?, 0, 0, ?, ?, ?, ?)";
+	public static String insNewRequest = "insert into Request (QuantityRequested, QuantityFulfilled, Expired, UserId, ProductId, DisasterEventId, NeededByDate, LocationID) values (?, 0, 0, ?, ?, ?, ?, ?)";
 
 }
