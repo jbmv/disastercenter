@@ -145,8 +145,8 @@ public class confirmDonation extends HttpServlet {
 				else
 				{
 					newDonation.setAmount(0);
-					newResponse.setQuantitySent(amountNeeded - currentAmt);
-					current.setQuantityFulfilled(amountNeeded - currentAmt + current.getQuantityFulfilled());
+					newResponse.setQuantitySent(currentAmt);
+					current.setQuantityFulfilled(currentAmt + current.getQuantityFulfilled());
 				}
 				// figure out how to get date newResponse.setProvidedByDate();
 				
