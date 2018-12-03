@@ -69,6 +69,7 @@ public class confirmRequest extends HttpServlet {
 			
 			Request newRequest = new Request();
             newRequest.setQuantityRequested(Integer.valueOf(request.getParameter("quantity")));
+			newRequest.setQuantityFulfilled(0);
 			newRequest.setExpired(false);
 			
 			String date = request.getParameter("neededBy");
@@ -83,6 +84,7 @@ public class confirmRequest extends HttpServlet {
 			newRequest.setProduct(pList.getProductByID(String.valueOf(prodId)));
 
             int disID = Integer.valueOf(request.getParameter("disaster"));
+			newRequest.setDisasterEventID(disID);
 			DisasterList dList = (DisasterList) session.getAttribute("disasterList");
 			Map<String, DisasterEvent> disInst = dList.getInstances();
 			DisasterEvent dEvent = disInst.get(String.valueOf(disID));
@@ -91,6 +93,14 @@ public class confirmRequest extends HttpServlet {
 			
 
 			//to do, update sql tables with new request
+			pst = conn.prepareStatement(Queries.insNewRequest);
+			pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
+			pst.setString(2, String.valueOf(newRequest.getQuantityFulfilled()));
+			pst.setString(3, String.valueOf(newRequest.getExpired()));
+			pst.setString(4, String.valueOf(newRequest.getUser.getUserID()));
+			pst.setString(5, String.valueOf(prodId));
+			pst.setString(6, String.valueOf(disID));
+			pst.executeUpdate();
 
 			session.setAttribute("newRequest", newRequest);
             // move to thank you for request
