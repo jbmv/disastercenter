@@ -64,4 +64,7 @@ public class Queries {
 	public static String updateUser = "update user set password = ?, firstname = ?, lastname = ?, email = ?, phone = ? where userid = ?";
 
 	public static String updateUserLocation = "update location set lattitude = ?, longitude = ?, streetnum = ?, street = ?, city = ?, zipcode = ? where locationid = ?";
+
+	public static String insNewRequest = "insert into Request (QuantityRequested, QuantityFulfilled, Expired, User_UserId, Product_ProductId, DisasterEvent_DisasterEventId) values (?, ?, ?, ?, ?, ?)";
+
 }
