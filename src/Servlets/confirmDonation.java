@@ -143,7 +143,7 @@ public class confirmDonation extends HttpServlet {
 				if(currentAmt >= amountNeeded)
 				{
 					newDonation.setAmount(currentAmt - amountNeeded);
-					newResponse.setQuantitySent(amountNeeded);
+					newResponse.setQuantitySent(currentAmt - amountNeeded);
 					current.setQuantityFulfilled(amountNeeded);
 				}
 				else
