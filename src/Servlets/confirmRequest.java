@@ -14,8 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Iterator;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -70,14 +69,18 @@ public class confirmRequest extends HttpServlet {
 			
 			Request newRequest = new Request();
             newRequest.setQuantityRequested(Integer.valueOf(request.getParameter("quantity")));
-            newRequest.setExpired(false);
-            String date = request.getParameter("neededBy");
-			newRequest.setNeededByDate();
+			newRequest.setExpired(false);
+			
+			String date = request.getParameter("neededBy");
+			DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+			Date neededBy = dateFormat.parse(date);
+			newRequest.setNeededByDate(neededBy);
+
             newRequest.setUser((User) session.getAttribute("user"));
             
 			int prodId = request.getParamter("productId");
 			ProductList pList = (ProductList) session.getAttribute("productList");
-			newRequest.setProduct(pList.getProductById(String.valueOf(prodId)));
+			newRequest.setProduct(pList.getProductByID(String.valueOf(prodId)));
 
             int disID = request.getParameter("disaster");
 			DisasterList dList = (DisasterList) session.getAttribute("disasterList");

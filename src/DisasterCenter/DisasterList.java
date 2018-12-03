@@ -17,7 +17,7 @@ public class DisasterList {
     private Map<String, DisasterEvent> instances = new HashMap<String, DisasterEvent>();
 
     public Map<String, DisasterEvent> getInstances() {
-        return instances;
+        return this.instances;
     }
 
     public void addInstance(DisasterEvent disaster) {
