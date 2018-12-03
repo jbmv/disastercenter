@@ -79,8 +79,9 @@ public class confirmDonation extends HttpServlet {
 			// need the product name for display on donationConfirmation.jsp
 			ProductList productList = (ProductList) session.getAttribute("productList");
 			if (newDonation.getProduct() == null) 
-				newDonation.setProduct(productList.getProductByID(String.valueOf(newDonation.getProductID())));
-			
+			{
+					newDonation.setProduct(productList.getProductByID(String.valueOf(newDonation.getProductID())));
+			}
 
 
 			newDonation = CheckCurrentRequests(newDonation, session, conn);
@@ -131,7 +132,6 @@ public class confirmDonation extends HttpServlet {
 				Response newResponse = new Response();
 				newResponse.setUser((User) session.getAttribute("user"));
 				newResponse.setRequest(current);
-				
 
 				Calendar calendar = Calendar.getInstance();
 				newResponse.setProvidedByDate(calendar.getTime());
@@ -146,7 +146,7 @@ public class confirmDonation extends HttpServlet {
 				{
 					newDonation.setAmount(0);
 					newResponse.setQuantitySent(amountNeeded - currentAmt);
-					current.setQuantityFulfilled(amountNeeded - currentAmt);
+					current.setQuantityFulfilled(amountNeeded - currentAmt + current.getQuantityFulfilled());
 				}
 				// figure out how to get date newResponse.setProvidedByDate();
 				
