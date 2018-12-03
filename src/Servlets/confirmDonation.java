@@ -100,6 +100,10 @@ public class confirmDonation extends HttpServlet {
 				pst.setString(2, String.valueOf(newDonation.getProductID()));
 
 				pst.executeUpdate();
+				
+				session.setAttribute("newDonation", newDonation);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/donationConfirmation.jsp");
+				dispatcher.forward(request, response);
 			}
 
 			// TODO add db update code here
@@ -107,7 +111,7 @@ public class confirmDonation extends HttpServlet {
 			// ... concurrency
 
 			session.setAttribute("newDonation", newDonation);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/donationConfirmation.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/thankYouMultiResponse.jsp");
 			dispatcher.forward(request, response);
 
 		} catch (Exception e) {
