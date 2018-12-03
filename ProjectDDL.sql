@@ -243,3 +243,37 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+DROP PROCEDURE CREATE_USER;
+DROP PROCEDURE UPDATE_USER;
+DROP PROCEDURE CREATE_LOCATION;
+DROP PROCEDURE CREATE_DONATION;
+
+DELIMITER //
+CREATE PROCEDURE CREATE_USER
+(IN usr CHAR(20), pass CHAR(20), fname CHAR(20), lname CHAR(20), email CHAR(20), phone CHAR(20), locationid INT, failedlogin INT)
+BEGIN
+	INSERT INTO USER(Username, Password, FirstName, LastName, Email, Phone, LocationId, FailedLoginAttempts) VALUES(usr, pass, fname, lname, email, phone, locationid, failedlogin);
+END //
+
+CREATE PROCEDURE UPDATE_USER
+(IN usr CHAR(20), pass CHAR(20), fname CHAR(20), lname CHAR(20), email CHAR(20), phone CHAR(20), locationid INT)
+BEGIN
+	UPDATE USER SET Password = pass, FirstName = fname, LastName = lname, Email = email, Phone = phone, LocationId = locationid WHERE Username = usr;
+END //
+
+CREATE PROCEDURE CREATE_LOCATION
+(IN lat FLOAT, lon FLOAT, streetnum INT, street CHAR(20), city CHAR(20), zip int)
+BEGIN
+	IF (SELECT COUNT(*) FROM LOCATION WHERE Lattitude = lat AND Longitude = lon) < 1 
+		THEN INSERT INTO LOCATION(Lattitude, Longitude, StreetNum, Street, City, Zipcode) VALUES(lat, lon, streetnum, street, city, zip);
+	END IF;
+END //
+
+CREATE PROCEDURE CREATE_DONATION
+(IN productid INT, amount INT, userid INT)
+BEGIN
+	INSERT INTO DONATION(ProductId, Amount, UserId) VALUES(productid, amount, userid);
+END //
+DELIMITER ;
