@@ -93,8 +93,7 @@ public class confirmRequest extends HttpServlet {
 			//to do, update sql tables with new request
 			PreparedStatement pst = conn.prepareStatement(Queries.insNewRequest);
 			pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
-			pst.setString(2, String.valueOf(newRequest.getQuantityFulfilled()));
-			pst.setString(3, String.valueOf(newRequest.getExpired()));
+						
 			pst.setString(4, String.valueOf(newRequest.getUser().getUserID()));
 			pst.setString(5, String.valueOf(prodId));
 			pst.setString(6, String.valueOf(disID));
