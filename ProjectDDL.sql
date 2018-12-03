@@ -243,7 +243,6 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-<<<<<<< HEAD
 
 <<<<<<< HEAD
 --------
@@ -306,5 +305,3 @@ BEGIN
 END //
 DELIMITER ;
 >>>>>>> branch 'master' of https://github.com/jbmv/disastercenter.git
-=======
->>>>>>> parent of 637b912... Merge branch 'master' of https://github.com/jbmv/disastercenter.git
