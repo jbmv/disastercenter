@@ -6,15 +6,21 @@
 
 
 <%@page import="DisasterCenter.Response"%>
+<%@page import="DisasterCenter.ResponseList"%>
+<%@page import="DisasterCenter.RequestList"%>
 <%@page import="DisasterCenter.Request"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.Iterator"%>
 <%
 	//import java objects from HTTP session
-	Request currentRequest = (Request) session.getAttribute("currentRequest");
+/* 	Request currentRequest = (Request) session.getAttribute("currentRequest");
 	Response newResponse = (Response) session.getAttribute("newResponse");
 	String address = "Disaster Center\n" + currentRequest.getLocation().getStreetNumber() + " "
 			+ currentRequest.getLocation().getStreet() + "\n"
 			+ currentRequest.getLocation().getCity() + " " 
-			+ currentRequest.getLocation().getZipcode(); 
+			+ currentRequest.getLocation().getZipcode();  */
+	ResponseList responseList = (ResponseList) session.getAttribute("responseList");
+	RequestList requestList = (RequestList) session.getAttribute("requestList");
 	
 %>
 
@@ -47,11 +53,24 @@
 		<div class="w3-container w3-teal">
 			<h1>Thank you for your donation</h1>
 			</div>
+		<%                    // for every entry in requestList.instances, create one table row
+                                Iterator it = responseList.getInstances().entrySet().iterator();
+                                while (it.hasNext()) {
+                                    Map.Entry pair = (Map.Entry) it.next();
+                                    Response newResponse = (Response) responseList.getInstances().get(pair.getKey());
+                                	Request currentRequest = requestList.getInstances().get(newResponse.getRequest().getRequestID());
+                                	String address = "Disaster Center\n" + currentRequest.getLocation().getStreetNumber() + " "
+                                			+ currentRequest.getLocation().getStreet() + "\n"
+                                			+ currentRequest.getLocation().getCity() + " " 
+                                			+ currentRequest.getLocation().getZipcode(); 
+         
+         %>
 			<div class="w3-container w3-deep-orange">
 			<h2>Please send the donation of <% out.print(newResponse.getQuantitySent()); %> <% out.print(currentRequest.getProductName()); %> to...</h2>
 			<textarea label="address" type="text"cols="40" rows="5" readonly><% out.print(address); %></textarea>
 			<h2><% out.print(currentRequest.getDateString() != null ? "...by " + currentRequest.getDateString() : "... as soon as possible."); %></h2>
 			</div>
+			<% } %>
 
 	</div>
 </body>
