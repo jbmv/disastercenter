@@ -20,12 +20,12 @@ public class ResponseList {
         return instances;
     }
 
-    public void addInstance(Response request) {
-        instances.put(String.valueOf(request.getResponseID()), request);
+    public void addInstance(Response response) {
+        instances.put(String.valueOf(response.getResponseID()), response);
     }
 
-    public void removeInstance(Response request) {
-        instances.remove(String.valueOf(request.getResponseID()));
+    public void removeInstance(Response response) {
+        instances.remove(String.valueOf(response.getResponseID()));
     }
 
 }

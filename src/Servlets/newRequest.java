@@ -94,6 +94,7 @@ public class newRequest extends HttpServlet {
 				location.setLatitude(rs.getLong("lattitude"));
 				location.setLongitude(rs.getLong("longitude"));
 				location.setZipcodes(rs.getInt("zipcode"));
+				location.setlocationID(rs.getInt("location"));
 				disaster.setDisasterEventID(rs.getInt("disastereventid"));
 				disaster.setLocation(location);
 				disaster.setType(rs.getString("type"));
