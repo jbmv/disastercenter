@@ -6,6 +6,7 @@
 
 
 <%@page import="DisasterCenter.Response"%>
+<%@page import="DisasterCenter.Donation"%>
 <%@page import="DisasterCenter.ResponseList"%>
 <%@page import="DisasterCenter.RequestList"%>
 <%@page import="DisasterCenter.Request"%>
@@ -21,7 +22,7 @@
 			+ currentRequest.getLocation().getZipcode();  */
 	ResponseList responseList = (ResponseList) session.getAttribute("responseList");
 	RequestList requestList = (RequestList) session.getAttribute("requestList");
-	System.out.println(requestList);
+	Donation newDonation = (Donation) session.getAttribute("newDonation");
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -37,7 +38,35 @@
             border-radius: 4px;
             box-sizing: border-box;
             resize: none;
+            
         }
+            
+            input[type=text], select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        
+        
      </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -53,7 +82,8 @@
 		<div class="w3-container w3-teal">
 			<h1>Thank you for your donation</h1>
 			</div>
-		<%                    // for every entry in requestList.instances, create one table row
+		<%                    
+					if (responseList != null) {
                                 Iterator it = responseList.getInstances().iterator();
                                 while (it.hasNext()) {
                                     Response newResponse = (Response) it.next();
@@ -71,7 +101,6 @@
 			<textarea label="address" type="text"cols="40" rows="5" readonly><% out.print(address); %></textarea>
 			<h2><% out.print(currentRequest.getDateString() != null ? "...by " + currentRequest.getDateString() : "... as soon as possible."); %></h2>
 			</div>
-<<<<<<< HEAD
 			<% } } %>
 			
 			<% if (newDonation != null) {
@@ -95,9 +124,6 @@
 				
 				<% } %>
 			
-=======
-			<% } %>
->>>>>>> parent of 7357e0c... Merge branch 'master' of https://github.com/jbmv/disastercenter
 
 	</div>
 </body>
