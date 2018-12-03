@@ -98,6 +98,7 @@ public class confirmRequest extends HttpServlet {
 			pst.setString(3, String.valueOf(prodId));
 			pst.setString(4, String.valueOf(disID));
 			pst.setString(5, dateFormat.format(neededBy));
+			pst.setString(6, String.valueOf(newRequest.getLocation().getLocationID()))
 			pst.executeUpdate();
 
 			session.setAttribute("newRequest", newRequest);
