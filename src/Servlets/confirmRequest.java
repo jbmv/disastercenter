@@ -71,11 +71,21 @@ public class confirmRequest extends HttpServlet {
 			Request newRequest = new Request();
             newRequest.setQuantityRequested(Integer.valueOf(request.getParameter("quantity")));
             newRequest.setExpired(false);
-            // newRequest.setNeededByDate()  didn't see this input in jsp file
+            String date = request.getParameter("neededBy");
+			newRequest.setNeededByDate();
             newRequest.setUser((User) session.getAttribute("user"));
-            newRequest.setProduct(new Product(request.getParameter("productId")));
-            newRequest.setLocation(new Location());
-            // how should i set other attribute/do I need to?
+            
+			int prodId = request.getParamter("productId");
+			ProductList pList = (ProductList) session.getAttribute("productList");
+			newRequest.setProduct(pList.getProductById(String.valueOf(prodId)));
+
+            int disID = request.getParameter("disaster");
+			DisasterList dList = (DisasterList) session.getAttribute("disasterList");
+			Map<String, DisasterEvent> disInst = dList.getInstances();
+			DisasterEvent dEvent = disInst.get(String.valueOf(disID));
+			newRequest.setLocation(dEvent.getLocation());
+            
+			
 
 			//to do, update sql tables with new request
 
