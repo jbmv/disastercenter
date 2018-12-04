@@ -23,6 +23,8 @@
 	ResponseList responseList = (ResponseList) session.getAttribute("responseList");
 	RequestList requestList = (RequestList) session.getAttribute("requestList");
 	Donation newDonation = (Donation) session.getAttribute("newDonation");
+	System.out.println(newDonation.getProductID());
+	System.out.println(newDonation.getProduct().getProdType());
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -87,8 +89,8 @@
                                 Iterator it = responseList.getInstances().iterator();
                                 while (it.hasNext()) {
                                     Response newResponse = (Response) it.next();
-                                    System.out.println(newResponse.getRequest().getRequestID());
-                                    System.out.println(requestList.getInstances().get(newResponse.getRequest().getRequestID()));
+                                    // System.out.println(newResponse.getRequest().getRequestID());
+                                    // System.out.println(requestList.getInstances().get(newResponse.getRequest().getRequestID()));
                                 	Request currentRequest = requestList.getInstances().get(String.valueOf(newResponse.getRequest().getRequestID()));
                                 	String address = "Disaster Center\n" + currentRequest.getLocation().getStreetNumber() + " "
                                 			+ currentRequest.getLocation().getStreet() + "\n"
@@ -101,11 +103,12 @@
 			<textarea label="address" type="text"cols="40" rows="5" readonly><% out.print(address); %></textarea>
 			<h2><% out.print(currentRequest.getDateString() != null ? "...by " + currentRequest.getDateString() : "... as soon as possible."); %></h2>
 			</div>
+			<br>
 			<% } } %>
 			
-			<% if (newDonation != null) {
+			<% if (newDonation != null && newDonation.getAmount() != 0) {
 				%>
-				
+			<br>
 			<div class="w3-container w3-aqua">
 			<h2>Your quantity donated exceeded the quantity for this request. 
 			A new donation with the excess quantity has been created.
@@ -121,6 +124,7 @@
 
 
 	</div>
+	<br><br>
 				
 				<% } %>
 			

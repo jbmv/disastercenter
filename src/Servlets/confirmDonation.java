@@ -52,6 +52,7 @@ public class confirmDonation extends HttpServlet {
 			// user not logged in, forward to login page
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.html");
 			dispatcher.forward(request, response);
+			return;
 		}
 
 		/* TODO still need to finish this servlet */
@@ -87,10 +88,7 @@ public class confirmDonation extends HttpServlet {
 			System.out.println("getting product object for productID" + newDonation.getProductID());
 			// need the product name for display on donationConfirmation.jsp
 			ProductList productList = (ProductList) session.getAttribute("productList");
-			if (newDonation.getProduct() == null) 
-			{
-					newDonation.setProduct(productList.getProductByID(String.valueOf(newDonation.getProductID())));
-			}
+			newDonation.setProduct(productList.getProductByID(String.valueOf(newDonation.getProductID())));
 
 			newDonation = CheckCurrentRequests(newDonation, session, conn);
 
@@ -112,6 +110,7 @@ public class confirmDonation extends HttpServlet {
 				session.setAttribute("newDonation", newDonation);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/thankYouMultiResponse.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
 
 			// TODO add db update code here
@@ -121,6 +120,7 @@ public class confirmDonation extends HttpServlet {
 			session.setAttribute("newDonation", newDonation);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/thankYouMultiResponse.jsp");
 			dispatcher.forward(request, response);
+			return;
 
 		} catch (Exception e) {
 			PrintWriter out = response.getWriter();
