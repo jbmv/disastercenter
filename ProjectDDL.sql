@@ -206,7 +206,6 @@ CREATE TABLE IF NOT EXISTS `Project`.`Donation` (
   `Amount` INT NOT NULL,
   `UserId` INT NOT NULL,
   PRIMARY KEY (`DonationId`),
-  UNIQUE INDEX `ProductName_UNIQUE` (`ProductId` ASC) VISIBLE,
   INDEX `UserId_idx` (`UserId` ASC) VISIBLE,
   CONSTRAINT `ProductIdDonation`
     FOREIGN KEY (`ProductId`)

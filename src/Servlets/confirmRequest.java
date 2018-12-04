@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -107,10 +108,13 @@ public class confirmRequest extends HttpServlet {
 			pst.executeUpdate();
 
 			// check stored product for the requested item
-			ResetRequestsList();
+			ResetRequestsList(session, conn);
 
-			RequestList rlist = session.getAttribute("requestList").getInstances().iterator();
-
+			Iterator<Request> rlist = ((RequestList) session.getAttribute("requestList")).getInstances().values().iterator();
+			while(rlist.hasNext())
+			{
+				newRequest = rlist.next();
+			}
 
 
 			StoredProduct storedProduct = new StoredProduct();
@@ -133,6 +137,7 @@ public class confirmRequest extends HttpServlet {
 					pst = conn.prepareStatement(Queries.createResponse);
 					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
 					pst.setString(2, String.valueOf(newRequest.getRequestID()));
+					System.out.println(String.valueOf(newRequest.getRequestID()));
 					pst.setString(3, String.valueOf(1));
 					DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
 					Calendar calendar = Calendar.getInstance();
@@ -187,7 +192,7 @@ public class confirmRequest extends HttpServlet {
 
 	}
 
-	private void ResetRequestsList(HttpSession session, Connection conn)
+	private void ResetRequestsList(HttpSession session, Connection conn) throws SQLException, ParseException
 	{
 		Location userLocation = (Location) session.getAttribute("userLocation");
 		// first, expire any old requests before displaying requests
