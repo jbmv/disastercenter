@@ -23,6 +23,8 @@
 	ResponseList responseList = (ResponseList) session.getAttribute("responseList");
 	RequestList requestList = (RequestList) session.getAttribute("requestList");
 	Donation newDonation = (Donation) session.getAttribute("newDonation");
+	System.out.println(newDonation.getProductID());
+	System.out.println(newDonation.getProduct().getProdType());
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -87,8 +89,8 @@
                                 Iterator it = responseList.getInstances().iterator();
                                 while (it.hasNext()) {
                                     Response newResponse = (Response) it.next();
-                                    System.out.println(newResponse.getRequest().getRequestID());
-                                    System.out.println(requestList.getInstances().get(newResponse.getRequest().getRequestID()));
+                                    // System.out.println(newResponse.getRequest().getRequestID());
+                                    // System.out.println(requestList.getInstances().get(newResponse.getRequest().getRequestID()));
                                 	Request currentRequest = requestList.getInstances().get(String.valueOf(newResponse.getRequest().getRequestID()));
                                 	String address = "Disaster Center\n" + currentRequest.getLocation().getStreetNumber() + " "
                                 			+ currentRequest.getLocation().getStreet() + "\n"
