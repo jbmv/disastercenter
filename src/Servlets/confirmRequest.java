@@ -168,12 +168,12 @@ public class confirmRequest extends HttpServlet {
 					pst.executeUpdate();
 
 					pst = conn.prepareStatement(Queries.updateRequest);
-					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
+					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()-storedAmt));
 					pst.setString(2, String.valueOf(newRequest.getRequestID()));
 					pst.executeUpdate();
 
 					pst = conn.prepareStatement(Queries.updateStoredProduct);
-					pst.setString(1, String.valueOf(0));
+					pst.setString(1, String.valueOf(-1*storedAmt));
 					pst.setString(2, String.valueOf(storedProduct.getProductId()));
 					pst.executeUpdate();
 				}
