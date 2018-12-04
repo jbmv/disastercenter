@@ -130,13 +130,13 @@ public class confirmDonation extends HttpServlet {
 
 	}
 
-	private int CreateNewProduct(String productType, HttpSession session, Connection conn)
+	private int CreateNewProduct(String productType, HttpSession session, Connection conn) throws SQLException
 	{
 		// insert product into product table and stored product table
 		PreparedStatement pst = conn.prepareStatement(Queries.createProduct);
 		pst.setString(1, productType);
 		ResultSet rs = pst.executeQuery();
-		int newProductId;
+		int newProductId = -1;
 		while(rs.next())
 		{
 			newProductId = rs.getInt("productID");

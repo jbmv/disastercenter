@@ -38,7 +38,7 @@ public class Queries {
 
 	public static String correctUserLogin = "update user set lastlogin = ?, failedloginattempts = 0 where username = ?";
 
-	public static String createProduct = "Call CREATE_PRODUCT ('?', @output); select @output as productID;";
+	public static String createProduct = "Call CREATE_PRODUCT (?, @output); select @output as productID";
 
 	public static String incorrectUserLogin = "update user set failedloginattempts = failedloginattempts + 1 where username = ?";
 
