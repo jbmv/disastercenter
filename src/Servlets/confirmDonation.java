@@ -80,7 +80,7 @@ public class confirmDonation extends HttpServlet {
 			int productId = Integer.valueOf(request.getParameter("productID"));
 			if(productId == -1)
 			{
-				productId = CreateNewProduct(request.getParameter("other"));
+				productId = CreateNewProduct(request.getParameter("other"), session, conn);
 			}
 
 			newDonation.setProductID(productId);
@@ -141,7 +141,7 @@ public class confirmDonation extends HttpServlet {
 		{
 			newProductId = rs.getInt("productID");
 		}
-		ProductList productList = session.getAttribute("productList");
+		ProductList productList = (ProductList) session.getAttribute("productList");
 		Product newProduct = new Product(newProductId);
 		newProduct.setProductType(productType);
 		productList.addInstance(newProduct);
