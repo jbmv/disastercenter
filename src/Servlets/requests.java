@@ -75,9 +75,6 @@ public class requests extends HttpServlet {
 				PreparedStatement pst = conn.prepareStatement(Queries.expireOldRequests);
 				pst.executeUpdate();
 				
-				
-				
-				
 				pst = conn.prepareStatement(Queries.getRequest);
 				pst.setString(1, String.valueOf(userLocation.getLatitude()));
 				pst.setString(2, String.valueOf(userLocation.getLongitude()));
@@ -90,7 +87,6 @@ public class requests extends HttpServlet {
 				// create RequestList object, add all current requests, append requestList to
 				// HttpSession
 				RequestList requestList = new RequestList();
-
 
 				while (rs.next()) {
 

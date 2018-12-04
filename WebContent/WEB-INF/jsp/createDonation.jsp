@@ -73,20 +73,21 @@
                             while (it.hasNext()) {
                                 Map.Entry pair = (Map.Entry) it.next();
                                 Product newProduct = (Product) productList.getInstances().get(pair.getKey());
-                        %>
-                        <option value="<%= newProduct.getProdId()%>"><% out.print(newProduct.getProdType()); %></option>
-                        <% }%>
-                    </select>
+                            %>
+                            <option value="<%= newProduct.getProdId()%>"><% out.print(newProduct.getProdType()); %></option>
+                            <% }%>
+                        </select>
+                        <input type="text" id="other" name="other" placeholder="Enter Other Product Type">
 
 
-                    <label for="quantity">Quantity Donating</label>
-                    <input type="text" id="quantity" name="quantity" placeholder="Enter Quantity">
+                        <label for="quantity">Quantity Donating</label>
+                        <input type="text" id="quantity" name="quantity" placeholder="Enter Quantity">
 
 
 
-                    <input type="submit" value="Submit">
-                </form>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
             </div>
-        </div>
     </body>
 </html>

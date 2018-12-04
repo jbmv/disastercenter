@@ -144,7 +144,7 @@ public class updateUser extends HttpServlet {
 				rs.next();
 				System.out.println("rs.next() done");
 				user.setLocationID(rs.getInt("locationid"));
-				System.out.println("got locatoin");
+				System.out.println("got location");
 				
 				
 				//finally we can create the new user

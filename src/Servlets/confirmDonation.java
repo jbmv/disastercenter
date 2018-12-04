@@ -71,9 +71,18 @@ public class confirmDonation extends HttpServlet {
 			// populate product,amount,user fields of donation object
 			Donation newDonation = new Donation();
 			if (session.getAttribute("newDonation") != null) 
+			{
 				newDonation = (Donation) session.getAttribute("newDonation");
+			}
 			newDonation.setAmount(Integer.valueOf(request.getParameter("quantity")));
-			newDonation.setProductID(Integer.valueOf(request.getParameter("productID")));
+
+			int productId = Integer.valueOf(request.getParameter("productID"));
+			if(productId == -1)
+			{
+				productId = CreateNewProduct(request.getParameter("other"));
+			}
+
+			newDonation.setProductID(productId);
 			newDonation.setUser((User) session.getAttribute("user"));
 			System.out.println("getting product object for productID" + newDonation.getProductID());
 			// need the product name for display on donationConfirmation.jsp
@@ -82,7 +91,6 @@ public class confirmDonation extends HttpServlet {
 			{
 					newDonation.setProduct(productList.getProductByID(String.valueOf(newDonation.getProductID())));
 			}
-
 
 			newDonation = CheckCurrentRequests(newDonation, session, conn);
 
@@ -120,6 +128,26 @@ public class confirmDonation extends HttpServlet {
 			e.printStackTrace();
 		}
 
+	}
+
+	private int CreateNewProduct(String productType, HttpSession session, Connection conn)
+	{
+		// insert product into product table and stored product table
+		PreparedStatement pst = conn.prepareStatement(Queries.createProduct);
+		pst.setString(1, productType);
+		ResultSet rs = pst.executeQuery();
+		int newProductId;
+		while(rs.next())
+		{
+			newProductId = rs.getInt("productID");
+		}
+		ProductList productList = session.getAttribute("productList");
+		Product newProduct = new Product(newProductId);
+		newProduct.setProductType(productType);
+		productList.addInstance(newProduct);
+		session.setAttribute("productList", productList);
+
+		return newProductId;
 	}
 
 	private Donation CheckCurrentRequests(Donation newDonation, HttpSession session, Connection conn) throws SQLException

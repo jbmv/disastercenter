@@ -71,6 +71,10 @@ public class donation extends HttpServlet {
 					// append each request to requestList object
 					productList.addInstance(newProduct);
 				}
+				// other option
+				Product other = new Product(-1);
+				other.setProductType("Other");
+				productList.addInstance(other);
 
 				// append productList to HTTP session for use in the view,
 				// then forward browser to createDonation.jsp view

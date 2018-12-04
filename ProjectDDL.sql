@@ -244,10 +244,6 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-<<<<<<< HEAD
---------
-DROP PROCEDURE getUser;
-
 DELIMITER //
 CREATE PROCEDURE getUser 
 (IN userna varchar(20), IN pass varchar(20))
@@ -258,9 +254,6 @@ BEGIN
 END // 
 DELIMITER ;
 
---------
-DROP PROCEDURE updateUser;
-
 DELIMITER //
 CREATE PROCEDURE updateUser
 (IN pass varchar(20), IN firstN varchar(20), IN lastN varchar(20), IN ema varchar(20), IN phon varchar(20), IN uID int)
@@ -270,12 +263,6 @@ BEGIN
 END //
 DELIMITER //
 
-=======
-
-DROP PROCEDURE CREATE_USER;
-DROP PROCEDURE UPDATE_USER;
-DROP PROCEDURE CREATE_LOCATION;
-DROP PROCEDURE CREATE_DONATION;
 
 DELIMITER //
 CREATE PROCEDURE CREATE_USER
@@ -283,13 +270,17 @@ CREATE PROCEDURE CREATE_USER
 BEGIN
 	INSERT INTO USER(Username, Password, FirstName, LastName, Email, Phone, LocationId, FailedLoginAttempts) VALUES(usr, pass, fname, lname, email, phone, locationid, failedlogin);
 END //
+DELIMITER ;
 
+DELIMITER //
 CREATE PROCEDURE UPDATE_USER
 (IN usr CHAR(20), pass CHAR(20), fname CHAR(20), lname CHAR(20), email CHAR(20), phone CHAR(20), locationid INT)
 BEGIN
 	UPDATE USER SET Password = pass, FirstName = fname, LastName = lname, Email = email, Phone = phone, LocationId = locationid WHERE Username = usr;
 END //
+DELIMITER ;
 
+DELIMITER //
 CREATE PROCEDURE CREATE_LOCATION
 (IN lat FLOAT, lon FLOAT, streetnum INT, street CHAR(20), city CHAR(20), zip int)
 BEGIN
@@ -297,11 +288,24 @@ BEGIN
 		THEN INSERT INTO LOCATION(Lattitude, Longitude, StreetNum, Street, City, Zipcode) VALUES(lat, lon, streetnum, street, city, zip);
 	END IF;
 END //
+DELIMITER ;
 
+DELIMITER //
 CREATE PROCEDURE CREATE_DONATION
 (IN productid INT, amount INT, userid INT)
 BEGIN
 	INSERT INTO DONATION(ProductId, Amount, UserId) VALUES(productid, amount, userid);
 END //
 DELIMITER ;
->>>>>>> branch 'master' of https://github.com/jbmv/disastercenter.git
+
+DELIMITER //
+CREATE PROCEDURE CREATE_PRODUCT 
+(IN _Type VARCHAR(45), OUT output int)
+BEGIN
+	insert into Product (Type) values (_Type);
+	insert into StoredProduct (Quantity, ProductId) select 0, ProductId from Product where Type = _Type;
+	select ProductId into output from Product where Type = _Type;
+END //
+DELIMITER ;
+
+

@@ -81,6 +81,7 @@
                         <option value="<%= newProduct.getProdId()%>"><% out.print(newProduct.getProdType()); %></option>
                         <% }%>
                     </select>
+                    <input type="text" id="other" name="other" placeholder="Enter Other Product Type">
 
                     <label for="disaster">Disaster associated with this request</label>
                         <select id="disaster" name="disaster">

@@ -78,10 +78,15 @@ public class confirmRequest extends HttpServlet {
 			newRequest.setNeededByDate(neededBy);
 
             newRequest.setUser((User) session.getAttribute("user"));
-            
-			int prodId = Integer.valueOf(request.getParameter("productID"));
+			
+			int productId = Integer.valueOf(request.getParameter("productID"));
+			if(productId == -1)
+			{
+				productId = CreateNewProduct(request.getParameter("other"));
+			}
+			
 			ProductList pList = (ProductList) session.getAttribute("productList");
-			newRequest.setProduct(pList.getProductByID(String.valueOf(prodId)));
+			newRequest.setProduct(pList.getProductByID(String.valueOf(productId)));
 
             int disID = Integer.valueOf(request.getParameter("disaster"));
 			newRequest.setDisasterEventID(disID);
@@ -94,7 +99,7 @@ public class confirmRequest extends HttpServlet {
 			PreparedStatement pst = conn.prepareStatement(Queries.insNewRequest);
 			pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
 			pst.setString(2, String.valueOf(newRequest.getUser().getUserID()));
-			pst.setString(3, String.valueOf(prodId));
+			pst.setString(3, String.valueOf(productId));
 			pst.setString(4, String.valueOf(disID));
 			pst.setString(5, dateFormat.format(neededBy));
 			pst.setString(6, String.valueOf(newRequest.getLocation().getLocationID()));
@@ -113,6 +118,27 @@ public class confirmRequest extends HttpServlet {
 		}
 
 	}
+
+	private int CreateNewProduct(String productType, HttpSession session, Connection conn)
+	{
+		// insert product into product table and stored product table
+		PreparedStatement pst = conn.prepareStatement(Queries.createProduct);
+		pst.setString(1, productType);
+		ResultSet rs = pst.executeQuery();
+		int newProductId;
+		while(rs.next())
+		{
+			newProductId = rs.getInt("productID");
+		}
+		ProductList productList = session.getAttribute("productList");
+		Product newProduct = new Product(newProductId);
+		newProduct.setProductType(productType);
+		productList.addInstance(newProduct);
+		session.setAttribute("productList", productList);
+
+		return newProductId;
+	}
+
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
 	// + sign on the left to edit the code.">
 	/**

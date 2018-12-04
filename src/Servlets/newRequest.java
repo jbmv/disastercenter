@@ -79,6 +79,10 @@ public class newRequest extends HttpServlet {
 				// append each request to requestList object
 				productList.addInstance(newProduct);
 			}
+			// other option
+			Product other = new Product(-1);
+			other.setProductType("Other");
+			productList.addInstance(other);
 
 			// get all disasters from DisasterEvents table and append to disastersList
 			// this is to populate the select disaster associated with a new request
