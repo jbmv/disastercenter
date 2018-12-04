@@ -42,6 +42,8 @@ public class Queries {
 
 	public static String getNewProductId = "select @output as productID";
 
+	public static String getStoredProduct = "select * from StoredProduct where productId = ?";
+
 	public static String incorrectUserLogin = "update user set failedloginattempts = failedloginattempts + 1 where username = ?";
 
 	public static String getNextDonationID = "SELECT IFNULL(MAX(donationid) + 1, 1) as nextID FROM donation";
