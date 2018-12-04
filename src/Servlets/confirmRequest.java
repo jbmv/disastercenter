@@ -107,8 +107,8 @@ public class confirmRequest extends HttpServlet {
 			pst.executeUpdate();
 
 			// check stored product for the requested item
-			StoredProduct storedProduct;
-			PreparedStatement pst = conn.prepareStatement(Queries.getStoredProduct);
+			StoredProduct storedProduct = new StoredProduct();
+			pst = conn.prepareStatement(Queries.getStoredProduct);
 			pst.setString(1, String.valueOf(newRequest.getProduct().getProdId()));
 			ResultSet rs = pst.executeQuery();
 
@@ -124,7 +124,7 @@ public class confirmRequest extends HttpServlet {
 			{
 				if( storedAmt >= newRequest.getQuantityRequested())
 				{
-					PreparedStatement pst = conn.prepareStatement(Queries.createResponse);
+					pst = conn.prepareStatement(Queries.createResponse);
 					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
 					pst.setString(2, String.valueOf(newRequest.getRequestID()));
 					pst.setString(3, String.valueOf(1));
@@ -134,19 +134,19 @@ public class confirmRequest extends HttpServlet {
 					pst.setString(4, dfString);
 					pst.executeUpdate();
 
-					PreparedStatement pst = conn.prepareStatement(Queries.updateRequest);
+					pst = conn.prepareStatement(Queries.updateRequest);
 					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
 					pst.setString(2, String.valueOf(newRequest.getRequestID()));
 					pst.executeUpdate();
 
-					PreparedStatement pst = conn.prepareStatement(Queries.updateStoredProduct);
+					pst = conn.prepareStatement(Queries.updateStoredProduct);
 					pst.setString(1, String.valueOf(-1*newRequest.getQuantityRequested()));
 					pst.setString(2, String.valueOf(storedProduct.getProductId()));
 					pst.executeUpdate();
 				}
 				else
 				{
-					PreparedStatement pst = conn.prepareStatement(Queries.createResponse);
+					pst = conn.prepareStatement(Queries.createResponse);
 					pst.setString(1, String.valueOf(storedAmt));
 					pst.setString(2, String.valueOf(newRequest.getRequestID()));
 					pst.setString(3, String.valueOf(1));
@@ -156,12 +156,12 @@ public class confirmRequest extends HttpServlet {
 					pst.setString(4, dfString);
 					pst.executeUpdate();
 
-					PreparedStatement pst = conn.prepareStatement(Queries.updateRequest);
+					pst = conn.prepareStatement(Queries.updateRequest);
 					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
 					pst.setString(2, String.valueOf(newRequest.getRequestID()));
 					pst.executeUpdate();
 
-					PreparedStatement pst = conn.prepareStatement(Queries.updateStoredProduct);
+					pst = conn.prepareStatement(Queries.updateStoredProduct);
 					pst.setString(1, String.valueOf(0));
 					pst.setString(2, String.valueOf(storedProduct.getProductId()));
 					pst.executeUpdate();
