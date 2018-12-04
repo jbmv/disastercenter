@@ -106,6 +106,67 @@ public class confirmRequest extends HttpServlet {
 			pst.setString(6, String.valueOf(newRequest.getLocation().getLocationID()));
 			pst.executeUpdate();
 
+			// check stored product for the requested item
+			StoredProduct storedProduct;
+			PreparedStatement pst = conn.prepareStatement(Queries.getStoredProduct);
+			pst.setString(1, String.valueOf(newRequest.getProduct().getProdId()));
+			ResultSet rs = pst.executeQuery();
+
+			while(rs.next())
+			{
+				storedProduct = new StoredProduct(rs.getInt("storedProductId"));
+				storedProduct.setProductId(rs.getInt("productId"));
+				storedProduct.setAmount(rs.getInt("amount"));
+			}
+
+			int storedAmt = storedProduct.getAmount();
+			if(storedAmt > 0)
+			{
+				if( storedAmt >= newRequest.getQuantityRequested())
+				{
+					PreparedStatement pst = conn.prepareStatement(Queries.createResponse);
+					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
+					pst.setString(2, String.valueOf(newRequest.getRequestID()));
+					pst.setString(3, String.valueOf(1));
+					DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+					Calendar calendar = Calendar.getInstance();
+					String dfString = df.format(calendar.getTime());
+					pst.setString(4, dfString);
+					pst.executeUpdate();
+
+					PreparedStatement pst = conn.prepareStatement(Queries.updateRequest);
+					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
+					pst.setString(2, String.valueOf(newRequest.getRequestID()));
+					pst.executeUpdate();
+
+					PreparedStatement pst = conn.prepareStatement(Queries.updateStoredProduct);
+					pst.setString(1, String.valueOf(-1*newRequest.getQuantityRequested()));
+					pst.setString(2, String.valueOf(storedProduct.getProductId()));
+					pst.executeUpdate();
+				}
+				else
+				{
+					PreparedStatement pst = conn.prepareStatement(Queries.createResponse);
+					pst.setString(1, String.valueOf(storedAmt));
+					pst.setString(2, String.valueOf(newRequest.getRequestID()));
+					pst.setString(3, String.valueOf(1));
+					DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+					Calendar calendar = Calendar.getInstance();
+					String dfString = df.format(calendar.getTime());
+					pst.setString(4, dfString);
+					pst.executeUpdate();
+
+					PreparedStatement pst = conn.prepareStatement(Queries.updateRequest);
+					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
+					pst.setString(2, String.valueOf(newRequest.getRequestID()));
+					pst.executeUpdate();
+
+					PreparedStatement pst = conn.prepareStatement(Queries.updateStoredProduct);
+					pst.setString(1, String.valueOf(0));
+					pst.setString(2, String.valueOf(storedProduct.getProductId()));
+					pst.executeUpdate();
+				}
+			}
 			session.setAttribute("newRequest", newRequest);
             // move to thank you for request
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/requests");
