@@ -74,7 +74,7 @@ public class confirmRequest extends HttpServlet {
 			newRequest.setExpired(false);
 			
 			String date = request.getParameter("neededBy");
-			DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 			Date neededBy = dateFormat.parse(date);
 			newRequest.setNeededByDate(neededBy);
 
