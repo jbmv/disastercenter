@@ -130,12 +130,13 @@ public class confirmRequest extends HttpServlet {
 			}
 
 			int storedAmt = storedProduct.getAmount();
+			int neededAmt = newRequest.getQuantityRequested() - newRequest.getQuantityFulfilled();
 			if(storedAmt > 0)
 			{
-				if( storedAmt >= newRequest.getQuantityRequested())
+				if( storedAmt >= neededAmt)
 				{
 					pst = conn.prepareStatement(Queries.createResponse);
-					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
+					pst.setString(1, String.valueOf(neededAmt));
 					pst.setString(2, String.valueOf(newRequest.getRequestID()));
 					System.out.println(String.valueOf(newRequest.getRequestID()));
 					pst.setString(3, String.valueOf(1));
@@ -146,12 +147,12 @@ public class confirmRequest extends HttpServlet {
 					pst.executeUpdate();
 
 					pst = conn.prepareStatement(Queries.updateRequest);
-					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()));
+					pst.setString(1, String.valueOf(neededAmt + newRequest.getQuantityFulfilled()));
 					pst.setString(2, String.valueOf(newRequest.getRequestID()));
 					pst.executeUpdate();
 
 					pst = conn.prepareStatement(Queries.updateStoredProduct);
-					pst.setString(1, String.valueOf(-1*newRequest.getQuantityRequested()));
+					pst.setString(1, String.valueOf(-1*neededAmt));
 					pst.setString(2, String.valueOf(storedProduct.getProductId()));
 					pst.executeUpdate();
 				}
@@ -168,7 +169,7 @@ public class confirmRequest extends HttpServlet {
 					pst.executeUpdate();
 
 					pst = conn.prepareStatement(Queries.updateRequest);
-					pst.setString(1, String.valueOf(newRequest.getQuantityRequested()-storedAmt));
+					pst.setString(1, String.valueOf(storedAmt + newRequest.getQuantityFulfilled()));
 					pst.setString(2, String.valueOf(newRequest.getRequestID()));
 					pst.executeUpdate();
 
