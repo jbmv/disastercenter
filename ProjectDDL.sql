@@ -303,7 +303,7 @@ CREATE PROCEDURE CREATE_PRODUCT
 (IN _Type VARCHAR(45), OUT output int)
 BEGIN
 	insert into Product (Type) values (_Type);
-	insert into StoredProduct (Quantity, ProductId) select 0, ProductId from Product where Type = _Type;
+	/*nsert into StoredProduct (Quantity, ProductId) select 0, ProductId from Product where Type = _Type;*/
 	select ProductId into output from Product where Type = _Type;
 END //
 DELIMITER ;
