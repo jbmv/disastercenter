@@ -1,5 +1,7 @@
 package DisasterCenter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Request {
@@ -23,12 +25,10 @@ public class Request {
     
     
     public String getDateString() {
-		return dateString;
+		DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+		return df.format(this.neededByDate);
 	}
 
-	public void setDateString(String dateString) {
-		this.dateString = dateString;
-	}
 
 	public void setUser(User user) {
 		this.user = user;

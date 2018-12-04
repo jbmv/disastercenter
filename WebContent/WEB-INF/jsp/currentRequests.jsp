@@ -82,8 +82,8 @@
                             %>
                             <tr onclick="document.location = 'respond?requestID=<% out.print(newRequest.getRequestID()); %>'">
                                 <td><% out.print(newRequest.getDistance()); %></td>
-                                <td><% out.print(newRequest.getZipName()); %></td>
-                                <td><% out.print(newRequest.getProductName()); %></td>
+                                <td><% out.print(newRequest.getLocation().getZipcode()); %></td>
+                                <td><% out.print(newRequest.getProduct().getProdType()); %></td>
                                 <td><% out.print(newRequest.getQuantityRequested() - newRequest.getQuantityFulfilled()); %></td>
                                 <td><% out.print(newRequest.getDateString()); %></td>
                                 <td><% out.print(newRequest.getDisasterName()); %></td>

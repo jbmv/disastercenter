@@ -21,6 +21,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -110,12 +111,12 @@ public class requests extends HttpServlet {
 					newRequest.setDisasterName(rs.getString("disasterName"));
 					newRequest.setProductName(rs.getString("productName"));
 					newRequest.setDistance(rs.getFloat("distance"));
-					
-					SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd");
-					Date date = df.parse(rs.getString("NeededByDate"));
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+					Date date = df.parse(rs.getString("NeededByDate").substring(0, 10));
 					String stringDate = df.format(date);
+					System.out.println(rs.getString("NeededByDate").substring(0, 10));
+					System.out.println(df.format(date));
 					newRequest.setNeededByDate(date);
-					newRequest.setDateString(stringDate);
 
 					// append each request to requestList object
 					requestList.addInstance(newRequest);
