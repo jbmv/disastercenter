@@ -54,8 +54,6 @@ public class Queries {
 	
 	public static String createResponse = "insert into Response (QuantitySent, RequestId, UserId, ProvidedByDate) values (?,?,?,?)";	
 	
-	public static String updateFulfilledRequestAmount = "update Request set quantityFulfilled = ? where requestId = ?";																											// null
-
 	public static String getDisasters = "select disastereventid,type,location,startdate,lattitude,longitude,zipcode from DisasterEvent d join location l on d.location = l.locationid";
 
 	public static String getAddressToSendResponse = "";
