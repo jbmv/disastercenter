@@ -107,6 +107,8 @@ public class confirmRequest extends HttpServlet {
 			pst.executeUpdate();
 
 			// check stored product for the requested item
+			ResetRequestsList();
+
 			StoredProduct storedProduct = new StoredProduct();
 			pst = conn.prepareStatement(Queries.getStoredProduct);
 			pst.setString(1, String.valueOf(newRequest.getProduct().getProdId()));
@@ -179,6 +181,62 @@ public class confirmRequest extends HttpServlet {
 		
 		}
 
+	}
+
+	private void ResetRequestsList(HttpSession session, Connection conn)
+	{
+						// first, expire any old requests before displaying requests
+						PreparedStatement pst = conn.prepareStatement(Queries.expireOldRequests);
+						pst.executeUpdate();
+						
+						pst = conn.prepareStatement(Queries.getRequest);
+						pst.setString(1, String.valueOf(userLocation.getLatitude()));
+						pst.setString(2, String.valueOf(userLocation.getLongitude()));
+						
+						//query returns: RequestId,r.DisasterEventID,r.UserID,r.ProductID,QuantityRequested,
+						// QuantityFulfilled,PriorityReferenceId,Expired,NeededByDate,l.lattitude,l.longitude,
+						//r.LocationID,streetnum,street,city,p.type as productName," + "d.type as disasterName," + "l.zipcode as zipName, 
+						ResultSet rs = pst.executeQuery();
+		
+						// create RequestList object, add all current requests, append requestList to
+						// HttpSession
+						RequestList requestList = new RequestList();
+		
+						while (rs.next()) {
+		
+							Request newRequest = new Request(rs.getInt("RequestID"));
+							
+							Location location = new Location(rs.getInt("LocationID"));
+							location.setStreetNumber(rs.getInt("streetnum"));
+							location.setStreet(rs.getString("street"));
+							location.setCity(rs.getString("city"));
+							location.setZipcodes(rs.getInt("zipName"));
+							newRequest.setLocation(location);
+							
+							Product product = new Product(rs.getInt("ProductID"));
+							product.setProductType(rs.getString("productName"));
+							newRequest.setProduct(product);
+							
+							newRequest.setQuantityRequested(rs.getInt("QuantityRequested"));
+							newRequest.setQuantityFulfilled(rs.getInt("QuantityFulfilled"));
+							newRequest.setExpired(rs.getBoolean("Expired"));
+							newRequest.setZipName(rs.getString("zipName"));
+							newRequest.setDisasterName(rs.getString("disasterName"));
+							newRequest.setProductName(rs.getString("productName"));
+							newRequest.setDistance(rs.getFloat("distance"));
+							DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+							Date date = df.parse(rs.getString("NeededByDate").substring(0, 10));
+							String stringDate = df.format(date);
+							System.out.println(rs.getString("NeededByDate").substring(0, 10));
+							System.out.println(df.format(date));
+							newRequest.setNeededByDate(date);
+		
+							// append each request to requestList object
+							requestList.addInstance(newRequest);
+						}
+		
+						// append requestList to HTTP session, send browser to currentRequests.jsp view
+						session.setAttribute("requestList", requestList);
 	}
 
 	private int CreateNewProduct(String productType, HttpSession session, Connection conn) throws SQLException
