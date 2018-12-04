@@ -38,7 +38,9 @@ public class Queries {
 
 	public static String correctUserLogin = "update user set lastlogin = ?, failedloginattempts = 0 where username = ?";
 
-	public static String createProduct = "Call CREATE_PRODUCT (?, @output); select @output as productID";
+	public static String createProduct = "Call CREATE_PRODUCT ('?', @output)";
+
+	public static String getNewProductId = "select @output as productID";
 
 	public static String incorrectUserLogin = "update user set failedloginattempts = failedloginattempts + 1 where username = ?";
 
@@ -65,7 +67,7 @@ public class Queries {
 //	public static String createNewUserLocation = "insert into location (lattitude,longitude,streetnum,street,city,zipcode) values (?,?,?,?,?,?)";
 	public static String createNewUserLocation = "call CREATE_LOCATION(?,?,?,?,?,?)";
 	
-	public static String getNewUserLocation = "select locationid from location where lattitude = ? and longitude = ? and streetnum = ?";
+	public static String getNewUserLocation = "select locationid from location where (lattitude - ?) < 0.01 and (longitude - ?) < 0.01 and streetnum = ?";
 	
 //	public static String createNewUser = "insert into user (username,password,firstname,lastname,email,phone,locationid,failedloginattempts) values (?,?,?,?,?,?,?,0)";
 	public static String createNewUser = "CALL CREATE_USER(?,?,?,?,?,?,?,0)";
