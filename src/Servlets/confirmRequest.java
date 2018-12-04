@@ -116,7 +116,7 @@ public class confirmRequest extends HttpServlet {
 			{
 				storedProduct = new StoredProduct(rs.getInt("storedProductId"));
 				storedProduct.setProductId(rs.getInt("productId"));
-				storedProduct.setAmount(rs.getInt("amount"));
+				storedProduct.setAmount(rs.getInt("quantity"));
 			}
 
 			int storedAmt = storedProduct.getAmount();
