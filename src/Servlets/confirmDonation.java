@@ -203,14 +203,14 @@ public class confirmDonation extends HttpServlet {
 				
 				if(current.getQuantityRequested() == current.getQuantityFulfilled())
 				{
-					pst = conn.prepareStatement(Queries.updateFulfilledRequestAmount);
+					pst = conn.prepareStatement(Queries.updateRequest);
 					pst.setString(1, String.valueOf(current.getQuantityFulfilled()));
 					pst.setString(2, String.valueOf(current.getRequestID()));
 					pst.executeUpdate();
 				}
 				else
 				{
-					pst = conn.prepareStatement(Queries.updateFulfilledRequestAmount);
+					pst = conn.prepareStatement(Queries.updateRequest);
 					pst.setString(1, String.valueOf(current.getQuantityFulfilled()));
 					pst.setString(2, String.valueOf(current.getRequestID()));
 					pst.executeUpdate();
