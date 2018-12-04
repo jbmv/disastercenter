@@ -124,6 +124,9 @@ public class confirmRequest extends HttpServlet {
 		// insert product into product table and stored product table
 		PreparedStatement pst = conn.prepareStatement(Queries.createProduct);
 		pst.setString(1, productType);
+		pst.executeUpdate();
+
+		pst = conn.prepareStatement(Queries.getNewProductId);
 		ResultSet rs = pst.executeQuery();
 		int newProductId;
 		while(rs.next())
