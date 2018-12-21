@@ -65,8 +65,8 @@
                         <table id="myTable" class="w3-table-all">
                             <thead>
                                 <tr>
-                                    <th onclick="sortOnDistance()"> Distance</th>
-                                    <th onclick="sortTable(1)"> Location</th>
+                                    <th onclick="sortOnDistance()">Distance</th>
+                                    <th onclick="sortTable(1)">Location</th>
                                     <th onclick="sortTable(2)">Product</th>
                                     <th onclick="sortTable(3)">Quantity Needed</th>
                                     <th onclick="sortTable(4)">Needed By</th>
@@ -195,7 +195,7 @@
                     }
                 }
             </script>
-
+            </div>
     </body>
 </html>
 
