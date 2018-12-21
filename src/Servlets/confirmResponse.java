@@ -5,6 +5,14 @@
  */
 package Servlets;
 
+import DisasterCenter.*;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -14,22 +22,6 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import DisasterCenter.Donation;
-import DisasterCenter.Location;
-import DisasterCenter.Queries;
-import DisasterCenter.Request;
-import DisasterCenter.RequestList;
-import DisasterCenter.Response;
-import DisasterCenter.User;
 
 /**
  *
@@ -138,7 +130,6 @@ public class confirmResponse extends HttpServlet {
 				}
 				
 			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
 				out.print(e);
 				e.printStackTrace();
 			} 

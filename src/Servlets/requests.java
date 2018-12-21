@@ -5,31 +5,23 @@
  */
 package Servlets;
 
-import DisasterCenter.Location;
-import DisasterCenter.Product;
-import DisasterCenter.Queries;
-import DisasterCenter.Request;
-import DisasterCenter.RequestList;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import DisasterCenter.*;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -63,7 +55,6 @@ public class requests extends HttpServlet {
 		Location userLocation = (Location) session.getAttribute("userLocation");
 
 		try (PrintWriter out = response.getWriter()) {
-			/* TODO output your page here. You may use following sample code. */
 
 			try {
 

@@ -4,10 +4,8 @@
     Author     : james
 --%>
 
-<%@page import="DisasterCenter.Request"%>
-<%@page import="DisasterCenter.Response"%>
-<%@page import="DisasterCenter.RequestList"%>
 <%@page import="DisasterCenter.Location"%>
+<%@page import="DisasterCenter.Request" %>
 <%@page import="DisasterCenter.User"%>
 <%
     //import java objects from HTTP session

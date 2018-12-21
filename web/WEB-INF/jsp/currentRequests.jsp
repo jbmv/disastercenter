@@ -4,12 +4,12 @@
     Author     : james
 --%>
 
-<%@page import="DisasterCenter.RequestList"%>
-<%@page import="java.util.Map"%>
+<%@page import="DisasterCenter.Location" %>
 <%@page import="DisasterCenter.Request"%>
-<%@page import="java.util.Iterator"%>
-<%@ page import="DisasterCenter.User" %>
-<%@ page import="DisasterCenter.Location" %>
+<%@page import="DisasterCenter.RequestList" %>
+<%@page import="DisasterCenter.User" %>
+<%@page import="java.util.Iterator" %>
+<%@page import="java.util.Map" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -78,7 +78,7 @@
                                 Iterator it = requestList.getInstances().entrySet().iterator();
                                 while (it.hasNext()) {
                                     Map.Entry pair = (Map.Entry) it.next();
-                                    Request newRequest = (Request) requestList.getInstances().get(pair.getKey());
+                                    Request newRequest = requestList.getInstances().get(pair.getKey());
                             %>
                             <tr onclick="document.location = 'respond?requestID=<% out.print(newRequest.getRequestID()); %>'">
                                 <td><% out.print(newRequest.getDistance()); %></td>

@@ -5,21 +5,10 @@
 --%>
 
 
-<%@page import="DisasterCenter.Response"%>
-<%@page import="DisasterCenter.Donation"%>
-<%@page import="DisasterCenter.ResponseList"%>
-<%@page import="DisasterCenter.RequestList"%>
-<%@page import="DisasterCenter.Request"%>
-<%@page import="java.util.Map"%>
+<%@page import="DisasterCenter.*" %>
 <%@page import="java.util.Iterator"%>
 <%
 	//import java objects from HTTP session
-/* 	Request currentRequest = (Request) session.getAttribute("currentRequest");
-	Response newResponse = (Response) session.getAttribute("newResponse");
-	String address = "Disaster Center\n" + currentRequest.getLocation().getStreetNumber() + " "
-			+ currentRequest.getLocation().getStreet() + "\n"
-			+ currentRequest.getLocation().getCity() + " " 
-			+ currentRequest.getLocation().getZipcode();  */
 	ResponseList responseList = (ResponseList) session.getAttribute("responseList");
 	RequestList requestList = (RequestList) session.getAttribute("requestList");
 	Donation newDonation = (Donation) session.getAttribute("newDonation");

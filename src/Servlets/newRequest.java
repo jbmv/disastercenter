@@ -5,13 +5,7 @@
  */
 package Servlets;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import DisasterCenter.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,13 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import DisasterCenter.DisasterEvent;
-import DisasterCenter.DisasterList;
-import DisasterCenter.Location;
-import DisasterCenter.Product;
-import DisasterCenter.ProductList;
-import DisasterCenter.Queries;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
 
 /**
  *
@@ -135,7 +125,6 @@ public class newRequest extends HttpServlet {
 		try {
 			processRequest(request, response);
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -154,7 +143,6 @@ public class newRequest extends HttpServlet {
 		try {
 			processRequest(request, response);
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

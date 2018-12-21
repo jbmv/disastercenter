@@ -21,8 +21,8 @@ public class StoredProduct {
     }
 
     public StoredProduct() {
-		// TODO Auto-generated constructor stub
-	}
+
+    }
 
 	public int getStoredProductId() {
         return this.storedProductId;

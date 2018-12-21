@@ -4,17 +4,12 @@
     Author     : james
 --%>
 
+<%@page import="DisasterCenter.DisasterEvent" %>
+<%@page import="DisasterCenter.DisasterList" %>
 <%@page import="DisasterCenter.Product"%>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.Iterator"%>
 <%@page import="DisasterCenter.ProductList"%>
-<%@page import="DisasterCenter.Request"%>
-<%@page import="DisasterCenter.Response"%>
-<%@page import="DisasterCenter.RequestList"%>
-<%@page import="DisasterCenter.Location"%>
-<%@page import="DisasterCenter.User"%>
-<%@page import="DisasterCenter.DisasterList"%>
-<%@page import="DisasterCenter.DisasterEvent"%>
+<%@page import="java.util.Iterator" %>
+<%@page import="java.util.Map" %>
 
 <%
     //import java objects from HTTP session
@@ -76,7 +71,7 @@
                             Iterator it = productList.getInstances().entrySet().iterator();
                             while (it.hasNext()) {
                                 Map.Entry pair = (Map.Entry) it.next();
-                                Product newProduct = (Product) productList.getInstances().get(pair.getKey());
+                                Product newProduct = productList.getInstances().get(pair.getKey());
                         %>
                         <option value="<%= newProduct.getProdId()%>"><% out.print(newProduct.getProdType()); %></option>
                         <% }%>
@@ -90,7 +85,7 @@
                             Iterator it2 = disasterList.getInstances().entrySet().iterator();
                             while (it2.hasNext()) {
                                 Map.Entry pair = (Map.Entry) it2.next();
-                                DisasterEvent disaster = (DisasterEvent) disasterList.getInstances().get(pair.getKey());
+                                DisasterEvent disaster = disasterList.getInstances().get(pair.getKey());
                         %>
                         <option value="<%= disaster.getDisasterEventID()%>"><% out.print(disaster.getType() + " at zipcode " + disaster.getLocation().getZipcode()); %></option>
                         <% }%>

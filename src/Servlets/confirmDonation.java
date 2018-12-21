@@ -5,18 +5,7 @@
  */
 package Servlets;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Array;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Iterator;
+import DisasterCenter.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,8 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import DisasterCenter.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Iterator;
 
 /**
  *
@@ -54,9 +48,6 @@ public class confirmDonation extends HttpServlet {
 			dispatcher.forward(request, response);
 			return;
 		}
-
-		/* TODO still need to finish this servlet */
-		// get next available donationID
 
 		try {
 			// connect to database, get next available ID for this new donation
@@ -113,9 +104,6 @@ public class confirmDonation extends HttpServlet {
 				return;
 			}
 
-			// TODO add db update code here
-			// don't forget to recheck database to see if that new donation id was used?
-			// ... concurrency
 
 			session.setAttribute("newDonation", newDonation);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/thankYouMultiResponse.jsp");
@@ -192,7 +180,7 @@ public class confirmDonation extends HttpServlet {
 				pst.setString(1, String.valueOf(newResponse.getQuantitySent()));
 				pst.setString(2, String.valueOf(newResponse.getRequest().getRequestID()));
 				pst.setString(3, String.valueOf(newResponse.getUser().getUserID()));
-				pst.setString(4, String.valueOf(df.format(newResponse.getProvidedByDate())));
+				pst.setString(4, df.format(newResponse.getProvidedByDate()));
 				pst.executeUpdate();
 				
 				if (session.getAttribute("responseList") != null)
