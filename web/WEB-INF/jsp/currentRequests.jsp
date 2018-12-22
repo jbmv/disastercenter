@@ -8,6 +8,7 @@
 <%@page import="DisasterCenter.Request"%>
 <%@page import="DisasterCenter.RequestList" %>
 <%@page import="DisasterCenter.User" %>
+<%@page import="java.text.DecimalFormat" %>
 <%@page import="java.util.Iterator" %>
 <%@page import="java.util.Map" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -65,7 +66,7 @@
                         <table id="myTable" class="w3-table-all">
                             <thead>
                                 <tr>
-                                    <th onclick="sortOnDistance()">Distance</th>
+                                    <th onclick="sortOnDistance()">Distance (mi)</th>
                                     <th onclick="sortTable(1)">Location</th>
                                     <th onclick="sortTable(2)">Product</th>
                                     <th onclick="sortTable(3)">Quantity Needed</th>
@@ -81,7 +82,8 @@
                                     Request newRequest = requestList.getInstances().get(pair.getKey());
                             %>
                             <tr onclick="document.location = 'respond?requestID=<% out.print(newRequest.getRequestID()); %>'">
-                                <td><% out.print(newRequest.getDistance()); %></td>
+                                <td><%
+                                    out.print(String.format(new DecimalFormat("#").format(newRequest.getDistance()))); %></td>
                                 <td><% out.print(newRequest.getLocation().getZipcode()); %></td>
                                 <td><% out.print(newRequest.getProduct().getProdType()); %></td>
                                 <td><% out.print(newRequest.getQuantityRequested() - newRequest.getQuantityFulfilled()); %></td>
