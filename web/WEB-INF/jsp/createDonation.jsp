@@ -5,14 +5,10 @@
 --%>
 
 <%@page import="DisasterCenter.Product"%>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.Iterator"%>
 <%@page import="DisasterCenter.ProductList"%>
-<%@page import="DisasterCenter.Request"%>
-<%@page import="DisasterCenter.Response"%>
-<%@page import="DisasterCenter.RequestList"%>
-<%@page import="DisasterCenter.Location"%>
-<%@page import="DisasterCenter.User"%>
+<%@page import="java.util.Iterator" %>
+<%@page import="java.util.Map" %>
+
 <%
     //import java objects from HTTP session
     ProductList productList = (ProductList) session.getAttribute("productList");
@@ -72,7 +68,7 @@
                             Iterator it = productList.getInstances().entrySet().iterator();
                             while (it.hasNext()) {
                                 Map.Entry pair = (Map.Entry) it.next();
-                                Product newProduct = (Product) productList.getInstances().get(pair.getKey());
+                                Product newProduct = productList.getInstances().get(pair.getKey());
                             %>
                             <option value="<%= newProduct.getProdId()%>"><% out.print(newProduct.getProdType()); %></option>
                             <% }%>

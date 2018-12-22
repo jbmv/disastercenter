@@ -5,18 +5,7 @@
  */
 package Servlets;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Array;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import DisasterCenter.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,8 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import DisasterCenter.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.*;
 
 /**
  *
@@ -54,8 +49,7 @@ public class confirmRequest extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 
-		/* TODO still need to finish this servlet */
-		// get next available donationID
+
         
 		try {
 			// connect to database, get next available ID for this new donation
@@ -138,7 +132,7 @@ public class confirmRequest extends HttpServlet {
 					pst = conn.prepareStatement(Queries.createResponse);
 					pst.setString(1, String.valueOf(neededAmt));
 					pst.setString(2, String.valueOf(newRequest.getRequestID()));
-					System.out.println(String.valueOf(newRequest.getRequestID()));
+					System.out.println(newRequest.getRequestID());
 					pst.setString(3, String.valueOf(1));
 					DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
 					Calendar calendar = Calendar.getInstance();

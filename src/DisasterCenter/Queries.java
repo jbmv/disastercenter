@@ -16,23 +16,26 @@ public class Queries {
 			+ "from user u join location l on u.locationid = l.locationid " + "where username=? and password=?");
     
 	public static String getUserSP = ("Call getUser(?,?)");
-	
-	public static String getRequest =
-			// gets all non-expired requests, calculates distance from user based on lat/lon
-			// algorithm source:
-			// http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
-			("" + "SELECT RequestId,r.DisasterEventID,r.UserID,r.ProductID,QuantityRequested,"
-					+ "QuantityFulfilled,Expired,NeededByDate,l.lattitude,l.longitude, "
-					+ "r.LocationID,streetnum,street,city,p.type as productName," + "d.type as disasterName," + "l.zipcode as zipName, "
-					+ "111.045* DEGREES(ACOS(COS(RADIANS(userLat))" + "                 * COS(RADIANS(l.lattitude))"
-					+ "                 * COS(RADIANS(userLon) - RADIANS(l.longitude))"
-					+ "                 + SIN(RADIANS(userLat))"
-					+ "                 * SIN(RADIANS(l.lattitude)))) AS distance "
-					+ "FROM Request r JOIN Product p on r.ProductId = p.ProductId "
-					+ "JOIN disasterevent d on r.DisasterEventId = d.DisasterEventId "
-					+ "JOIN location l on r.locationid = l.locationid " + " JOIN ("
-					+ "     SELECT  ?  AS userLat, ? AS userLon" + "   ) AS p ON 1=1 " + "HAVING expired = 0 AND quantityfulfilled < quantityrequested "
-					+ "ORDER BY distance");
+
+//	public static String getRequest =
+//			// gets all non-expired requests, calculates distance from user based on lat/lon
+//			// algorithm source:
+//			// http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
+//			("" + "SELECT RequestId,r.DisasterEventID,r.UserID,r.ProductID,QuantityRequested,"
+//					+ "QuantityFulfilled,Expired,NeededByDate,l.lattitude,l.longitude, "
+//					+ "r.LocationID,streetnum,street,city,p.type as productName," + "d.type as disasterName," + "l.zipcode as zipName, "
+//					+ "69 * DEGREES(ACOS(COS(RADIANS(userLat))"
+//					+ "         * COS(RADIANS(l.lattitude))"
+//					+ "         * COS(RADIANS(userLon) - RADIANS(l.longitude))"
+//					+ "         + SIN(RADIANS(userLat))"
+//					+ "         * SIN(RADIANS(l.lattitude)))) AS distance "
+//					+ "FROM Request r JOIN Product p on r.ProductId = p.ProductId "
+//					+ "JOIN disasterevent d on r.DisasterEventId = d.DisasterEventId "
+//					+ "JOIN location l on r.locationid = l.locationid " + " JOIN ("
+//					+ "     SELECT  ?  AS userLat, ? AS userLon" + "   ) AS p ON 1=1 " + "HAVING expired = 0 AND quantityfulfilled < quantityrequested "
+//					+ "ORDER BY distance");
+
+	public static String getRequest = "call GET_DISTANCES(?,?)";
 
 	public static String getProducts = "select * from product"; 
 

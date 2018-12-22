@@ -4,12 +4,13 @@
     Author     : james
 --%>
 
-<%@page import="DisasterCenter.RequestList"%>
-<%@page import="java.util.Map"%>
+<%@page import="DisasterCenter.Location" %>
 <%@page import="DisasterCenter.Request"%>
-<%@page import="java.util.Iterator"%>
-<%@ page import="DisasterCenter.User" %>
-<%@ page import="DisasterCenter.Location" %>
+<%@page import="DisasterCenter.RequestList" %>
+<%@page import="DisasterCenter.User" %>
+<%@page import="java.text.DecimalFormat" %>
+<%@page import="java.util.Iterator" %>
+<%@page import="java.util.Map" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -65,8 +66,8 @@
                         <table id="myTable" class="w3-table-all">
                             <thead>
                                 <tr>
-                                    <th onclick="sortOnDistance()"> Distance</th>
-                                    <th onclick="sortTable(1)"> Location</th>
+                                    <th onclick="sortOnDistance()">Distance (mi)</th>
+                                    <th onclick="sortTable(1)">Location</th>
                                     <th onclick="sortTable(2)">Product</th>
                                     <th onclick="sortTable(3)">Quantity Needed</th>
                                     <th onclick="sortTable(4)">Needed By</th>
@@ -78,10 +79,11 @@
                                 Iterator it = requestList.getInstances().entrySet().iterator();
                                 while (it.hasNext()) {
                                     Map.Entry pair = (Map.Entry) it.next();
-                                    Request newRequest = (Request) requestList.getInstances().get(pair.getKey());
+                                    Request newRequest = requestList.getInstances().get(pair.getKey());
                             %>
                             <tr onclick="document.location = 'respond?requestID=<% out.print(newRequest.getRequestID()); %>'">
-                                <td><% out.print(newRequest.getDistance()); %></td>
+                                <td><%
+                                    out.print(String.format(new DecimalFormat("#").format(newRequest.getDistance()))); %></td>
                                 <td><% out.print(newRequest.getLocation().getZipcode()); %></td>
                                 <td><% out.print(newRequest.getProduct().getProdType()); %></td>
                                 <td><% out.print(newRequest.getQuantityRequested() - newRequest.getQuantityFulfilled()); %></td>
@@ -195,7 +197,7 @@
                     }
                 }
             </script>
-
+            </div>
     </body>
 </html>
 

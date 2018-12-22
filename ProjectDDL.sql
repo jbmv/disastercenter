@@ -7,6 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema Project
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `Project` ;
 
 -- -----------------------------------------------------
 -- Schema Project
@@ -238,83 +239,142 @@ CREATE TABLE IF NOT EXISTS `Project`.`StoredProduct` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+USE `Project` ;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- -----------------------------------------------------
+-- procedure CREATE_USER
+-- -----------------------------------------------------
 
-DROP PROCEDURE getUser;
-DROP PROCEDURE updateUser;
+USE `Project`;
+DROP procedure IF EXISTS `Project`.`CREATE_USER`;
 
-DROP PROCEDURE CREATE_USER;
-DROP PROCEDURE UPDATE_USER;
-DROP PROCEDURE CREATE_LOCATION;
-DROP PROCEDURE CREATE_DONATION;
-
-DROP PROCEDURE CREATE_PRODUCT;
-
-DELIMITER //
-CREATE PROCEDURE getUser 
-(IN userna varchar(20), IN pass varchar(20))
-BEGIN
-	SELECT userid,username,password,firstname,lastname,email,phone,u.locationid,lattitude,longitude,streetnum,street,city,zipcode
-	FROM user u join location l on u.locationid = l.locationid
-	WHERE username=userna and password=pass ;
-END // 
-DELIMITER ;
-
-DELIMITER //
-CREATE PROCEDURE updateUser
-(IN pass varchar(20), IN firstN varchar(20), IN lastN varchar(20), IN ema varchar(20), IN phon varchar(20), IN uID int)
-BEGIN 
-	UPDATE user SET password = pass, firstname = firstN, lastname = lastN, email = ema, phone = phon
-    WHERE userid = uID;
-END //
-DELIMITER //
-
-
-DELIMITER //
+DELIMITER $$
+USE `Project`$$
 CREATE PROCEDURE CREATE_USER
 (IN usr CHAR(20), pass CHAR(20), fname CHAR(20), lname CHAR(20), email CHAR(20), phone CHAR(20), locationid INT, failedlogin INT)
 BEGIN
 	INSERT INTO USER(Username, Password, FirstName, LastName, Email, Phone, LocationId, FailedLoginAttempts) VALUES(usr, pass, fname, lname, email, phone, locationid, failedlogin);
-END //
+END$$
+
 DELIMITER ;
 
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure UPDATE_USER
+-- -----------------------------------------------------
+
+USE `Project`;
+DROP procedure IF EXISTS `Project`.`UPDATE_USER`;
+
+DELIMITER $$
+USE `Project`$$
 CREATE PROCEDURE UPDATE_USER
 (IN usr CHAR(20), pass CHAR(20), fname CHAR(20), lname CHAR(20), email CHAR(20), phone CHAR(20), locationid INT)
 BEGIN
 	UPDATE USER SET Password = pass, FirstName = fname, LastName = lname, Email = email, Phone = phone, LocationId = locationid WHERE Username = usr;
-END //
+END$$
+
 DELIMITER ;
 
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure CREATE_LOCATION
+-- -----------------------------------------------------
+
+USE `Project`;
+DROP procedure IF EXISTS `Project`.`CREATE_LOCATION`;
+
+DELIMITER $$
+USE `Project`$$
 CREATE PROCEDURE CREATE_LOCATION
 (IN lat FLOAT, lon FLOAT, streetnum INT, street CHAR(20), city CHAR(20), zip int)
 BEGIN
 	IF (SELECT COUNT(*) FROM LOCATION WHERE Lattitude = lat AND Longitude = lon) < 1 
 		THEN INSERT INTO LOCATION(Lattitude, Longitude, StreetNum, Street, City, Zipcode) VALUES(lat, lon, streetnum, street, city, zip);
 	END IF;
-END //
+END$$
+
 DELIMITER ;
 
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure CREATE_DONATION
+-- -----------------------------------------------------
+
+USE `Project`;
+DROP procedure IF EXISTS `Project`.`CREATE_DONATION`;
+
+DELIMITER $$
+USE `Project`$$
 CREATE PROCEDURE CREATE_DONATION
 (IN productid INT, amount INT, userid INT)
 BEGIN
 	INSERT INTO DONATION(ProductId, Amount, UserId) VALUES(productid, amount, userid);
-END //
+END$$
+
 DELIMITER ;
 
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure CREATE_PRODUCT
+-- -----------------------------------------------------
+
+USE `Project`;
+DROP procedure IF EXISTS `Project`.`CREATE_PRODUCT`;
+
+DELIMITER $$
+USE `Project`$$
 CREATE PROCEDURE CREATE_PRODUCT 
 (IN _Type VARCHAR(45), OUT output int)
 BEGIN
 	insert into Product (Type) values (_Type);
-	/*nsert into StoredProduct (Quantity, ProductId) select 0, ProductId from Product where Type = _Type;*/
+	insert into StoredProduct (Quantity, ProductId) select 0, ProductId from Product where Type = _Type;
 	select ProductId into output from Product where Type = _Type;
-END //
+END$$
+
 DELIMITER ;
 
+-- -----------------------------------------------------
+-- procedure GET_DISTANCES
+-- -----------------------------------------------------
 
+USE `Project`;
+DROP procedure IF EXISTS `Project`.`GET_DISTANCES`;
+
+DELIMITER $$
+USE `Project`$$
+CREATE PROCEDURE `GET_DISTANCES` 
+(IN inLat long, inLon long)
+BEGIN
+SELECT RequestId,r.DisasterEventID,r.UserID,r.ProductID,QuantityRequested,
+					QuantityFulfilled,Expired,NeededByDate,l.lattitude,l.longitude, 
+					r.LocationID,streetnum,street,city,p.type as productName,
+                    d.type as disasterName,l.zipcode as zipName, 
+					69 * DEGREES(ACOS(COS(RADIANS(userLat))
+									 * COS(RADIANS(l.lattitude))
+					                 * COS(RADIANS(userLon) - RADIANS(l.longitude))
+					                 + SIN(RADIANS(userLat))
+					                 * SIN(RADIANS(l.lattitude)))) AS distance 
+					FROM Request r JOIN Product p on r.ProductId = p.ProductId 
+					JOIN disasterevent d on r.DisasterEventId = d.DisasterEventId 
+					JOIN location l on r.locationid = l.locationid
+                    JOIN ( SELECT  inLat AS userLat, inLon AS userLon) AS p ON 1=1
+                    HAVING expired = 0 AND quantityfulfilled < quantityrequested
+					ORDER BY distance;
+END$$
+
+DELIMITER ;
+USE `Project`;
+
+DELIMITER $$
+
+USE `Project`$$
+DROP TRIGGER IF EXISTS `Project`.`Product_AFTER_INSERT` $$
+USE `Project`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `Project`.`Product_AFTER_INSERT` AFTER INSERT ON `Product` FOR EACH ROW
+BEGIN
+	insert into storedproduct (productid, quantity) values (new.productid,0);
+END$$
+
+
+DELIMITER ;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
